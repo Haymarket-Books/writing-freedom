@@ -6,6 +6,7 @@ import type {
   Emphasis,
   Presentation,
   Quote,
+  Index,
   CTA,
 } from "../../types/index";
 import type { PortableTextBlock } from "sanity";
@@ -13,6 +14,7 @@ import HomeHeroSection from "../PageSections/HomeHero.astro";
 import IntroGridSection from "../PageSections/IntroGrid.astro";
 import EmphasisSection from "../PageSections/Emphasis.astro";
 import PresentationSection from "../PageSections/Presentation.astro";
+import IndexSection from "../PageSections/IndexSection.astro";
 import QuoteSection from "../PageSections/Quote.astro";
 import CallToActionSection from "../PageSections/CallToAction.astro";
 
@@ -37,6 +39,8 @@ const { page } = Astro.props;
           return <EmphasisSection content={section as Emphasis} />;
         case "quote":
           return <QuoteSection content={section as Quote} />;
+        case "index":
+          return <IndexSection content={section as Index} />;
         case "cta":
           return <CallToActionSection content={section as CTA} />;
         default:

@@ -1,0 +1,53 @@
+---
+import { Image } from "astro:assets";
+import type { FAQ, Person, Fellow } from "../../types";
+import PersonCard from "../PersonCard.astro";
+import ButtonLink from "../ButtonLink.astro";
+import urlFor from "../../lib/sanity.urlForImage";
+import Accordion from "../Svelte/Accordion.svelte";
+import RichContent from "../RichContent.astro";
+
+type Props = {
+  content?: FAQ;
+};
+
+const { content } = Astro.props;
+---
+
+<section id={content?.slug}>
+  <div class="content-wrapper flow">
+    <h2 class="with-mark">{content?.title}</h2>
+    {
+      content?.list?.map((faq) => (
+        <Accordion client:load>
+          <Fragment slot="question">{faq.question}</Fragment>
+          <div class="text | flow" slot="answer">
+            <RichContent content={faq.answer} />
+          </div>
+        </Accordion>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  section {
+    margin-block: var(--section-spacer);
+    padding-block: var(--section-spacer);
+    background-color: color-mix(
+      in srgb,
+      var(--color-primary-light),
+      transparent 40%
+    );
+  }
+
+  h2 {
+    font-size: var(--step-2);
+  }
+
+  .content-wrapper {
+    &.flow {
+      --flow-space: 3rem;
+    }
+  }
+</style>

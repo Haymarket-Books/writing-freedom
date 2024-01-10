@@ -47,17 +47,20 @@ export default defineType({
     defineField({
       name: 'image',
       type: 'coverImage',
+      description: 'Background image layered behind call to action text.',
       validation: (Rule) => Rule.required(),
     }),
   ],
   preview: {
     select: {
       title: 'heading',
+      image: 'image',
     },
-    prepare({title}) {
+    prepare({title, image}) {
       return {
         title: title,
         subtitle: 'Call to Action',
+        media: image,
       }
     },
   },

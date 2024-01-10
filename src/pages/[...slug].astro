@@ -4,12 +4,13 @@ import InteriorBlueprint from "../components/PageBlueprints/InteriorBlueprint.as
 import IndexBlueprint from "../components/PageBlueprints/IndexBlueprint.astro";
 import ContactBlueprint from "../components/PageBlueprints/ContactBlueprint.astro";
 import { sanityClient } from "sanity:client";
-import { pageQuery } from "../lib/sanity.queries";
-import type { PagePayload } from "../types";
+import { pageQuery, fellowsAllQuery } from "../lib/sanity.queries";
+import type { PagePayload, Fellow } from "../types";
 
 export async function getStaticPaths() {
   const pagesList = await sanityClient.fetch<PagePayload[]>(pageQuery, {
     page: "page",
+    fellowshipYear: 2024,
   });
 
   return pagesList.map((page) => {
@@ -19,6 +20,8 @@ export async function getStaticPaths() {
     };
   });
 }
+
+const fellows = await sanityClient.fetch<Fellow[]>(fellowsAllQuery);
 
 type Props = {
   page: PagePayload;
@@ -37,15 +40,17 @@ const { page } = Astro.props;
             case "interior":
               return <InteriorBlueprint page={page} />;
             case "index":
-              return <IndexBlueprint page={page} />;
+              return (
+                <IndexBlueprint
+                  page={page}
+                  content={page.slug === "fellows" ? fellows : undefined}
+                />
+              );
             case "contact":
               return <ContactBlueprint page={page} />;
           }
         }
       }
     </>
-    <!-- {page.blueprint === "interior" && <InteriorBlueprint page={page} />}
-    {page.blueprint === "index" && <IndexBlueprint page={page} />}
-    {page.blueprint === "contact" && <ContactBlueprint page={page} />} -->
   </main>
 </Layout>

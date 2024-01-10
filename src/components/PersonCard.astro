@@ -1,0 +1,119 @@
+---
+import type { Person, Fellow } from "../types/index";
+import { Image } from "astro:assets";
+import urlFor from "../lib/sanity.urlForImage";
+import joinNames from "../utils/joinNames";
+import buildFellowHref from "../utils/buildFellowHref";
+
+type Props = {
+  person: Person | Fellow;
+};
+
+const { person } = Astro.props;
+---
+
+<article class="flow">
+  {
+    person.type === "teamMember" ? (
+      <Fragment>
+        <Image
+          class="headshot lqip-preview"
+          src={urlFor(person.image!)
+            .width(400)
+            .height(500)
+            .auto("format")
+            .url()}
+          alt={person.image?.alt || ""}
+          width={400}
+          height={500}
+          format="webp"
+          style={`background-image: url(${person?.image?.asset.metadata.lqip})`}
+        />
+        <div class="text | flow">
+          <h3>{joinNames(person.name)}</h3>
+          <p class="small-title">{person?.category?.name}</p>
+        </div>
+      </Fragment>
+    ) : (
+      <Fragment>
+        <a href={buildFellowHref(person as Fellow)}>
+          <Image
+            class="headshot lqip-preview"
+            src={urlFor(person.image!)
+              .width(400)
+              .height(500)
+              .auto("format")
+              .url()}
+            alt={person.image?.alt || ""}
+            width={400}
+            height={500}
+            format="webp"
+            style={`background-image: url(${person?.image?.asset.metadata.lqip})`}
+          />
+        </a>
+        <div class="text | flow">
+          <a href={buildFellowHref(person as Fellow)}>
+            <h3>{joinNames(person.name)}</h3>
+          </a>
+          <p class="small-title">{person?.category?.name}</p>
+        </div>
+      </Fragment>
+    )
+  }
+</article>
+
+<style>
+  article {
+    --underline-color: color-mix(
+      in srgb,
+      var(--color-primary-base),
+      transparent 50%
+    );
+
+    &.flow {
+      --flow-space: 0.75rem;
+    }
+
+    & > a {
+      overflow: hidden;
+
+      &:hover img {
+        transform: scale(1.05);
+      }
+
+      &:hover + .text a {
+        text-decoration: underline var(--underline-color);
+      }
+    }
+  }
+
+  .headshot {
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    transition: all 0.3s ease-out;
+  }
+
+  h3 {
+    font-size: var(--step-0);
+  }
+
+  .text {
+    &.flow {
+      --flow-space: 0.5rem;
+    }
+
+    & .small-title {
+      opacity: var(--text-opacity-shade);
+      font-size: 12px;
+    }
+
+    & a {
+      transition: all 0.2s ease-out;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline var(--underline-color);
+      }
+    }
+  }
+</style>

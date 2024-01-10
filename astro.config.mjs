@@ -3,10 +3,12 @@ import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
 
 import sanity from "@sanity/astro";
+import svelte from "@astrojs/svelte";
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
+    svelte(),
     sanity({
       projectId: "7zni91yt",
       dataset: "production",

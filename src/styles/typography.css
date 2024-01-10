@@ -44,7 +44,7 @@ a:not(.button-link, .logo):hover {
   letter-spacing: 0.15em;
 }
 
-:is(h2, h3) {
+:is(h1, h2, h3) {
   &.with-mark {
     position: relative;
 

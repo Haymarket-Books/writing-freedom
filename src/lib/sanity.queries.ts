@@ -1,20 +1,20 @@
 import groq from "groq";
 
 // Partials
-const groqNavigationLink = groq`_type == 'navigationLink' => {
+const groqNavigationLink = groq`_type == "navigationLink" => {
     "type": _type,
     name,
     href[0]{
-        _type == 'page' => @-> {
+        _type == "page" => @-> {
             "type": ^._type,
             "pageName": title,
             "slug": slug.current
         },
-        _type == 'slugString' => {
+        _type == "slugString" => {
             "type": _type,
             slug,
         },
-        _type == 'externalLink' => {
+        _type == "externalLink" => {
             "type": _type,
             url
         }
@@ -27,12 +27,13 @@ const groqImage = groq`image{
     asset->
 }`;
 
-export const settingsQuery = groq`*[_type == 'siteSettings'][0]{
+export const settingsQuery = groq`*[_type == "siteSettings"][0]{
     title,
     description,
     logo{
         asset->
     },
+    defaultFellowshipYear,
     defaultOgImage{
         asset->
     },
@@ -42,9 +43,46 @@ export const settingsQuery = groq`*[_type == 'siteSettings'][0]{
     }
 }`;
 
+// Collections
+export const teamMembersQuery = groq`*[_type == "teamMember"] | order(name.lastName asc) {
+    "type": _type,
+    name,
+    title,
+    category->,
+    "image": ${groqImage}
+}`;
+
+export const fellowsIndexQuery = groq`*[_type == "fellow" && fellowshipYear == $fellowshipYear] | order(name.lastName asc) {
+    "type": _type,
+    name,
+    "slug": slug.current,
+    fellowshipYear,
+    category->,
+    "image": ${groqImage}
+}`;
+
+export const fellowsAllQuery = groq`*[_type == "fellow"] | order(name.lastName asc) {
+    name,
+    "slug": slug.current,
+    fellowshipYear,
+    category->,
+    "image": ${groqImage}
+}`;
+
+export const fellowsDetailQuery = groq`*[_type == "fellow"] {
+    name,
+    "slug": slug.current,
+    fellowshipYear,
+    category->,
+    "image": ${groqImage},
+    content[],
+    selectedWorks[],
+    media
+}`;
+
 //// PAGES
 // Navigation
-export const mainNavQuery = `*[_type == 'navigation'][0] {
+export const mainNavQuery = groq`*[_type == "navigation"][0] {
     title,
     entries[]->{
         title,
@@ -55,7 +93,7 @@ export const mainNavQuery = `*[_type == 'navigation'][0] {
 // Home page
 
 // Interior pages
-export const pageQuery = `*[_type == $page]{
+export const pageQuery = groq`*[_type == $page] {
     "id": _id,
     title,
     blueprint,
@@ -97,8 +135,20 @@ export const pageQuery = `*[_type == $page]{
                 }
             }
         },
-        _type == "indexSection" => {
-            ...
+        _type == "index" => {
+            title,
+            "slug": slug.current,
+            text,
+            "linkObject": link{
+                ${groqNavigationLink}
+            },
+            "showContentType": items[0],
+            items[0] == "teamMembers" => {
+                "entries": ${teamMembersQuery}
+            },
+            items[0] == "fellows" => {
+                "entries": ${fellowsIndexQuery}
+            }
         },
         _type == "emphasis" => {
             text,
@@ -114,8 +164,10 @@ export const pageQuery = `*[_type == $page]{
             },
             layout
         },
-        _type == "faqs" => {
-            ...
+        _type == "faq" => {
+            title,
+            "slug": slug.current,
+            list[]
         },
         _type == "quote" => {
             attribution,

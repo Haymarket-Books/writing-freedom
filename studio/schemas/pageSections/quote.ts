@@ -32,6 +32,7 @@ export default defineType({
     defineField({
       name: 'image',
       type: 'coverImage',
+      description: 'Background image layered behind quote text.',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -54,11 +55,13 @@ export default defineType({
   preview: {
     select: {
       name: 'attribution.name',
+      image: 'image',
     },
-    prepare({name}) {
+    prepare({name, image}) {
       return {
         title: `Quote by ${name}`,
         subtitle: 'Quote Section',
+        media: image,
       }
     },
   },

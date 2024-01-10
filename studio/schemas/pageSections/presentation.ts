@@ -37,7 +37,7 @@ export default defineType({
     defineField({
       name: 'image',
       type: 'coverImage',
-      description: 'Optional image.',
+      description: 'Optional image to accompany text.',
       // validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -50,17 +50,21 @@ export default defineType({
       name: 'layout',
       title: 'Flip Layout?',
       type: 'boolean',
+      description:
+        'Flip to "true" to position the image to the right of the text (default is image to the left).',
     }),
   ],
   preview: {
     select: {
       title: 'title',
       heading: 'heading',
+      image: 'image',
     },
-    prepare({heading, title}) {
+    prepare({heading, title, image}) {
       return {
         title: heading || title,
         subtitle: 'Presentation Section',
+        media: image,
       }
     },
   },

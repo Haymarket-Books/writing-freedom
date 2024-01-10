@@ -6,13 +6,17 @@ import type {
   Emphasis,
   Presentation,
   Quote,
+  FAQ,
+  Index,
   CTA,
   PageNavigation,
 } from "../../types/index";
 import InnerHeroSection from "../PageSections/InnerHero.astro";
-import IntroGridSection from "../PageSections/IntroGrid.astro";
+import InnerGridSection from "../PageSections/InnerGrid.astro";
 import EmphasisSection from "../PageSections/Emphasis.astro";
 import PresentationSection from "../PageSections/Presentation.astro";
+import IndexSection from "../PageSections/IndexSection.astro";
+import FAQSection from "../PageSections/FAQSection.astro";
 import QuoteSection from "../PageSections/Quote.astro";
 import CallToActionSection from "../PageSections/CallToAction.astro";
 import buildPageNav from "../../utils/buildPageNav";
@@ -29,7 +33,7 @@ const pageNavigation: PageNavigation = buildPageNav(page.content);
 
 <Fragment>
   {
-    page.content.map((section) => {
+    page.content.map((section, idx) => {
       switch (section.type) {
         case "hero":
           return (
@@ -39,13 +43,24 @@ const pageNavigation: PageNavigation = buildPageNav(page.content);
             />
           );
         case "grid":
-          return <IntroGridSection content={section as Grid} />;
+          return <InnerGridSection content={section as Grid} />;
         case "presentation":
           return <PresentationSection content={section as Presentation} />;
         case "emphasis":
           return <EmphasisSection content={section as Emphasis} />;
         case "quote":
           return <QuoteSection content={section as Quote} />;
+        case "faq":
+          return <FAQSection content={section as FAQ} />;
+        case "index":
+          // should probably make padding/background dynamic/controllable through Sanity
+          return (
+            <IndexSection
+              content={section as Index}
+              padding={idx === 4}
+              background={idx === 4}
+            />
+          );
         case "cta":
           return <CallToActionSection content={section as CTA} />;
         default:

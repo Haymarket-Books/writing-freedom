@@ -7,6 +7,7 @@ const SOCIAL_ICONS = [
   {title: 'Instagram', value: 'instagram'},
   {title: 'YouTube', value: 'youtube'},
   {title: 'Twitter', value: 'twitter'},
+  {title: 'Website', value: 'square-arrow-up-right'},
 ]
 
 export default defineType({
@@ -33,6 +34,15 @@ export default defineType({
       title: 'Site Logo',
       type: 'image',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'defaultFellowshipYear',
+      title: 'Default Fellowship Year',
+      type: 'number',
+      description: 'Set a default year for index grids, which show fellows of that year.',
+      options: {
+        list: [2024, 2025],
+      },
     }),
     defineField({
       name: 'socialLinks',

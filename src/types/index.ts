@@ -18,6 +18,39 @@ export type Link = {
   };
 };
 
+export type Category = {
+  name?: string;
+  slug?: string;
+};
+
+export type Work = {
+  title?: string;
+  year?: number;
+};
+
+export type Person = {
+  name?: {
+    firstName?: string;
+    lastName?: string;
+  };
+  slug?: string;
+  type?: string;
+  title?: string;
+  category?: Category;
+  image?: CoverImage;
+};
+
+// export interface TeamMember extends Person {
+//   title?: string;
+// }
+
+export interface Fellow extends Person {
+  fellowshipYear?: number;
+  content?: PortableTextBlock[];
+  selectedWorks?: Work[];
+  media?: string;
+}
+
 // Pages
 export type Navigation = {
   title?: string;
@@ -36,6 +69,7 @@ export type SiteSettings = {
   title?: string;
   description?: string;
   logo?: Image;
+  defaultFellowshipYear?: number;
   defaultOgImage?: Image;
   socialLinks?: {
     icon?: string;
@@ -55,9 +89,9 @@ export type SiteSettings = {
 export type PageSectionTypes =
   | "hero"
   | "cta"
-  | "faqs"
+  | "faq"
   | "grid"
-  | "indexSection"
+  | "index"
   | "emphasis"
   | "presentation"
   | "quote"
@@ -127,6 +161,22 @@ export interface CTA extends PageSection {
   ctaType: string;
 }
 
+export interface FAQ extends PageSection {
+  title?: string;
+  list?: {
+    question?: string;
+    answer?: PortableTextBlock[];
+  }[];
+}
+
+export interface Index extends PageSection {
+  title?: string;
+  text?: string;
+  linkObject?: Link;
+  showContentType?: string;
+  entries?: Array<Person | Fellow>;
+}
+
 // Metadata and queries
 
 export type PageMetadata = {
@@ -146,5 +196,7 @@ export type PagePayload = {
   slug: string;
   blueprint?: "home" | "interior" | "index" | "contact";
   metadata?: PageMetadata;
-  content: Array<Hero | Grid | Emphasis | Presentation | Quote | CTA>;
+  content: Array<
+    Hero | Grid | Emphasis | Presentation | Quote | FAQ | Index | CTA
+  >;
 };

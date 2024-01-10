@@ -37,6 +37,7 @@ export default defineType({
     defineField({
       name: 'image',
       type: 'coverImage',
+      description: 'Background image layered behind hero text.',
       validation: (Rule) => Rule.required(),
     }),
   ],
@@ -44,11 +45,13 @@ export default defineType({
     select: {
       title: 'title',
       heading: 'heading',
+      image: 'image',
     },
-    prepare({heading, title}) {
+    prepare({heading, title, image}) {
       return {
         title: heading || title,
         subtitle: 'Hero Section',
+        media: image,
       }
     },
   },

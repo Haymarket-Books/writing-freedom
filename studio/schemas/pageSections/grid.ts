@@ -58,8 +58,21 @@ export default defineType({
             defineField({
               name: 'image',
               type: 'coverImage',
+              description: 'Background image layered behind column text.',
             }),
           ],
+          preview: {
+            select: {
+              heading: 'heading',
+              image: 'image',
+            },
+            prepare({heading, image}) {
+              return {
+                title: heading,
+                media: image,
+              }
+            },
+          },
         },
       ],
     }),

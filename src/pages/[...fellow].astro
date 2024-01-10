@@ -1,0 +1,32 @@
+---
+import Layout from "../layouts/Layout.astro";
+import IndexBlueprint from "../components/PageBlueprints/IndexBlueprint.astro";
+import { sanityClient } from "sanity:client";
+import { fellowsDetailQuery } from "../lib/sanity.queries";
+import type { Fellow } from "../types";
+import joinNames from "../utils/joinNames";
+import buildFellowHref from "../utils/buildFellowHref";
+
+export async function getStaticPaths() {
+  const fellows = await sanityClient.fetch<Fellow[]>(fellowsDetailQuery);
+
+  return fellows.map((fellow) => {
+    return {
+      params: { fellow: buildFellowHref(fellow) },
+      props: { fellow },
+    };
+  });
+}
+
+type Props = {
+  fellow?: Fellow;
+};
+
+const { fellow } = Astro.props;
+---
+
+<Layout>
+  <main slot="content">
+    <h1>{joinNames(fellow?.name)}</h1>
+  </main>
+</Layout>

@@ -1,0 +1,71 @@
+---
+import { Image } from "astro:assets";
+import type { Index, Person, Fellow } from "../../types";
+import PersonCard from "../PersonCard.astro";
+import ButtonLink from "../ButtonLink.astro";
+import urlFor from "../../lib/sanity.urlForImage";
+
+type Props = {
+  content?: Index;
+  padding?: boolean;
+  background?: boolean;
+};
+
+const { content, padding = false, background = false } = Astro.props;
+// console.log(content);
+---
+
+<section
+  id={content?.slug}
+  class:list={[padding && "padding", background && "background"]}
+>
+  <div class="content-wrapper flow">
+    <h2 class="with-mark">{content?.title}</h2>
+    <div class="responsive-grid">
+      {
+        content?.entries?.map((indexEntry) => {
+          return <PersonCard person={indexEntry as Person} />;
+        })
+      }
+    </div>
+    {
+      content?.linkObject && (
+        <ButtonLink linkObject={content?.linkObject} withArrow />
+      )
+    }
+  </div>
+</section>
+
+<style>
+  section {
+    margin-block: var(--section-spacer);
+  }
+
+  .padding {
+    padding-block: var(--section-spacer);
+  }
+
+  .background {
+    background-color: color-mix(
+      in srgb,
+      var(--color-primary-light),
+      transparent 40%
+    );
+  }
+
+  h2 {
+    font-size: var(--step-2);
+  }
+
+  .content-wrapper {
+    &.flow {
+      --flow-space: 3rem;
+    }
+  }
+
+  .responsive-grid {
+    --grid-gap: 2rem;
+    --item-min-width: 12rem;
+    --item-max-width: 14rem;
+  }
+</style>

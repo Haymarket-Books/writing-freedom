@@ -7,6 +7,8 @@ import type { PagePayload } from "../types";
 
 const query = await sanityClient.fetch<PagePayload[]>(pageQuery, {
   page: "homepage",
+  // How to get year here without calling settings query twice (on layout and pages)
+  fellowshipYear: 2024,
 });
 const home = query[0];
 // console.log(home);

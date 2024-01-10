@@ -14,17 +14,20 @@ export default defineType({
     defineField({
       name: 'image',
       type: 'coverImage',
+      description: 'Primary image to accompany text.',
       validation: (Rule) => Rule.required(),
     }),
   ],
   preview: {
     select: {
       text: 'text',
+      image: 'image',
     },
-    prepare({text}) {
+    prepare({text, image}) {
       return {
         title: text,
         subtitle: 'Emphasis Section',
+        media: image,
       }
     },
   },

@@ -1,0 +1,74 @@
+---
+import { Image } from "astro:assets";
+import type { Grid } from "../../types";
+import ButtonLink from "../ButtonLink.astro";
+import urlFor from "../../lib/sanity.urlForImage";
+
+type Props = {
+  content?: Grid;
+};
+
+const { content } = Astro.props;
+---
+
+<section class="content-wrapper" id={content?.slug}>
+  <h2 class="center-all with-mark">{content?.title}</h2>
+  <div class="responsive-grid">
+    {
+      content?.items?.map((item) => {
+        return (
+          <article class="flow">
+            {item.image && (
+              <Image
+                src={urlFor(item?.image)
+                  .width(400)
+                  .height(400)
+                  .auto("format")
+                  .url()}
+                alt={item.image.alt || ""}
+                width={400}
+                height={400}
+                format="webp"
+              />
+            )}
+            <p>{item.text}</p>
+            {item.linkObject && (
+              <ButtonLink linkObject={item?.linkObject} withArrow />
+            )}
+          </article>
+        );
+      })
+    }
+  </div>
+</section>
+
+<style>
+  section {
+    margin-block: var(--section-spacer);
+  }
+
+  h2 {
+    font-size: var(--step-2);
+
+    &::before {
+      left: 50% !important;
+      transform: translateX(-50%);
+    }
+  }
+
+  .responsive-grid {
+    --grid-gap: var(--space-2xl);
+    margin-block-start: calc(var(--section-spacer) * 0.5);
+  }
+
+  article {
+    &.flow {
+      --flow-space: 2rem;
+    }
+
+    & img {
+      max-height: 8rem;
+      margin-inline: auto;
+    }
+  }
+</style>

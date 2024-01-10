@@ -1,15 +1,39 @@
 ---
-import type { PagePayload } from "../../types/index";
+import type { PagePayload, Fellow } from "../../types/index";
 import type { PortableTextBlock } from "sanity";
+import PersonCard from "../PersonCard.astro";
 
 type Props = {
   page: PagePayload;
+  content?: Fellow[];
 };
 
-const { page } = Astro.props;
+const { page, content } = Astro.props;
 ---
 
-<h1>{page.title}</h1>
-<p>{page.slug}</p>
-<p>{page.blueprint}</p>
-<p>grid</p>
+<div class="content-wrapper flow">
+  <h1 class="with-mark">{page.title}</h1>
+  <div class="responsive-grid">
+    {
+      content?.map((fellow) => {
+        return <PersonCard person={fellow} />;
+      })
+    }
+  </div>
+</div>
+
+<style>
+  .content-wrapper {
+    margin-block: var(--section-spacer);
+
+    &.flow {
+      --flow-space: 3rem;
+    }
+  }
+
+  .responsive-grid {
+    --grid-gap: 2rem;
+    --item-min-width: 12rem;
+    --item-max-width: 14rem;
+  }
+</style>

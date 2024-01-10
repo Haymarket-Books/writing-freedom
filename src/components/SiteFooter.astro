@@ -52,7 +52,11 @@ const date = new Date();
                 target="_blank"
                 title={capitalizeFirst(link.icon!)}
               >
-                <i class={`fa-brands fa-${link.icon}`} />
+                <i
+                  class={`fa-${
+                    link.icon === "square-arrow-up-right" ? "regular" : "brands"
+                  } fa-${link.icon}`}
+                />
                 <span class="sr-only">{capitalizeFirst(link.icon!)}</span>
               </a>
             </li>
