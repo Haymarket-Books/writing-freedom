@@ -1,0 +1,70 @@
+---
+import type {
+  PagePayload,
+  Hero,
+  Grid,
+  Emphasis,
+  Presentation,
+  Quote,
+  CTA,
+  PageNavigation,
+} from "../../types/index";
+import InnerHeroSection from "../PageSections/InnerHero.astro";
+import IntroGridSection from "../PageSections/IntroGrid.astro";
+import EmphasisSection from "../PageSections/Emphasis.astro";
+import PresentationSection from "../PageSections/Presentation.astro";
+import QuoteSection from "../PageSections/Quote.astro";
+import CallToActionSection from "../PageSections/CallToAction.astro";
+import buildPageNav from "../../utils/buildPageNav";
+import type { PortableTextBlock } from "sanity";
+
+type Props = {
+  page: PagePayload;
+};
+
+const { page } = Astro.props;
+
+const pageNavigation: PageNavigation = buildPageNav(page.content);
+---
+
+<Fragment>
+  {
+    page.content.map((section) => {
+      switch (section.type) {
+        case "hero":
+          return (
+            <InnerHeroSection
+              content={section as Hero}
+              navigation={pageNavigation}
+            />
+          );
+        case "grid":
+          return <IntroGridSection content={section as Grid} />;
+        case "presentation":
+          return <PresentationSection content={section as Presentation} />;
+        case "emphasis":
+          return <EmphasisSection content={section as Emphasis} />;
+        case "quote":
+          return <QuoteSection content={section as Quote} />;
+        case "cta":
+          return <CallToActionSection content={section as CTA} />;
+        default:
+          return null;
+      }
+    })
+  }
+</Fragment>
+<!-- <h1>{page.title}</h1>
+<p>{page.slug}</p>
+<article>
+  {
+    page.content.map((section) => (
+      <div>
+        <>
+          <h2>{section.title || "Section"}</h2>
+          <p>{section.type}</p>
+        </>
+      </div>
+    ))
+  }
+</article> -->

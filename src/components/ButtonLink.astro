@@ -1,0 +1,92 @@
+---
+import { I } from "../../studio/dist/static/sanity-71aad658";
+import type { Link } from "../types/index";
+import buildHref from "../utils/buildHref";
+
+type Props = {
+  linkObject: Link;
+  theme?: string;
+  withArrow?: boolean;
+};
+
+const themes = {
+  primary: "primary",
+  white: "white",
+  ghost: "ghost-white",
+};
+
+const {
+  linkObject,
+  theme = "primary",
+  withArrow = false,
+  ...props
+} = Astro.props;
+
+const classList = ["button-link", themes[theme as keyof typeof themes]];
+
+const link = buildHref(linkObject);
+---
+
+<a class:list={classList} href={link.href} target={link.target} {...props}
+  >{link.name}{withArrow && <i class="fa-regular fa-arrow-right" />}</a
+>
+
+<style>
+  .button-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    line-height: 1;
+    padding: 0.75rem 1rem;
+    font-family: var(--font-heading);
+    font-size: var(--step--1);
+    text-decoration: none;
+    color: var(--link-color);
+    background-color: var(--link-bg);
+    border: 1px solid var(--link-border);
+    border-radius: var(--rounded-corners-small);
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: var(--link-bg-hover);
+      border-color: var(--link-border-hover);
+      color: var(--link-color-hover);
+
+      & svg {
+        transform: translateX(2px);
+      }
+    }
+
+    & svg {
+      transition: all 0.2s ease-out;
+    }
+
+    &.primary {
+      --link-color: var(--color-white);
+      --link-color-hover: var(--color-primary-light);
+      --link-bg: var(--color-accent-base);
+      --link-bg-hover: color-mix(in srgb, var(--color-accent-base) 85%, black);
+      --link-border: transparent;
+      --link-border-hover: transparent;
+    }
+
+    &.white {
+      --link-color: var(--color-text-heading);
+      --link-color-hover: var(--color-text-heading);
+      --link-bg: var(--color-white);
+      --link-bg-hover: color-mix(in srgb, var(--color-white) 90%, black);
+      --link-border: transparent;
+      --link-border-hover: transparent;
+    }
+
+    &.ghost-white {
+      --link-color: inherit;
+      --link-color-hover: var(--color-text-heading);
+      --link-bg: transparent;
+      --link-bg-hover: var(--color-white);
+      --link-border: var(--color-white);
+      --link-border-hover: transparent;
+    }
+  }
+</style>

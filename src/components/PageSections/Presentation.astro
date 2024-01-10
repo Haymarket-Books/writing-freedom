@@ -1,0 +1,105 @@
+---
+import type { Presentation } from "../../types";
+import RichContent from "../RichContent.astro";
+import ButtonLink from "../ButtonLink.astro";
+import buildHref from "../../utils/buildHref";
+import urlFor from "../../lib/sanity.urlForImage";
+import { Image } from "astro:assets";
+import "../../styles/rich-content.css";
+
+type Props = {
+  content?: Presentation;
+};
+
+const { content } = Astro.props;
+---
+
+<article class="content-wrapper" id={content?.slug}>
+  <div
+    class:list={[content?.image ? "grid" : "center"]}
+    data-layout={content?.layout === true ? "flipped" : "default"}
+  >
+    {
+      content?.image && (
+        <Image
+          class="lqip-preview"
+          src={urlFor(content?.image!)
+            .width(600)
+            .height(900)
+            .auto("format")
+            .url()}
+          alt={content?.image?.alt || ""}
+          width={600}
+          height={900}
+          format="webp"
+          style={`background-image: url(${content?.image?.asset.metadata.lqip})`}
+        />
+      )
+    }
+    <div class="text | flow">
+      <h2 class="small-title">{content?.title}</h2>
+      <div class="rich-content">
+        <RichContent content={content?.blocks} />
+      </div>
+      {
+        content?.linkObject && (
+          <ButtonLink linkObject={content?.linkObject} withArrow />
+        )
+      }
+    </div>
+  </div>
+</article>
+
+<style>
+  article {
+    margin-block: calc(var(--section-spacer) * 0.75);
+  }
+
+  .small-title {
+    color: var(--color-primary-base);
+  }
+
+  .rich-content {
+    max-width: var(--paragraph-measure);
+  }
+
+  .center {
+    margin-inline: auto;
+    width: fit-content;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(auto, 24rem) auto;
+    gap: 3rem;
+    margin-inline: auto;
+    width: fit-content;
+
+    & img {
+      aspect-ratio: var(--presentation-image-ratio);
+      object-fit: cover;
+      height: 100%;
+      border-radius: var(--rounded-corners-small);
+      order: 1;
+    }
+
+    & .text {
+      align-self: center;
+      max-width: 40rem;
+      text-wrap: pretty;
+      order: 2;
+    }
+
+    &[data-layout="flipped"] {
+      grid-template-columns: auto minmax(auto, 24rem);
+
+      & img {
+        order: 2;
+      }
+
+      & .text {
+        order: 1;
+      }
+    }
+  }
+</style>

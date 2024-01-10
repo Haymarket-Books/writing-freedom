@@ -1,0 +1,95 @@
+---
+import type { Quote } from "../../types";
+import RichContent from "../RichContent.astro";
+import ButtonLink from "../ButtonLink.astro";
+import buildHref from "../../utils/buildHref";
+import urlFor from "../../lib/sanity.urlForImage";
+import { Image } from "astro:assets";
+import "../../styles/rich-content.css";
+
+type Props = {
+  content?: Quote;
+};
+
+const { content } = Astro.props;
+// console.log(content);
+---
+
+<article class="content-wrapper">
+  <div class="grid">
+    <div class="rich-content quote">
+      <RichContent content={content?.blocks} />
+      <div class="attribution">
+        <p class="small-title">{`—${content?.attribution?.name}`}</p>
+        <p>{content?.attribution?.title}</p>
+      </div>
+    </div>
+    {
+      content?.featuredLink && (
+        <div class="link | flow">
+          <ButtonLink
+            theme="ghost"
+            linkObject={content.featuredLink.linkObject!}
+            withArrow
+          />
+          <p>{content.featuredLink.description}</p>
+        </div>
+      )
+    }
+  </div>
+  {
+    content?.image && (
+      <Image
+        class="bg-image lqip-preview"
+        src={urlFor(content.image).width(1200).height(675).auto("format").url()}
+        alt=""
+        width={1200}
+        height={675}
+        format="webp"
+        style={`background-image: url(${content.image.asset.metadata.lqip})`}
+      />
+    )
+  }
+</article>
+
+<style>
+  article {
+    position: relative;
+    border-radius: var(--rounded-corners-small);
+    background: var(--color-background-gradient);
+    color: var(--color-primary-light);
+    margin-block: var(--section-spacer);
+  }
+
+  .grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 0.5fr;
+    gap: 2rem;
+    padding: 4rem;
+    margin-inline: calc(var(--gutter) * -1);
+
+    & .link {
+      place-self: center;
+      align-items: center;
+    }
+  }
+
+  .attribution {
+    margin-block-start: 3rem;
+
+    & p:last-of-type {
+      margin-top: 0.25rem;
+      font-style: italic;
+      font-size: var(--step--1);
+      opacity: 0.7;
+    }
+  }
+
+  .bg-image {
+    filter: saturate(0);
+    mix-blend-mode: multiply;
+    opacity: 0.6;
+  }
+</style>

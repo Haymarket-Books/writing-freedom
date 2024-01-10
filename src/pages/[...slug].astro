@@ -1,0 +1,51 @@
+---
+import Layout from "../layouts/Layout.astro";
+import InteriorBlueprint from "../components/PageBlueprints/InteriorBlueprint.astro";
+import IndexBlueprint from "../components/PageBlueprints/IndexBlueprint.astro";
+import ContactBlueprint from "../components/PageBlueprints/ContactBlueprint.astro";
+import { sanityClient } from "sanity:client";
+import { pageQuery } from "../lib/sanity.queries";
+import type { PagePayload } from "../types";
+
+export async function getStaticPaths() {
+  const pagesList = await sanityClient.fetch<PagePayload[]>(pageQuery, {
+    page: "page",
+  });
+
+  return pagesList.map((page) => {
+    return {
+      params: { slug: `${page.slug}` },
+      props: { page },
+    };
+  });
+}
+
+type Props = {
+  page: PagePayload;
+};
+
+const { page } = Astro.props;
+// console.log(page);
+---
+
+<Layout>
+  <main slot="content">
+    <>
+      {
+        () => {
+          switch (page.blueprint) {
+            case "interior":
+              return <InteriorBlueprint page={page} />;
+            case "index":
+              return <IndexBlueprint page={page} />;
+            case "contact":
+              return <ContactBlueprint page={page} />;
+          }
+        }
+      }
+    </>
+    <!-- {page.blueprint === "interior" && <InteriorBlueprint page={page} />}
+    {page.blueprint === "index" && <IndexBlueprint page={page} />}
+    {page.blueprint === "contact" && <ContactBlueprint page={page} />} -->
+  </main>
+</Layout>

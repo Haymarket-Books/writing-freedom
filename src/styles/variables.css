@@ -1,0 +1,96 @@
+:root {
+  /* Fonts */
+  --font-primary: "Quattrocento Sans", system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-heading: "termina", sans-serif;
+  --font-heading-weight: 800;
+  --leading-normal: 1.5;
+  --leading-tight: 1.2;
+
+  /* Colors */
+  --color-neutral-darker: #222222;
+  --color-neutral-base: #333333;
+  --color-primary-base: #750075;
+  --color-primary-dark: #460046;
+  --color-primary-bright: #a300a3;
+  --color-primary-light: #f7ebf4;
+  --color-white: #fff;
+  --color-accent-base: #d52d7e;
+  --color-accent-light: #fea4d0;
+  --color-secondary-base: #5108a1;
+  --color-tertiary-base: #d79263;
+  --color-quaternary-base: #086f82;
+
+  --color-text-body: var(--color-neutral-base);
+  --color-text-heading: var(--color-neutral-darker);
+  --color-text-heading-emphasis: var(--color-primary-base);
+  --color-text-body-light: var(--color-primary-light);
+  --color-text-heading-light: var(--color-white);
+  --color-background-gradient: linear-gradient(
+    105deg,
+    var(--color-primary-base),
+    var(--color-accent-base)
+  );
+  --color-background-gradient-dark: linear-gradient(
+    105deg,
+    var(--color-primary-base),
+    var(--color-primary-dark)
+  );
+  --color-button-background: var(--color-accent-base);
+  --color-button-text: var(--color-white);
+
+  /* Fluid type scale */
+  /* @link https://utopia.fyi/type/calculator?c=320,16,1.2,1240,18,1.25,6,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+
+  --step--2: clamp(0.69rem, 0.69rem + 0.04vw, 0.72rem);
+  --step--1: clamp(0.83rem, 0.81rem + 0.12vw, 0.9rem);
+  --step-0: clamp(1rem, 0.96rem + 0.22vw, 1.13rem);
+  --step-1: clamp(1.2rem, 1.13rem + 0.36vw, 1.41rem);
+  --step-2: clamp(1.44rem, 1.33rem + 0.55vw, 1.76rem);
+  --step-3: clamp(1.73rem, 1.56rem + 0.82vw, 2.2rem);
+  --step-4: clamp(2.07rem, 1.84rem + 1.17vw, 2.75rem);
+  --step-5: clamp(2.49rem, 2.16rem + 1.64vw, 3.43rem);
+  --step-6: clamp(2.99rem, 2.53rem + 2.27vw, 4.29rem);
+
+  /* Fluid spacing */
+  /* @link https://utopia.fyi/space/calculator?c=320,16,1.2,1240,18,1.25,6,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l|s-m&g=s,l,xl,12 */
+
+  --space-3xs: clamp(0.25rem, 0.23rem + 0.11vw, 0.31rem);
+  --space-2xs: clamp(0.5rem, 0.48rem + 0.11vw, 0.56rem);
+  --space-xs: clamp(0.75rem, 0.71rem + 0.22vw, 0.88rem);
+  --space-s: clamp(1rem, 0.96rem + 0.22vw, 1.13rem);
+  --space-m: clamp(1.5rem, 1.43rem + 0.33vw, 1.69rem);
+  --space-l: clamp(2rem, 1.91rem + 0.43vw, 2.25rem);
+  --space-xl: clamp(3rem, 2.87rem + 0.65vw, 3.38rem);
+  --space-2xl: clamp(4rem, 3.83rem + 0.87vw, 4.5rem);
+  --space-3xl: clamp(6rem, 5.74rem + 1.3vw, 6.75rem);
+
+  /* One-up pairs */
+  --space-3xs-2xs: clamp(0.25rem, 0.14rem + 0.54vw, 0.56rem);
+  --space-2xs-xs: clamp(0.5rem, 0.37rem + 0.65vw, 0.88rem);
+  --space-xs-s: clamp(0.75rem, 0.62rem + 0.65vw, 1.13rem);
+  --space-s-m: clamp(1rem, 0.76rem + 1.2vw, 1.69rem);
+  --space-m-l: clamp(1.5rem, 1.24rem + 1.3vw, 2.25rem);
+  --space-l-xl: clamp(2rem, 1.52rem + 2.39vw, 3.38rem);
+  --space-xl-2xl: clamp(3rem, 2.48rem + 2.61vw, 4.5rem);
+  --space-2xl-3xl: clamp(4rem, 3.04rem + 4.78vw, 6.75rem);
+
+  /* Custom pairs */
+  --space-s-l: clamp(1rem, 0.57rem + 2.17vw, 2.25rem);
+  --space-s-m: clamp(1rem, 0.76rem + 1.2vw, 1.69rem);
+
+  /* Layouts */
+  --gutter: var(--space-l, 1rem);
+  --wrapper-max-width: 1366px;
+
+  /* Other */
+  --rounded-corners: 0.5rem;
+  --rounded-corners-small: 0.25rem;
+  --paragraph-measure: 65ch;
+  --section-spacer: 6rem;
+  --main-top-spacer: 10rem;
+  --shadow-regular: 0 -3px 28px -3px rgb(43 0 43 / 18%);
+  --accent-line-width: 4px;
+  --text-opacity-shade: 0.75;
+  --presentation-image-ratio: 4/5;
+}

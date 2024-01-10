@@ -1,0 +1,33 @@
+.rich-content {
+  /*max-width: var(--paragraph-measure);*/
+
+  & h2 {
+    font-size: var(--step-3);
+  }
+
+  & h3 {
+    font-size: var(--step-2);
+  }
+
+  & img {
+    border-radius: var(--rounded-corners-small);
+    margin-block: 2rem;
+  }
+
+  & > * + * {
+    margin-block-start: 1.25rem;
+  }
+
+  & > :where(h2, h3):not(:first-of-type) {
+    margin-block-start: 2rem;
+  }
+
+  &.quote {
+    & > p {
+      font-family: var(--font-heading);
+      font-weight: var(--font-heading-weight);
+      font-size: var(--step-1);
+      text-wrap: balance;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+---
+import type { PageNavigation } from "../../types";
+
+type Props = {
+  navigation?: PageNavigation;
+};
+
+const { navigation } = Astro.props;
+// console.log("PageNav", navigation);
+---
+
+<section>
+  <div class="content-wrapper cluster">
+    <p class="small-title">Jump to:</p>
+    <nav>
+      <ul class="cluster" role="list">
+        {
+          navigation?.map((navItem) => {
+            return (
+              <li>
+                <a href={`#${navItem.slug}`}>{navItem.title}</a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+  </div>
+</section>
+
+<style>
+  section {
+    padding-block: 1rem;
+    background-color: color-mix(
+      in srgb,
+      var(--color-primary-light),
+      transparent 40%
+    );
+  }
+
+  .small-title {
+    color: var(--color-primary-base);
+  }
+
+  nav {
+    & .cluster {
+      --cluster-space: 1.5rem;
+    }
+  }
+</style>

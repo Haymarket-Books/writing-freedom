@@ -1,0 +1,60 @@
+---
+import type { Emphasis } from "../../types";
+import RichContent from "../RichContent.astro";
+import ButtonLink from "../ButtonLink.astro";
+import buildHref from "../../utils/buildHref";
+import urlFor from "../../lib/sanity.urlForImage";
+import { Image } from "astro:assets";
+import "../../styles/rich-content.css";
+
+type Props = {
+  content?: Emphasis;
+};
+
+const { content } = Astro.props;
+---
+
+<article class="content-wrapper">
+  <Image
+    class="lqip-preview"
+    src={urlFor(content?.image!).width(600).height(900).auto("format").url()}
+    alt={content?.image?.alt || ""}
+    width={600}
+    height={900}
+    format="webp"
+    style={`background-image: url(${content?.image?.asset.metadata.lqip})`}
+  />
+  <div class="emphasis">
+    <p set:html={content?.text} />
+  </div>
+</article>
+
+<style>
+  article {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+
+  img {
+    aspect-ratio: var(--presentation-image-ratio);
+    object-fit: cover;
+    border-radius: var(--rounded-corners-small);
+  }
+
+  .emphasis {
+    position: relative;
+    z-index: 2;
+    min-width: 30ch;
+    place-self: center;
+    left: calc((var(--section-spacer) / 1.25) * -1);
+    background: var(--color-white);
+    padding: 2rem;
+    border-radius: var(--rounded-corners-small);
+
+    & p {
+      font-family: var(--font-heading);
+      font-size: var(--step-3);
+      font-weight: var(--font-heading-weight);
+    }
+  }
+</style>

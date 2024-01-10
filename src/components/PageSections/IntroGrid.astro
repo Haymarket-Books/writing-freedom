@@ -1,0 +1,118 @@
+---
+import { Image } from "astro:assets";
+import type { Grid } from "../../types";
+import buildHref from "../../utils/buildHref";
+import urlFor from "../../lib/sanity.urlForImage";
+
+type Props = {
+  content?: Grid;
+};
+
+const { content } = Astro.props;
+---
+
+<section class="content-wrapper" id={content?.slug}>
+  <div class="grid">
+    {
+      content?.items?.map((item) => {
+        const link = buildHref(item.linkObject);
+
+        return (
+          <article>
+            <a href={link.href} target={link.target}>
+              <div class="text | flow">
+                <h2 class="with-mark">{item.heading}</h2>
+                <p>{item.text}</p>
+              </div>
+              {item.image && (
+                <div class="overlay"></div>
+                <Image
+                  class="bg-image lqip-preview"
+                  src={urlFor(item?.image).width(600).height(600).auto('format').url()}
+                  alt=""
+                  width={600}
+                  height={600}
+                  format="webp"
+                  loading="eager"
+                />
+              )}
+            </a>
+          </article>
+        );
+      })
+    }
+  </div>
+</section>
+
+<style>
+  section {
+    position: relative;
+    z-index: 3;
+    background: var(--color-white);
+    margin-block-start: -4rem;
+    margin-block-end: var(--section-spacer);
+    border-radius: var(--rounded-corners-small);
+    box-shadow: var(--shadow-regular);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-inline: calc(var(--gutter) * -1);
+  }
+
+  article {
+    position: relative;
+    padding: 8rem 3rem 3rem;
+    overflow: hidden;
+
+    &:first-child {
+      border-top-left-radius: var(--rounded-corners-small);
+      border-bottom-left-radius: var(--rounded-corners-small);
+    }
+
+    &:last-child {
+      border-top-right-radius: var(--rounded-corners-small);
+      border-bottom-right-radius: var(--rounded-corners-small);
+    }
+  }
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      & .bg-image {
+        transform: scale(1.2);
+      }
+
+      & h2 {
+        text-decoration: underline;
+        text-decoration-color: currentColor;
+      }
+    }
+  }
+
+  h2 {
+    font-size: var(--step-2);
+  }
+
+  .text {
+    position: relative;
+    z-index: 2;
+  }
+
+  .overlay {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to bottom, transparent 40%, var(--color-white));
+  }
+
+  .bg-image {
+    opacity: 0.3;
+    filter: saturate(0) brightness(1.2);
+    transition: all 0.4s ease-out;
+  }
+</style>

@@ -1,0 +1,48 @@
+---
+type Props = {
+  size?: string;
+  color?: string;
+  href?: string;
+  title?: string;
+};
+
+const { size = 24, color = "currentColor", href = "/", title } = Astro.props;
+
+// const fill =
+//   color === "normal"
+//     ? "var(--color-primary-base);"
+//     : color === "white"
+//     ? "var(--color-white);"
+//     : color;
+---
+
+<a href={href} class="logo">
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 43 43"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M22.3196 42.5752L24.87 29.5039H16.4316L14.1646 41.2838C14.6264 41.4518 15.2561 41.6513 16.0537 41.8823C18.1319 42.4492 20.2205 42.6802 22.3196 42.5752Z"
+      fill={color}></path>
+    <path
+      d="M26.5401 20.8843L29.122 7.71855H37.403C34.6111 4.46385 31.1266 2.29055 26.9494 1.19865C21.3238 -0.313213 16.0026 0.390223 10.9857 3.30895C5.94784 6.20669 2.67324 10.4693 1.16188 16.0968C0.301249 19.2675 0.196293 22.4592 0.847016 25.6719C1.47675 28.7586 2.73621 31.5723 4.62541 34.1131L9.75772 7.71855H20.6836L18.1332 20.8843H26.5401Z"
+      fill={color}></path>
+    <path
+      d="M41.8416 26.9835C42.6183 24.1487 42.7862 21.2825 42.3454 18.3848C41.9256 15.592 40.9705 12.9778 39.4802 10.542L34.0645 38.4484C38.0108 35.5087 40.6032 31.687 41.8416 26.9835Z"
+      fill={color}></path>
+  </svg>
+  <span class="sr-only">{title}</span>
+</a>
+
+<style>
+  .logo {
+    display: inline-flex;
+
+    &:hover {
+      opacity: var(--text-opacity-shade);
+    }
+  }
+</style>

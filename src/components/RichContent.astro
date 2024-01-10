@@ -1,0 +1,19 @@
+---
+import { PortableText } from "astro-portabletext";
+// import PortableTextImage from "./PortableTextImage.astro";
+import type { PortableTextBlock } from "sanity";
+
+type Props = {
+  content?: Array<PortableTextBlock>;
+};
+
+const { content } = Astro.props;
+
+// const components = {
+//     type: {
+//         image: PortableTextImage,
+//     }
+// }
+---
+
+{content ? <PortableText value={content} /> : ""}

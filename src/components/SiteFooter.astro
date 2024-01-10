@@ -1,0 +1,156 @@
+---
+import type { Navigation, SiteSettings } from "../types";
+import Logo from "./Logo.astro";
+import capitalizeFirst from "../utils/capitalizeFirst";
+
+type Props = {
+  navigation: Navigation;
+  content: SiteSettings;
+};
+
+const { navigation, content } = Astro.props;
+
+const date = new Date();
+---
+
+<footer>
+  <div class="content-wrapper">
+    <div class="grid">
+      <div>
+        <div class="logo-wrapper | cluster">
+          <Logo size="3rem" color="white" />
+          <div>
+            <p class="small-title">Haymarket Books</p>
+            <p class="site-title">{content.title}</p>
+          </div>
+        </div>
+        <p class="haymarket | cluster">
+          <span
+            >Visit <a href="https://www.haymarketbooks.org/" target="_blank"
+              >Haymarket Books</a
+            ></span
+          ><i class="fa-regular fa-arrow-up-right-from-square"></i>
+        </p>
+      </div>
+      <nav>
+        <ul class="flow" role="list">
+          {
+            navigation.entries?.map((navItem) => (
+              <li>
+                <a href={`/${navItem.slug}`}>{navItem.title}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <ul class="social | cluster" role="list">
+        {
+          content?.socialLinks?.map((link) => (
+            <li>
+              <a
+                href={link.url}
+                target="_blank"
+                title={capitalizeFirst(link.icon!)}
+              >
+                <i class={`fa-brands fa-${link.icon}`} />
+                <span class="sr-only">{capitalizeFirst(link.icon!)}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div class="subfooter">{`© ${date.getFullYear()} ${content.title}`}</div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    --logo-size: 3rem;
+    color: var(--color-primary-light);
+    background: var(--color-background-gradient-dark);
+    padding-block-end: 1rem;
+  }
+
+  .grid {
+    --grid-gap: 2rem;
+    padding-block: 6rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--grid-gap);
+    place-items: start;
+  }
+
+  .logo-wrapper {
+    &.cluster {
+      --cluster-space: 2rem;
+    }
+
+    & .small-title {
+      opacity: var(--text-opacity-shade);
+    }
+
+    & .site-title {
+      color: var(--color-white);
+      margin-block-start: 0.25rem;
+      font-family: var(--font-heading);
+      font-size: var(--step-1);
+      font-weight: var(--font-heading-weight);
+    }
+  }
+
+  nav {
+    & .flow {
+      --flow-space: 0.75rem;
+    }
+
+    & a {
+      position: relative;
+      color: var(--color-primary-light);
+      font-family: var(--font-heading);
+      font-size: var(--step-0);
+      text-decoration: none;
+      opacity: var(--text-opacity-shade);
+      transition: all 0.2s ease;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .social {
+    color: var(--color-primary-light);
+    font-size: 1.5rem;
+
+    &.cluster {
+      --cluster-space: 1.5rem;
+    }
+
+    & a {
+      transition: all 0.2s ease;
+
+      &:hover {
+        opacity: var(--text-opacity-shade);
+      }
+    }
+  }
+
+  .haymarket {
+    margin-block-start: 1rem;
+    margin-inline-start: calc(var(--logo-size) + var(--grid-gap));
+
+    &.cluster {
+      --cluster-space: 0.5rem;
+    }
+
+    & svg {
+      font-size: 0.75em;
+    }
+  }
+
+  .subfooter {
+    font-size: var(--step--1);
+    opacity: var(--text-opacity-shade);
+  }
+</style>

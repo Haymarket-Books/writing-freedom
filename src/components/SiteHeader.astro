@@ -1,0 +1,179 @@
+---
+import ButtonLink from "./ButtonLink.astro";
+import type { Navigation, SiteSettings } from "../types";
+import Logo from "./Logo.astro";
+import buildHref from "../utils/buildHref";
+import capitalizeFirst from "../utils/capitalizeFirst";
+
+type Props = {
+  theme?: string;
+  position?: string;
+  currentPath: string;
+  navigation: Navigation;
+  content: SiteSettings;
+};
+
+const {
+  theme = "normal",
+  position = "relative",
+  currentPath,
+  navigation,
+  content,
+} = Astro.props;
+---
+
+<header
+  data-header-color={theme}
+  data-header-position={position}
+  class="cluster"
+>
+  <div class="cluster">
+    <Logo
+      title={content.title}
+      size="36"
+      color={theme === "normal"
+        ? "var(--color-primary-base)"
+        : "var(--color-white)"}
+    />
+    <nav>
+      <ul class="cluster" role="list">
+        {
+          navigation.entries?.map((navItem) => (
+            <li>
+              <a
+                aria-current={
+                  `/${navItem.slug}` === currentPath ? "page" : "false"
+                }
+                href={`/${navItem.slug}`}
+              >
+                {navItem.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+  <ul class="social | cluster" role="list">
+    {
+      content?.socialLinks?.map((link) => (
+        <li>
+          <a
+            href={link.url}
+            target="_blank"
+            title={capitalizeFirst(link.icon!)}
+          >
+            <i class={`fa-brands fa-${link.icon}`} />
+            <span class="sr-only">{capitalizeFirst(link.icon!)}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</header>
+
+<style>
+  header {
+    z-index: 10;
+    padding-block: 2.5rem;
+    padding-inline: var(--gutter, 1rem);
+    background-color: var(--theme-color-background);
+
+    &.cluster {
+      --cluster-justify: space-between;
+    }
+
+    & > :first-child {
+      --cluster-space: 2rem;
+    }
+
+    & a {
+      text-decoration: none;
+
+      &[aria-current="page"] {
+        color: var(--color-accent-base);
+      }
+    }
+
+    &[data-header-position="relative"] {
+      position: relative;
+      color: var(--color-text-heading);
+      box-shadow: var(--shadow-regular);
+    }
+
+    &[data-header-position="absolute"] {
+      position: absolute;
+      top: 0;
+      inset-inline: 0;
+    }
+  }
+
+  nav {
+    & ul {
+      &.cluster {
+        --cluster-space: 2rem;
+      }
+    }
+
+    & a {
+      position: relative;
+      color: var(--theme-color-text);
+      font-family: var(--font-heading);
+      font-size: var(--step--1);
+      transition: all 0.2s ease;
+
+      &:hover::after {
+        width: 33%;
+      }
+
+      &:hover {
+        opacity: var(--text-opacity-shade);
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 0%;
+        height: var(--accent-line-width);
+        bottom: -0.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: var(--theme-color-accent);
+        transition: all 0.2s ease-in-out;
+      }
+    }
+  }
+
+  .social {
+    color: var(--theme-color-social);
+    font-size: 1.5rem;
+
+    &.cluster {
+      --cluster-space: 1.5rem;
+    }
+
+    & a {
+      transition: all 0.2s ease;
+
+      &:hover {
+        opacity: var(--text-opacity-shade);
+      }
+    }
+  }
+
+  header[data-header-color="normal"] {
+    --theme-color-text: var(--color-text-heading);
+    --theme-color-accent: var(--color-accent-light);
+    --theme-color-logo: var(--color-primary-base);
+    --theme-color-social: var(--color-primary-base);
+    --theme-color-background: var(--color-white);
+  }
+
+  header[data-header-color="white"] {
+    --theme-color-text: var(--color-primary-light);
+    --theme-color-accent: var(--color-accent-light);
+    --theme-color-logo: var(--color-white);
+    --theme-color-social: var(--color-white);
+    --theme-color-background: transparent;
+  }
+</style>

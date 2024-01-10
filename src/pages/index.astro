@@ -1,0 +1,19 @@
+---
+import Layout from "../layouts/Layout.astro";
+import HomeBlueprint from "../components/PageBlueprints/HomeBlueprint.astro";
+import { sanityClient } from "sanity:client";
+import { pageQuery } from "../lib/sanity.queries";
+import type { PagePayload } from "../types";
+
+const query = await sanityClient.fetch<PagePayload[]>(pageQuery, {
+  page: "homepage",
+});
+const home = query[0];
+// console.log(home);
+---
+
+<Layout>
+  <main slot="content">
+    <HomeBlueprint page={home} />
+  </main>
+</Layout>

@@ -1,0 +1,50 @@
+---
+import type { CTA } from "../../types";
+import RichContent from "../RichContent.astro";
+import ButtonLink from "../ButtonLink.astro";
+import buildHref from "../../utils/buildHref";
+import urlFor from "../../lib/sanity.urlForImage";
+import { Image } from "astro:assets";
+
+type Props = {
+  content?: CTA;
+};
+
+const { content } = Astro.props;
+---
+
+<article id={content?.slug}>
+  <div class="text | flow">
+    <h2 class="balanced with-mark">{content?.heading}</h2>
+    <p>{content?.text}</p>
+    <ButtonLink linkObject={content?.linkObject!} withArrow />
+  </div>
+  <Image
+    class="bg-image lqip-preview"
+    src={urlFor(content?.image!).width(1920).height(1080).auto("format").url()}
+    width={1920}
+    height={1080}
+    alt={content?.image?.asset || ""}
+    format="webp"
+    style={`background-image: url(${content?.image?.asset.metadata.lqip})`}
+  />
+</article>
+
+<style>
+  article {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .text {
+    position: relative;
+    z-index: 2;
+    margin-inline: auto;
+    max-width: 55rem;
+    margin-block: var(--section-spacer);
+    background: var(--color-white);
+    border-radius: var(--rounded-corners-small);
+    padding: 6rem 4rem 4rem;
+    box-shadow: var(--shadow-regular);
+  }
+</style>

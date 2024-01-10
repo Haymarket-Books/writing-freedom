@@ -1,0 +1,90 @@
+---
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { sanityClient } from "sanity:client";
+import { mainNavQuery, settingsQuery } from "../lib/sanity.queries";
+import type { Navigation, SiteSettings } from "../types";
+
+import "../styles/variables.css";
+import "../styles/reset.css";
+import "../styles/typography.css";
+import "../styles/layout.css";
+import "../styles/utilities.css";
+
+const navigation = await sanityClient.fetch<Navigation>(mainNavQuery);
+const siteSettings = await sanityClient.fetch<SiteSettings>(settingsQuery);
+
+const path = Astro.url.pathname;
+// const canonicalURL = new URL(path, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Document</title>
+    <link
+      rel="preload"
+      href="/fonts/QuattrocentoSans-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/QuattrocentoSans-Italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/QuattrocentoSans-Bold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <style is:inline>
+      @font-face {
+        font-family: "Quattrocento Sans";
+        src: url("/fonts/QuattrocentoSans-Regular.woff2") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Quattrocento Sans";
+        src: url("/fonts/QuattrocentoSans-Italic.woff2") format("woff2");
+        font-weight: 400;
+        font-style: italic;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Quattrocento Sans";
+        src: url("/fonts/QuattrocentoSans-Bold.woff2") format("woff2");
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+      }
+    </style>
+    <link rel="stylesheet" href="https://use.typekit.net/eiq0vog.css" />
+    <script defer src="/fontawesome/brands.min.js"></script>
+    <script defer src="/fontawesome/regular.min.js"></script>
+    <script defer src="/fontawesome/fontawesome.min.js"></script>
+  </head>
+  <body>
+    <SiteHeader
+      content={siteSettings}
+      navigation={navigation}
+      currentPath={path}
+      theme={path === "/" ? "white" : "normal"}
+      position={path === "/" ? "absolute" : "relative"}
+    />
+    <slot name="content" />
+    <SiteFooter content={siteSettings} navigation={navigation} />
+  </body>
+</html>
