@@ -38,11 +38,16 @@ export default defineType({
     defineField({
       name: 'defaultFellowshipYear',
       title: 'Default Fellowship Year',
-      type: 'number',
       description: 'Set a default year for index grids, which show fellows of that year.',
+      type: 'reference',
+      to: [{type: 'fellowshipYear'}],
       options: {
-        list: [2024, 2025],
+        disableNew: true,
       },
+      validation: (Rule) => Rule.required(),
+      // options: {
+      //   list: [2024, 2025],
+      // },
     }),
     defineField({
       name: 'socialLinks',

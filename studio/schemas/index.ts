@@ -1,6 +1,7 @@
 import siteSettings from './siteSettings'
 import fellow from './fellow'
 import fellowCategory from './fellowCategory'
+import fellowshipYear from './fellowshipYear'
 import teamMember from './teamMember'
 import teamMemberCategory from './teamMemberCategory'
 import navigation from './navigation'
@@ -29,6 +30,7 @@ export const schemaTypes = [
   siteSettings,
   fellow,
   fellowCategory,
+  fellowshipYear,
   teamMember,
   teamMemberCategory,
   navigation,

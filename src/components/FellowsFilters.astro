@@ -1,0 +1,44 @@
+---
+import ButtonLink from "./ButtonLink.astro";
+import type { FellowshipYear } from "../types";
+
+type Props = {
+  years?: FellowshipYear[];
+};
+
+const { years } = Astro.props;
+
+const path = Astro.url.pathname;
+---
+
+<section class="cluster">
+  <div class="cluster">
+    <p class="small-title">Filter Year</p>
+    <div class="cluster">
+      <ButtonLink
+        linkObject={{
+          type: "slugString",
+          name: "All",
+          href: { slug: "fellows" },
+        }}
+        theme={path === "/fellows" ? "primary" : "ghostPrimary"}
+      />
+      {
+        years?.map((entry) => {
+          return (
+            <ButtonLink
+              linkObject={{
+                type: "slugString",
+                name: `${entry.year}`,
+                href: { slug: `fellows/${entry.slug}` },
+              }}
+              theme={
+                path === `/fellows/${entry.slug}` ? "primary" : "ghostPrimary"
+              }
+            />
+          );
+        })
+      }
+    </div>
+  </div>
+</section>

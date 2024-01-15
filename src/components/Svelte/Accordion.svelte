@@ -9,9 +9,13 @@
 
 <Disclosure class="disclosure" let:open>
   <DisclosureButton class="disclosure-button">
-    <div class="question-wrapper">
+    <div class:open class="question-wrapper" style="--bottom-radius:{open ? "0" : "var(--rounded-corners)"}">
         <slot name="question">Question?</slot>
+        <span class:open class="icon" style="--disclosure-toggle:{open && "rotate(90deg)"}">
+            <i class="fa-regular fa-chevron-right"></i>
+        </span>
     </div>
+    </DisclosureButton>
     
     {#if open}
     <div transition:slide>
@@ -24,7 +28,6 @@
         </DisclosurePanel>
     </div>
   {/if}
-</DisclosureButton>
 </Disclosure>
 
 <style>
@@ -32,31 +35,34 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-family: var(--font-secondary);
-        font-weight: var(--font-weight-semi);
-        background-color: var(--color-primary-100);
-        color: var(--color-primary-800);
-        line-height: 1.3;
+        font-family: var(--font-heading);
+        font-weight: var(--font-heading-weight);
+        background-color: var(--color-white);
         padding: 1.25rem 1.75rem;
-        border-radius: var(--rounded-corners);
-        font-size: var(--step-1);
-        width: 100%;
+        border-top-left-radius: var(--rounded-corners);
+        border-top-right-radius: var(--rounded-corners);
+        border-bottom-left-radius: var(--bottom-radius);
+        border-bottom-right-radius: var(--bottom-radius);
+        font-size: var(--step-0);
         transition: background-color 0.2s ease;
     }
 
     .question-wrapper:hover {
-        background-color: var(--color-primary-200);
+        background-color: color-mix(in srgb, var(--color-white), transparent 30%);
     }
 
     .answer-wrapper {
-        padding: 2rem;
+        padding: 0.5rem 2rem 2rem;
+        background-color: var(--color-white);
+        border-bottom-left-radius: var(--rounded-corners);
+        border-bottom-right-radius: var(--rounded-corners);
     }
-/* 
-    .chevron {
-        --svg-fill: var(--color-primary-400);
+
+    .icon {
+        color: var(--color-accent-base);
         transform: var(--disclosure-toggle);
-        transition: transform 0.2s ease;
-    } */
+        transition: transform 0.2s ease-out;
+    }
 
     @media (max-width: 640px) {
         .answer-wrapper {

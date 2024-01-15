@@ -48,13 +48,23 @@ export default defineType({
     defineField({
       name: 'fellowshipYear',
       title: 'Fellowship Year',
-      type: 'number',
-      initialValue: 2024,
+      type: 'reference',
+      to: [{type: 'fellowshipYear'}],
       options: {
-        list: [2024, 2025],
+        disableNew: true,
       },
       validation: (Rule) => Rule.required(),
     }),
+    // defineField({
+    //   name: 'fellowshipYear',
+    //   title: 'Fellowship Year',
+    //   type: 'number',
+    //   initialValue: 2024,
+    //   options: {
+    //     list: [2024, 2025],
+    //   },
+    //   validation: (Rule) => Rule.required(),
+    // }),
     defineField({
       name: 'image',
       title: 'Headshot',
@@ -122,7 +132,7 @@ export default defineType({
     select: {
       firstName: 'name.firstName',
       lastName: 'name.lastName',
-      year: 'fellowshipYear',
+      year: 'fellowshipYear.year',
       fellowType: 'category.name',
     },
     prepare({firstName, lastName, year, fellowType}) {

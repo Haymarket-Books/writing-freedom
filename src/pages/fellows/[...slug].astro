@@ -1,0 +1,201 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import RichContent from "../../components/RichContent.astro";
+import IndexBlueprint from "../../components/PageBlueprints/IndexBlueprint.astro";
+import ButtonLink from "../../components/ButtonLink.astro";
+import { sanityClient } from "sanity:client";
+import { fellowsDetailQuery } from "../../lib/sanity.queries";
+import type { Fellow } from "../../types";
+import urlFor from "../../lib/sanity.urlForImage";
+import joinNames from "../../utils/joinNames";
+import buildFellowHref from "../../utils/buildFellowHref";
+import "../../styles/rich-content.css";
+
+export async function getStaticPaths() {
+  const fellows = await sanityClient.fetch<Fellow[]>(fellowsDetailQuery);
+
+  return fellows.map((fellow) => {
+    return {
+      params: { slug: `${fellow.fellowshipYear?.slug}/${fellow?.slug}` },
+      props: { fellow },
+    };
+  });
+}
+
+type Props = {
+  fellow?: Fellow;
+};
+
+const { fellow } = Astro.props;
+
+// const url = Astro.url;
+// const urlParts = url.pathname.split('/');
+---
+
+<Layout>
+  <main slot="content">
+    <div class="breadcrumb | cluster">
+      <a href="/fellows">Fellows</a>
+      <span>/</span>
+      <a href={`/fellows/${fellow?.fellowshipYear?.slug}`}
+        >{fellow?.fellowshipYear?.year}</a
+      >
+      <!-- <a href={`/fellows?year=${fellow?.fellowshipYear}`}
+        >{fellow?.fellowshipYear}</a
+      > -->
+      <span>/</span>
+      <p>{joinNames(fellow?.name)}</p>
+    </div>
+    <article>
+      <section class="content-wrapper">
+        <div class="intro-grid">
+          <Image
+            class="headshot lqip-preview"
+            src={urlFor(fellow?.image!)
+              .width(400)
+              .height(500)
+              .auto("format")
+              .url()}
+            width={400}
+            height={500}
+            alt={fellow?.image?.alt ||
+              `Headshot for ${joinNames(fellow?.name)}`}
+            format="webp"
+          />
+          <div class="intro | flow">
+            <h1 class="with-mark">{joinNames(fellow?.name)}</h1>
+            <p class="small-title">{fellow?.category?.name}</p>
+            <p>
+              <a href={`/fellows/${fellow?.fellowshipYear?.slug}`}
+                >{`${fellow?.fellowshipYear?.year} Fellow`}</a
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="bio">
+        <div class="content-wrapper grid">
+          <div class="background | flow">
+            <h2 class="small-title">Background</h2>
+            <div class="rich-content">
+              <RichContent content={fellow?.content} />
+            </div>
+          </div>
+          <div class="selected-work | flow">
+            <h2 class="small-title">Selected Work</h2>
+            <div class="rich-content">
+              <ul role="list">
+                {
+                  fellow?.selectedWorks?.map((work) => (
+                    <li>{`${work.title}, ${work.year}`}</li>
+                  ))
+                }
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </article>
+    <div class="center-all content-wrapper">
+      <ButtonLink
+        linkObject={{ name: "Back to All Fellows", href: { slug: "fellows" } }}
+      />
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin-block-start: calc(var(--section-spacer) * 0.25);
+    margin-block-end: var(--section-spacer);
+  }
+
+  .breadcrumb {
+    font-size: var(--step--1);
+    padding-inline: var(--gutter, 1rem);
+
+    &.cluster {
+      --cluster-space: 0.5rem;
+    }
+
+    & span {
+      color: var(--color-accent-base);
+    }
+
+    & p {
+      opacity: var(--text-opacity-shade);
+    }
+  }
+
+  article {
+    margin-block-start: calc(var(--section-spacer) * 0.5);
+  }
+
+  h1 {
+    font-size: var(--step-3);
+    color: var(--color-text-heading);
+  }
+
+  .intro-grid {
+    grid-template-columns: minmax(auto, 20rem) auto;
+    gap: 3rem;
+    width: fit-content;
+    margin-inline: auto;
+    display: grid;
+    align-items: center;
+  }
+
+  .headshot {
+    aspect-ratio: var(--presentation-image-ratio);
+    object-fit: cover;
+    height: 100%;
+    border-radius: var(--rounded-corners-small);
+    justify-self: end;
+  }
+
+  .intro {
+    width: min(100vw, 28rem);
+
+    & .small-title {
+      opacity: var(--text-opacity-shade);
+    }
+
+    /* & .cluster {
+      --cluster-space: 0.5rem;
+
+      & span:not(.spacer) {
+        opacity: var(--text-opacity-shade);
+      }
+
+      & .spacer {
+        color: var(--color-primary-base);
+      }
+    } */
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(auto, 35rem) minmax(auto, 20rem);
+    gap: 4rem;
+    width: fit-content;
+    margin-inline: auto;
+  }
+
+  .bio {
+    margin-block-start: calc((var(--section-spacer) * 0.5) * -1);
+    margin-block-end: var(--section-spacer);
+    padding-block: var(--section-spacer);
+    background-color: var(--color-primary-light-background);
+
+    & .small-title {
+      color: var(--color-primary-base);
+    }
+
+    & .background {
+    }
+
+    & .selected-work {
+    }
+  }
+</style>

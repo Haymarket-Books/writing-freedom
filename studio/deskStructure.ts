@@ -7,6 +7,7 @@ import {
   HiUser,
   HiUserCircle,
   HiMiniBars3,
+  HiCalendar,
 } from 'react-icons/hi2'
 import type {StructureBuilder} from 'sanity/desk'
 import teamMember from './schemas/teamMember'
@@ -76,12 +77,30 @@ export const deskStructure = (S: StructureBuilder) =>
                                 .params({categoryId}),
                             ),
                         ),
+                      S.listItem()
+                        .title('Fellows by Year')
+                        .icon(HiFolder)
+                        .child(
+                          S.documentTypeList('fellowshipYear')
+                            .title('Fellows by Year')
+                            .child((yearId) =>
+                              S.documentList()
+                                .schemaType('fellow')
+                                .title('Fellows')
+                                .filter('_type == "fellow" && fellowshipYear._ref == $yearId')
+                                .params({yearId}),
+                            ),
+                        ),
                     ]),
                 ),
               S.listItem()
                 .title('Fellow Categories')
                 .icon(HiTag)
                 .child(S.documentTypeList('category')),
+              S.listItem()
+                .title('Fellowship Years')
+                .icon(HiCalendar)
+                .child(S.documentTypeList('fellowshipYear')),
               S.divider(),
               S.listItem()
                 .title('Team Members')

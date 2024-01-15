@@ -22,6 +22,15 @@
     margin-block-start: 2rem;
   }
 
+  & > :where(ul, ol) {
+    list-style-type: disc;
+    padding-inline-start: 1rem;
+
+    & > * + * {
+      margin-block-start: 0.5rem;
+    }
+  }
+
   &.quote {
     & > p {
       font-family: var(--font-heading);

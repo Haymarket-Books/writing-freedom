@@ -14,6 +14,11 @@
   --color-primary-dark: #460046;
   --color-primary-bright: #a300a3;
   --color-primary-light: #f7ebf4;
+  --color-primary-light-background: color-mix(
+    in srgb,
+    var(--color-primary-light),
+    transparent 50%
+  );
   --color-white: #fff;
   --color-accent-base: #d52d7e;
   --color-accent-light: #fea4d0;

@@ -17,16 +17,18 @@ const { content } = Astro.props;
 <section id={content?.slug}>
   <div class="content-wrapper flow">
     <h2 class="with-mark">{content?.title}</h2>
-    {
-      content?.list?.map((faq) => (
-        <Accordion client:load>
-          <Fragment slot="question">{faq.question}</Fragment>
-          <div class="text | flow" slot="answer">
-            <RichContent content={faq.answer} />
-          </div>
-        </Accordion>
-      ))
-    }
+    <div class="faqs | flow">
+      {
+        content?.list?.map((faq) => (
+          <Accordion client:load>
+            <Fragment slot="question">{faq.question}</Fragment>
+            <div class="text | flow" slot="answer">
+              <RichContent content={faq.answer} />
+            </div>
+          </Accordion>
+        ))
+      }
+    </div>
   </div>
 </section>
 
@@ -34,11 +36,7 @@ const { content } = Astro.props;
   section {
     margin-block: var(--section-spacer);
     padding-block: var(--section-spacer);
-    background-color: color-mix(
-      in srgb,
-      var(--color-primary-light),
-      transparent 40%
-    );
+    background-color: var(--color-primary-light-background);
   }
 
   h2 {
@@ -48,6 +46,14 @@ const { content } = Astro.props;
   .content-wrapper {
     &.flow {
       --flow-space: 3rem;
+    }
+  }
+
+  .faqs {
+    max-width: max(45rem, 50%);
+
+    &.flow {
+      --flow-space: 1.5rem;
     }
   }
 </style>

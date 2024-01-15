@@ -1,0 +1,70 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import InteriorBlueprint from "../../components/PageBlueprints/InteriorBlueprint.astro";
+import IndexBlueprint from "../../components/PageBlueprints/IndexBlueprint.astro";
+import ContactBlueprint from "../../components/PageBlueprints/ContactBlueprint.astro";
+import PersonCard from "../../components/PersonCard.astro";
+import { sanityClient } from "sanity:client";
+import { pageQuery, fellowshipYearsIndexQuery } from "../../lib/sanity.queries";
+import type { PagePayload, Fellow, FellowshipYear } from "../../types";
+import FellowsFilters from "../../components/FellowsFilters.astro";
+
+export async function getStaticPaths() {
+  const years = await sanityClient.fetch<FellowshipYear[]>(
+    fellowshipYearsIndexQuery,
+  );
+  // const pages = await sanityClient.fetch<PagePayload[]>(pageQuery, {
+  //   page: "page"
+  // });
+
+  return years.map((entry) => {
+    return {
+      params: { year: entry.year },
+      props: { page: entry, fellowshipYears: years },
+    };
+  });
+}
+
+// const fellows = await sanityClient.fetch<Fellow[]>(fellowsAllQuery);
+
+type Props = {
+  page?: FellowshipYear;
+  fellowshipYears?: FellowshipYear[];
+};
+
+const { page, fellowshipYears } = Astro.props;
+
+// const page = pages.filter((page) => page.blueprint === "index");
+---
+
+<Layout>
+  <main slot="content">
+    <div class="content-wrapper flow">
+      <h1 class="with-mark">{page?.year} Fellows</h1>
+      <FellowsFilters years={fellowshipYears} />
+      <div class="responsive-grid">
+        {
+          page?.fellows?.map((fellow) => {
+            return <PersonCard person={fellow} />;
+          })
+        }
+      </div>
+    </div>
+
+    <style>
+      .content-wrapper {
+        margin-block: var(--section-spacer);
+
+        &.flow {
+          --flow-space: 3rem;
+        }
+      }
+
+      .responsive-grid {
+        --grid-gap: 2rem;
+        --item-min-width: 12rem;
+        --item-max-width: 14rem;
+      }
+    </style>
+  </main>
+</Layout>

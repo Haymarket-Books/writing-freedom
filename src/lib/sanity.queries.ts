@@ -33,7 +33,10 @@ export const settingsQuery = groq`*[_type == "siteSettings"][0]{
     logo{
         asset->
     },
-    defaultFellowshipYear,
+    defaultFellowshipYear->{
+        year,
+        "slug": slug.current,
+    },
     defaultOgImage{
         asset->
     },
@@ -48,36 +51,79 @@ export const teamMembersQuery = groq`*[_type == "teamMember"] | order(name.lastN
     "type": _type,
     name,
     title,
-    category->,
+    category->{
+        name,
+        "slug": slug.current,
+    },
     "image": ${groqImage}
 }`;
 
-export const fellowsIndexQuery = groq`*[_type == "fellow" && fellowshipYear == $fellowshipYear] | order(name.lastName asc) {
+// remove $fellowshipYear param
+export const fellowsIndexQuery = groq`*[_type == "fellow"] | order(name.lastName asc) {
     "type": _type,
     name,
     "slug": slug.current,
-    fellowshipYear,
-    category->,
+    fellowshipYear->{
+        year,
+        "slug": slug.current
+    },
+    category->{
+        name,
+        "slug": slug.current,
+    },
     "image": ${groqImage}
 }`;
 
-export const fellowsAllQuery = groq`*[_type == "fellow"] | order(name.lastName asc) {
-    name,
-    "slug": slug.current,
-    fellowshipYear,
-    category->,
-    "image": ${groqImage}
-}`;
+// export const fellowsAllQuery = groq`*[_type == "fellow"] | order(name.lastName asc) {
+//     name,
+//     "slug": slug.current,
+//     fellowshipYear->{
+//         year,
+//         "slug": slug.current
+//     },
+//     category->{
+//         name,
+//         "slug": slug.current
+//     },
+//     "image": ${groqImage}
+// }`;
 
 export const fellowsDetailQuery = groq`*[_type == "fellow"] {
+    "type": _type,
     name,
     "slug": slug.current,
-    fellowshipYear,
-    category->,
+    fellowshipYear->{
+        year,
+        "slug": slug.current
+    },
+    category->{
+        name,
+        "slug": slug.current
+    },
     "image": ${groqImage},
     content[],
     selectedWorks[],
     media
+}`;
+
+export const fellowshipYearsIndexQuery = groq`*[_type == "fellowshipYear"] | order(year asc) {
+    "type": _type,
+    year,
+    "slug": slug.current,
+    "fellows": *[_type == "fellow" && references(^._id)] | order(name.lastName asc) {
+        "type": _type,
+        name,
+        "slug": slug.current,
+        fellowshipYear->{
+            year,
+            "slug": slug.current
+        },
+        category->{
+            name,
+            "slug": slug.current,
+        },
+        "image": ${groqImage}
+        }
 }`;
 
 //// PAGES

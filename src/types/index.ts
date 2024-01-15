@@ -28,6 +28,13 @@ export type Work = {
   year?: number;
 };
 
+export type FellowshipYear = {
+  type?: string;
+  year?: number;
+  slug?: string;
+  fellows?: Fellow[];
+};
+
 export type Person = {
   name?: {
     firstName?: string;
@@ -45,7 +52,7 @@ export type Person = {
 // }
 
 export interface Fellow extends Person {
-  fellowshipYear?: number;
+  fellowshipYear?: FellowshipYear;
   content?: PortableTextBlock[];
   selectedWorks?: Work[];
   media?: string;
@@ -69,7 +76,7 @@ export type SiteSettings = {
   title?: string;
   description?: string;
   logo?: Image;
-  defaultFellowshipYear?: number;
+  defaultFellowshipYear?: FellowshipYear;
   defaultOgImage?: Image;
   socialLinks?: {
     icon?: string;

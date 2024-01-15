@@ -46,11 +46,7 @@ const { content, padding = false, background = false } = Astro.props;
   }
 
   .background {
-    background-color: color-mix(
-      in srgb,
-      var(--color-primary-light),
-      transparent 40%
-    );
+    background-color: var(--color-primary-light-background);
   }
 
   h2 {

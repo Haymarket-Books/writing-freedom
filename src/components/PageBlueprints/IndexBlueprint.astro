@@ -1,18 +1,46 @@
 ---
-import type { PagePayload, Fellow } from "../../types/index";
+import type { PagePayload, Fellow, FellowshipYear } from "../../types/index";
 import type { PortableTextBlock } from "sanity";
 import PersonCard from "../PersonCard.astro";
+import FellowsFilters from "../FellowsFilters.astro";
+import FilterFellows from "../Svelte/FilterFellows.svelte";
+import { SITE_SETTINGS } from "../../lib/defaults";
+import { getImage } from "astro:assets";
+import urlFor from "../../lib/sanity.urlForImage";
 
 type Props = {
   page: PagePayload;
   content?: Fellow[];
+  filters?: FellowshipYear[];
 };
 
-const { page, content } = Astro.props;
+const { page, content, filters } = Astro.props;
+
+// const contentWithAstroImage = content?.map(async (fellow) => {
+//   return {
+//     ...fellow,
+//     astroImage: await getImage({
+//       src: urlFor(fellow.image!).width(400).height(500).url(),
+//       alt: fellow?.image?.alt || "",
+//       width: 400,
+//       height: 500,
+//       format: "webp",
+//     }),
+//   };
+// });
+
+// const preparedContent = await Promise.all(contentWithAstroImage!);
+// console.log(preparedContent[0].astroImage);
 ---
 
 <div class="content-wrapper flow">
   <h1 class="with-mark">{page.title}</h1>
+  <!-- <FilterFellows
+    client:load
+    fellows={preparedContent}
+    defaultYear={SITE_SETTINGS.defaultFellowshipYear}
+  /> -->
+  <FellowsFilters years={filters} />
   <div class="responsive-grid">
     {
       content?.map((fellow) => {

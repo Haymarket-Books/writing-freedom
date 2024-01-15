@@ -13,6 +13,7 @@ const themes = {
   primary: "primary",
   white: "white",
   ghost: "ghost-white",
+  ghostPrimary: "ghost-primary",
 };
 
 const {
@@ -87,6 +88,15 @@ const link = buildHref(linkObject);
       --link-bg-hover: var(--color-white);
       --link-border: var(--color-white);
       --link-border-hover: transparent;
+    }
+
+    &.ghost-primary {
+      --link-color: var(--color-primary-base);
+      --link-color-hover: var(--color-primary-base);
+      --link-bg: var(--color-primary-light-background);
+      --link-bg-hover: var(--color-primary-light);
+      --link-border: var(--color-primary-light);
+      --link-border-hover: var(--color-accent-base);
     }
   }
 </style>

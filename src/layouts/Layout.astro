@@ -4,15 +4,20 @@ import SiteFooter from "../components/SiteFooter.astro";
 import { sanityClient } from "sanity:client";
 import { mainNavQuery, settingsQuery } from "../lib/sanity.queries";
 import type { Navigation, SiteSettings } from "../types";
+import { SITE_SETTINGS, NAVIGATION } from "../lib/defaults";
 
 import "../styles/variables.css";
 import "../styles/reset.css";
 import "../styles/typography.css";
 import "../styles/layout.css";
+import "../styles/exception.css";
 import "../styles/utilities.css";
 
-const navigation = await sanityClient.fetch<Navigation>(mainNavQuery);
-const siteSettings = await sanityClient.fetch<SiteSettings>(settingsQuery);
+// const navigation = await sanityClient.fetch<Navigation>(mainNavQuery);
+// const siteSettings = await sanityClient.fetch<SiteSettings>(settingsQuery);
+const siteNav = NAVIGATION;
+const headerContent = SITE_SETTINGS;
+const footerContent = SITE_SETTINGS;
 
 const path = Astro.url.pathname;
 // const canonicalURL = new URL(path, Astro.site);
@@ -25,6 +30,7 @@ const path = Astro.url.pathname;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <title>Document</title>
+    <link rel="icon" type="image/svg" href="/haymarket-books-logo.svg" />
     <link
       rel="preload"
       href="/fonts/QuattrocentoSans-Regular.woff2"
@@ -78,13 +84,13 @@ const path = Astro.url.pathname;
   </head>
   <body>
     <SiteHeader
-      content={siteSettings}
-      navigation={navigation}
+      content={headerContent}
+      navigation={siteNav}
       currentPath={path}
       theme={path === "/" ? "white" : "normal"}
       position={path === "/" ? "absolute" : "relative"}
     />
     <slot name="content" />
-    <SiteFooter content={siteSettings} navigation={navigation} />
+    <SiteFooter content={footerContent} navigation={siteNav} />
   </body>
 </html>

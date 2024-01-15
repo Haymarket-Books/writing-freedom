@@ -7,6 +7,19 @@ import svelte from "@astrojs/svelte";
 
 // https://astro.build/config
 export default defineConfig({
+  scopedStyleStrategy: "class",
+  image: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.sanity.io",
+      },
+    ],
+  },
+  // redirects: {
+  //   "/fellows/2024": "/fellows?year=2024",
+  //   "/fellows/2025": "/fellows?year=2025",
+  // },
   integrations: [
     svelte(),
     sanity({
