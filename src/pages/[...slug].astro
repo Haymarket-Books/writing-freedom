@@ -10,6 +10,7 @@ import {
   fellowshipYearsIndexQuery,
 } from "../lib/sanity.queries";
 import type { PagePayload, Fellow, FellowshipYear } from "../types";
+import generatePageMetadata from "../utils/generatePageMetadata";
 
 export async function getStaticPaths() {
   const pagesList = await sanityClient.fetch<PagePayload[]>(pageQuery, {
@@ -35,9 +36,10 @@ type Props = {
 
 const { page } = Astro.props;
 // console.log(page);
+const path = Astro.url.pathname;
 ---
 
-<Layout>
+<Layout meta={generatePageMetadata(page?.metadata, page?.title, path)}>
   <main slot="content">
     <>
       {

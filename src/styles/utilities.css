@@ -56,6 +56,14 @@
   text-wrap: pretty;
 }
 
+.leading-normal {
+  line-height: var(--leading-normal);
+}
+
+.leading-tight {
+  line-height: var(--leading-tight);
+}
+
 .w-fit {
   width: fit-content;
 }

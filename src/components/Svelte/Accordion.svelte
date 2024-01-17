@@ -37,6 +37,7 @@
         justify-content: space-between;
         font-family: var(--font-heading);
         font-weight: var(--font-heading-weight);
+        line-height: var(--leading-normal);
         background-color: var(--color-white);
         padding: 1.25rem 1.75rem;
         border-top-left-radius: var(--rounded-corners);

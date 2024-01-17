@@ -42,17 +42,17 @@ export type Person = {
   };
   slug?: string;
   type?: string;
-  title?: string;
-  category?: Category;
   image?: CoverImage;
 };
 
-// export interface TeamMember extends Person {
-//   title?: string;
-// }
+export interface TeamMember extends Person {
+  title?: string;
+  category?: Category;
+}
 
 export interface Fellow extends Person {
   fellowshipYear?: FellowshipYear;
+  categories?: Category[];
   content?: PortableTextBlock[];
   selectedWorks?: Work[];
   media?: string;
@@ -194,6 +194,7 @@ export type PageMetadata = {
   openGraph?: {
     title?: string;
     image?: CoverImage;
+    description?: string;
   };
 };
 

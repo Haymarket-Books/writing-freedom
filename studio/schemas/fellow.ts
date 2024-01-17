@@ -72,11 +72,15 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'category',
-      title: 'Fellow Type',
-      type: 'reference',
-      to: [{type: 'category'}],
-      validation: (Rule) => Rule.required(),
+      name: 'categories',
+      title: 'Fellow Categories',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'category'}],
+        },
+      ],
     }),
     defineField({
       name: 'content',
@@ -133,12 +137,14 @@ export default defineType({
       firstName: 'name.firstName',
       lastName: 'name.lastName',
       year: 'fellowshipYear.year',
-      fellowType: 'category.name',
+      // fellowType: 'category.name',
+      image: 'image',
     },
-    prepare({firstName, lastName, year, fellowType}) {
+    prepare({firstName, lastName, year, image}) {
       return {
         title: `${firstName} ${lastName}`,
-        subtitle: year && `${year} Fellow • ${fellowType}`,
+        subtitle: year && `${year} Fellow`,
+        media: image,
       }
     },
   },

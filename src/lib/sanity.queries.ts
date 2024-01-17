@@ -24,7 +24,9 @@ const groqNavigationLink = groq`_type == "navigationLink" => {
 const groqImage = groq`image{
     _type,
     alt,
-    asset->
+    asset->,
+    crop,
+    hotspot
 }`;
 
 export const settingsQuery = groq`*[_type == "siteSettings"][0]{
@@ -67,26 +69,12 @@ export const fellowsIndexQuery = groq`*[_type == "fellow"] | order(name.lastName
         year,
         "slug": slug.current
     },
-    category->{
+    categories[]->{
         name,
         "slug": slug.current,
     },
     "image": ${groqImage}
 }`;
-
-// export const fellowsAllQuery = groq`*[_type == "fellow"] | order(name.lastName asc) {
-//     name,
-//     "slug": slug.current,
-//     fellowshipYear->{
-//         year,
-//         "slug": slug.current
-//     },
-//     category->{
-//         name,
-//         "slug": slug.current
-//     },
-//     "image": ${groqImage}
-// }`;
 
 export const fellowsDetailQuery = groq`*[_type == "fellow"] {
     "type": _type,
@@ -96,7 +84,7 @@ export const fellowsDetailQuery = groq`*[_type == "fellow"] {
         year,
         "slug": slug.current
     },
-    category->{
+    categories[]->{
         name,
         "slug": slug.current
     },
@@ -118,7 +106,7 @@ export const fellowshipYearsIndexQuery = groq`*[_type == "fellowshipYear"] | ord
             year,
             "slug": slug.current
         },
-        category->{
+        categories[]->{
             name,
             "slug": slug.current,
         },

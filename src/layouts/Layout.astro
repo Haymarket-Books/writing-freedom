@@ -1,10 +1,14 @@
 ---
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import { getImage } from "astro:assets";
+import urlFor from "../lib/sanity.urlForImage";
 import { sanityClient } from "sanity:client";
 import { mainNavQuery, settingsQuery } from "../lib/sanity.queries";
 import type { Navigation, SiteSettings } from "../types";
 import { SITE_SETTINGS, NAVIGATION } from "../lib/defaults";
+import { SEO } from "astro-seo";
+import type { PageMetadata } from "../types";
 
 import "../styles/variables.css";
 import "../styles/reset.css";
@@ -19,8 +23,26 @@ const siteNav = NAVIGATION;
 const headerContent = SITE_SETTINGS;
 const footerContent = SITE_SETTINGS;
 
+type Props = {
+  meta?: PageMetadata;
+};
+
+const { meta } = Astro.props;
+
 const path = Astro.url.pathname;
-// const canonicalURL = new URL(path, Astro.site);
+const canonicalURL = new URL(path, Astro.site);
+
+const ogImage = await getImage({
+  src: urlFor(meta?.openGraph?.image!)
+    .width(1200)
+    .height(630)
+    .auto("format")
+    .url(),
+  format: "webp",
+  width: 1200,
+  height: 630,
+  alt: "",
+});
 ---
 
 <!doctype html>
@@ -29,7 +51,21 @@ const path = Astro.url.pathname;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <title>Document</title>
+    <SEO
+      title={meta?.seo?.title}
+      description={meta?.seo?.description}
+      canonical={canonicalURL}
+      openGraph={{
+        basic: {
+          title: meta?.openGraph?.title!,
+          type: "website",
+          image: ogImage.src,
+        },
+        optional: {
+          description: meta?.openGraph?.description,
+        },
+      }}
+    />
     <link rel="icon" type="image/svg" href="/haymarket-books-logo.svg" />
     <link
       rel="preload"

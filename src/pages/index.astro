@@ -4,15 +4,17 @@ import HomeBlueprint from "../components/PageBlueprints/HomeBlueprint.astro";
 import { sanityClient } from "sanity:client";
 import { pageQuery } from "../lib/sanity.queries";
 import type { PagePayload } from "../types";
+import generatePageMetadata from "../utils/generatePageMetadata";
 
 const query = await sanityClient.fetch<PagePayload[]>(pageQuery, {
   page: "homepage",
 });
 const home = query[0];
 // console.log(home);
+const path = Astro.url.pathname;
 ---
 
-<Layout>
+<Layout meta={generatePageMetadata(home.metadata, home.title, path)}>
   <main slot="content">
     <HomeBlueprint page={home} />
   </main>

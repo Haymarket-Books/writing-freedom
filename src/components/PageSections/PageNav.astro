@@ -11,14 +11,16 @@ const { navigation } = Astro.props;
 
 <section>
   <div class="content-wrapper cluster">
-    <p class="small-title">Jump to:</p>
+    <p class="small-title">On this page:</p>
     <nav>
       <ul class="cluster" role="list">
         {
           navigation?.map((navItem) => {
             return (
               <li>
-                <a href={`#${navItem.slug}`}>{navItem.title}</a>
+                <a class="link" href={`#${navItem.slug}`}>
+                  {navItem.title}
+                </a>
               </li>
             );
           })
@@ -45,6 +47,20 @@ const { navigation } = Astro.props;
   nav {
     & .cluster {
       --cluster-space: 1.5rem;
+    }
+
+    & .link {
+      text-decoration-color: color-mix(
+        in srgb,
+        var(--color-primary-base),
+        transparent 60%
+      );
+      transition: all 0.2s ease;
+
+      &:hover {
+        text-decoration-color: var(--color-primary-base);
+        color: var(--color-primary-base);
+      }
     }
   }
 </style>

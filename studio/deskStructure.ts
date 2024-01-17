@@ -73,7 +73,7 @@ export const deskStructure = (S: StructureBuilder) =>
                               S.documentList()
                                 .schemaType('fellow')
                                 .title('Fellows')
-                                .filter('_type == "fellow" && category._ref == $categoryId')
+                                .filter('_type == "fellow" && references($categoryId)')
                                 .params({categoryId}),
                             ),
                         ),

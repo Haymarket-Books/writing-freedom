@@ -6,11 +6,12 @@ import IndexBlueprint from "../../components/PageBlueprints/IndexBlueprint.astro
 import ButtonLink from "../../components/ButtonLink.astro";
 import { sanityClient } from "sanity:client";
 import { fellowsDetailQuery } from "../../lib/sanity.queries";
-import type { Fellow } from "../../types";
+import type { Fellow, PageMetadata } from "../../types";
 import urlFor from "../../lib/sanity.urlForImage";
 import joinNames from "../../utils/joinNames";
 import buildFellowHref from "../../utils/buildFellowHref";
 import "../../styles/rich-content.css";
+import generatePageMetadata from "../../utils/generatePageMetadata";
 
 export async function getStaticPaths() {
   const fellows = await sanityClient.fetch<Fellow[]>(fellowsDetailQuery);
@@ -29,11 +30,39 @@ type Props = {
 
 const { fellow } = Astro.props;
 
+const meta: PageMetadata = {
+  seo: {
+    title: `${joinNames(fellow?.name)} | ${
+      fellow?.fellowshipYear?.year
+    } Fellows`,
+    description: `Biography for ${
+      fellow?.fellowshipYear?.year
+    } fellow ${joinNames(fellow?.name)}.`,
+  },
+  openGraph: {
+    title: `${joinNames(fellow?.name)} | ${
+      fellow?.fellowshipYear?.year
+    } Fellows`,
+    image: fellow?.image,
+    description: `Biography for ${
+      fellow?.fellowshipYear?.year
+    } fellow ${joinNames(fellow?.name)}.`,
+  },
+};
+
+const path = Astro.url.pathname;
+
 // const url = Astro.url;
 // const urlParts = url.pathname.split('/');
 ---
 
-<Layout>
+<Layout
+  meta={generatePageMetadata(
+    meta,
+    `${joinNames(fellow?.name)} | Fellows`,
+    path,
+  )}
+>
   <main slot="content">
     <div class="breadcrumb | cluster">
       <a href="/fellows">Fellows</a>
@@ -64,8 +93,9 @@ const { fellow } = Astro.props;
             format="webp"
           />
           <div class="intro | flow">
-            <h1 class="with-mark">{joinNames(fellow?.name)}</h1>
-            <p class="small-title">{fellow?.category?.name}</p>
+            <h1 class="with-mark balanced">{joinNames(fellow?.name)}</h1>
+            <!-- prettier-ignore -->
+            <p class="small-title leading-normal">{fellow?.categories?.map((category) => category.name).join(", ")}</p>
             <p>
               <a href={`/fellows/${fellow?.fellowshipYear?.slug}`}
                 >{`${fellow?.fellowshipYear?.year} Fellow`}</a
@@ -176,8 +206,8 @@ const { fellow } = Astro.props;
 
   .grid {
     display: grid;
-    grid-template-columns: minmax(auto, 35rem) minmax(auto, 20rem);
-    gap: 4rem;
+    grid-template-columns: minmax(auto, 38rem) minmax(auto, 20rem);
+    gap: 3rem;
     width: fit-content;
     margin-inline: auto;
   }

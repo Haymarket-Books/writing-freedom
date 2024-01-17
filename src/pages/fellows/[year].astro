@@ -6,8 +6,14 @@ import ContactBlueprint from "../../components/PageBlueprints/ContactBlueprint.a
 import PersonCard from "../../components/PersonCard.astro";
 import { sanityClient } from "sanity:client";
 import { pageQuery, fellowshipYearsIndexQuery } from "../../lib/sanity.queries";
-import type { PagePayload, Fellow, FellowshipYear } from "../../types";
+import type {
+  PagePayload,
+  Fellow,
+  FellowshipYear,
+  PageMetadata,
+} from "../../types";
 import FellowsFilters from "../../components/FellowsFilters.astro";
+import generatePageMetadata from "../../utils/generatePageMetadata";
 
 export async function getStaticPaths() {
   const years = await sanityClient.fetch<FellowshipYear[]>(
@@ -34,10 +40,24 @@ type Props = {
 
 const { page, fellowshipYears } = Astro.props;
 
+const meta: PageMetadata = {
+  seo: {
+    title: `${page?.year} Fellows`,
+    description: `Meet the Writing Freedom fellows for ${page?.year}.`,
+  },
+  openGraph: {
+    title: `${page?.year} Fellows`,
+    image: undefined,
+    description: `Meet the Writing Freedom fellows for ${page?.year}.`,
+  },
+};
+
+const path = Astro.url.pathname;
+
 // const page = pages.filter((page) => page.blueprint === "index");
 ---
 
-<Layout>
+<Layout meta={generatePageMetadata(meta, `${page?.year} Fellows`, path)}>
   <main slot="content">
     <div class="content-wrapper flow">
       <h1 class="with-mark">{page?.year} Fellows</h1>
@@ -62,8 +82,10 @@ const { page, fellowshipYears } = Astro.props;
 
       .responsive-grid {
         --grid-gap: 2rem;
-        --item-min-width: 12rem;
-        --item-max-width: 14rem;
+        --item-min-width: 16rem;
+        --item-max-width: 18rem;
+        /* --item-min-width: 12rem; 
+        --item-max-width: 14rem; */
       }
     </style>
   </main>

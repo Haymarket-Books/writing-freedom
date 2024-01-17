@@ -1,12 +1,12 @@
 ---
-import type { Person, Fellow } from "../types/index";
+import type { Person, Fellow, TeamMember } from "../types/index";
 import { Image } from "astro:assets";
 import urlFor from "../lib/sanity.urlForImage";
 import joinNames from "../utils/joinNames";
 import buildFellowHref from "../utils/buildFellowHref";
 
 type Props = {
-  person: Person | Fellow;
+  person: Person | Fellow | TeamMember;
 };
 
 const { person } = Astro.props;
@@ -31,12 +31,12 @@ const { person } = Astro.props;
         />
         <div class="text | flow">
           <h3>{joinNames(person.name)}</h3>
-          <p class="small-title">{person?.category?.name}</p>
+          <p class="small-title">{(person as TeamMember)?.category?.name}</p>
         </div>
       </Fragment>
     ) : (
       <Fragment>
-        <a href={buildFellowHref(person as Fellow)}>
+        <a class="img-wrapper" href={buildFellowHref(person as Fellow)}>
           <Image
             class="headshot lqip-preview"
             src={urlFor(person.image!)
@@ -55,7 +55,7 @@ const { person } = Astro.props;
           <a href={buildFellowHref(person as Fellow)}>
             <h3>{joinNames(person.name)}</h3>
           </a>
-          <p class="small-title">{person?.category?.name}</p>
+          <p class="small-title">{(person as Fellow)?.categories?.[0].name}</p>
         </div>
       </Fragment>
     )
@@ -85,6 +85,10 @@ const { person } = Astro.props;
         text-decoration: underline var(--underline-color);
       }
     }
+  }
+
+  .img-wrapper {
+    border-radius: var(--rounded-corners-small);
   }
 
   .headshot {
