@@ -21,7 +21,7 @@ const path = Astro.url.pathname;
           name: "All",
           href: { slug: "fellows" },
         }}
-        theme={path === "/fellows" ? "primary" : "ghostPrimary"}
+        theme={path === "/fellows/" ? "primary" : "ghostPrimary"}
       />
       {
         years?.map((entry) => {
@@ -33,7 +33,7 @@ const path = Astro.url.pathname;
                 href: { slug: `fellows/${entry.slug}` },
               }}
               theme={
-                path === `/fellows/${entry.slug}` ? "primary" : "ghostPrimary"
+                path === `/fellows/${entry.slug}/` ? "primary" : "ghostPrimary"
               }
             />
           );
