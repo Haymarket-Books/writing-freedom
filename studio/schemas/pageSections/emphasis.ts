@@ -6,9 +6,9 @@ export default defineType({
   type: 'object',
   fields: [
     defineField({
-      name: 'text',
+      name: 'blocks',
       title: 'Text',
-      type: 'text',
+      type: 'richContentLite',
       validation: (Rule) => Rule.required().max(200),
     }),
     defineField({

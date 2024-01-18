@@ -1,0 +1,42 @@
+---
+type Props = {
+  xPosition?: number;
+  opacity?: number;
+};
+
+const { xPosition = 15, opacity = 1 } = Astro.props;
+---
+
+<div
+  class="background-illustration"
+  style={`--xPosition: ${xPosition}%; --opacity: ${opacity}`}
+>
+  <svg
+    width="226"
+    height="504"
+    viewBox="0 0 226 504"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g opacity="0.3">
+      <path d="M1 0V320" stroke="#750075" stroke-opacity="0.5"></path>
+      <path d="M33 0L33 409" stroke="#750075" stroke-opacity="0.6"></path>
+      <path d="M65 0V361" stroke="#750075" stroke-opacity="0.7"></path>
+      <path d="M97 0L97 456" stroke="#750075" stroke-opacity="0.8"></path>
+      <path d="M129 0V320" stroke="#750075" stroke-opacity="0.9"></path>
+      <path d="M161 0L161 380" stroke="#750075" stroke-opacity="0.7"></path>
+      <path d="M193 0V232" stroke="#750075" stroke-opacity="0.6"></path>
+      <path d="M225 0V320" stroke="#750075" stroke-opacity="0.5"></path>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .background-illustration {
+    position: absolute;
+    top: 0;
+    right: var(--xPosition);
+    opacity: var(--opacity);
+    z-index: -1;
+  }
+</style>

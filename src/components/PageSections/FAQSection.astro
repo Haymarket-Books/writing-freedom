@@ -6,6 +6,7 @@ import ButtonLink from "../ButtonLink.astro";
 import urlFor from "../../lib/sanity.urlForImage";
 import Accordion from "../Svelte/Accordion.svelte";
 import RichContent from "../RichContent.astro";
+import BackgroundIllustration from "../BackgroundIllustration.astro";
 
 type Props = {
   content?: FAQ;
@@ -14,7 +15,13 @@ type Props = {
 const { content } = Astro.props;
 ---
 
-<section id={content?.slug}>
+<section
+  id={content?.slug}
+  class:list={[
+    content?.sectionPadding ? "padding background" : "margin",
+    "relative",
+  ]}
+>
   <div class="content-wrapper flow">
     <h2 class="with-mark">{content?.title}</h2>
     <div class="faqs | flow">
@@ -30,12 +37,19 @@ const { content } = Astro.props;
       }
     </div>
   </div>
+  <BackgroundIllustration />
 </section>
 
 <style>
-  section {
+  .margin {
     margin-block: var(--section-spacer);
+  }
+
+  .padding {
     padding-block: var(--section-spacer);
+  }
+
+  .background {
     background-color: var(--color-primary-light-background);
   }
 

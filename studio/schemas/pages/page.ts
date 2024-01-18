@@ -55,6 +55,11 @@ export default defineType({
           type: 'grid',
         }),
         defineArrayMember({
+          name: 'sponsors',
+          title: 'Sponsors Section',
+          type: 'sponsorsSection',
+        }),
+        defineArrayMember({
           name: 'index',
           title: 'Index Section',
           type: 'indexSection',
@@ -73,6 +78,11 @@ export default defineType({
           name: 'quote',
           title: 'Quote',
           type: 'quote',
+        }),
+        defineArrayMember({
+          name: 'linkCTA',
+          title: 'Link CTA',
+          type: 'linkCTA',
         }),
         defineArrayMember({
           name: 'cta',

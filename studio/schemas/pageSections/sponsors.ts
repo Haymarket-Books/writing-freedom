@@ -1,8 +1,8 @@
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
-  name: 'grid',
-  title: 'Columns',
+  name: 'sponsorsSection',
+  title: 'Sponsors',
   type: 'object',
   fields: [
     defineField({
@@ -84,7 +84,7 @@ export default defineType({
     prepare({title}) {
       return {
         title: title,
-        subtitle: 'Columns Section',
+        subtitle: 'Sponsors Section',
       }
     },
   },

@@ -1,0 +1,13 @@
+---
+import type { PortableTextChild } from "sanity";
+const { children } = Astro.props.node;
+// console.log("highlight children", children);
+---
+
+{
+  children.map((child: PortableTextChild) => {
+    if (child._type === "@text") {
+      return <span class="highlight">{child.text}</span>;
+    }
+  })
+}

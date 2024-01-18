@@ -96,8 +96,10 @@ export type SiteSettings = {
 export type PageSectionTypes =
   | "hero"
   | "cta"
+  | "linkCTA"
   | "faq"
   | "grid"
+  | "sponsors"
   | "index"
   | "emphasis"
   | "presentation"
@@ -133,7 +135,7 @@ export interface Grid extends PageSection {
 
 export interface Emphasis extends PageSection {
   title?: string;
-  text?: string;
+  blocks?: PortableTextBlock[];
   image?: CoverImage;
 }
 
@@ -168,12 +170,17 @@ export interface CTA extends PageSection {
   ctaType: string;
 }
 
+export interface LinkCTA extends PageSection {
+  linkObject?: Link;
+}
+
 export interface FAQ extends PageSection {
   title?: string;
   list?: {
     question?: string;
     answer?: PortableTextBlock[];
   }[];
+  sectionPadding?: boolean;
 }
 
 export interface Index extends PageSection {
@@ -182,6 +189,7 @@ export interface Index extends PageSection {
   linkObject?: Link;
   showContentType?: string;
   entries?: Array<Person | Fellow>;
+  sectionPadding?: boolean;
 }
 
 // Metadata and queries
@@ -205,6 +213,6 @@ export type PagePayload = {
   blueprint?: "home" | "interior" | "index" | "contact";
   metadata?: PageMetadata;
   content: Array<
-    Hero | Grid | Emphasis | Presentation | Quote | FAQ | Index | CTA
+    Hero | Grid | Emphasis | Presentation | Quote | FAQ | Index | LinkCTA | CTA
   >;
 };

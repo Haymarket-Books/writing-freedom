@@ -4,6 +4,7 @@ import { Image } from "astro:assets";
 import RichContent from "../../components/RichContent.astro";
 import IndexBlueprint from "../../components/PageBlueprints/IndexBlueprint.astro";
 import ButtonLink from "../../components/ButtonLink.astro";
+import BackgroundIllustration from "../../components/BackgroundIllustration.astro";
 import { sanityClient } from "sanity:client";
 import { fellowsDetailQuery } from "../../lib/sanity.queries";
 import type { Fellow, PageMetadata } from "../../types";
@@ -125,6 +126,7 @@ const path = Astro.url.pathname;
             </div>
           </div>
         </div>
+        <BackgroundIllustration xPosition={5} />
       </section>
     </article>
     <div class="center-all content-wrapper">
@@ -174,6 +176,8 @@ const path = Astro.url.pathname;
     margin-inline: auto;
     display: grid;
     align-items: center;
+    position: relative;
+    z-index: 2;
   }
 
   .headshot {
@@ -217,6 +221,7 @@ const path = Astro.url.pathname;
     margin-block-end: var(--section-spacer);
     padding-block: var(--section-spacer);
     background-color: var(--color-primary-light-background);
+    position: relative;
 
     & .small-title {
       color: var(--color-primary-base);

@@ -28,22 +28,6 @@
   background-size: cover;
 }
 
-.emphasis p span {
-  position: relative;
-  display: inline-block;
-
-  &::before {
-    content: "";
-    position: absolute;
-    bottom: 0.5rem;
-    z-index: -1;
-    opacity: var(--text-opacity-shade);
-    height: 30%;
-    width: 100%;
-    background: var(--color-accent-light);
-  }
-}
-
 .toggle-rotate {
   transform: rotate(-180deg);
 }

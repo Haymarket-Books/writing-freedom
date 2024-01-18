@@ -45,6 +45,13 @@ export default defineType({
       type: 'navigationLink',
       description: 'Optional link.',
     }),
+    defineField({
+      name: 'sectionPadding',
+      title: 'Section Padding?',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Flip to "true" to add a light background and padding to this section.',
+    }),
   ],
   preview: {
     select: {

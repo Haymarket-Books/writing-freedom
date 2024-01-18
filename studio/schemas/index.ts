@@ -12,6 +12,8 @@ import page from './pages/page'
 // import fellows from './pages/fellows'
 import hero from './pageSections/hero'
 import indexSection from './pageSections/indexSection'
+import linkCTA from './pageSections/linkCTA'
+import sponsors from './pageSections/sponsors'
 import faqs from './pageSections/faqs'
 import quote from './pageSections/quote'
 import emphasis from './pageSections/emphasis'
@@ -42,6 +44,8 @@ export const schemaTypes = [
   hero,
   presentation,
   indexSection,
+  linkCTA,
+  sponsors,
   faqs,
   quote,
   emphasis,

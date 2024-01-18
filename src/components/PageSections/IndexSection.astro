@@ -11,13 +11,13 @@ type Props = {
   background?: boolean;
 };
 
-const { content, padding = false, background = false } = Astro.props;
+const { content } = Astro.props;
 // console.log(content);
 ---
 
 <section
   id={content?.slug}
-  class:list={[padding && "padding", background && "background"]}
+  class:list={[content?.sectionPadding ? "padding background" : "margin"]}
 >
   <div class="content-wrapper flow">
     <h2 class="with-mark">{content?.title}</h2>
@@ -37,7 +37,7 @@ const { content, padding = false, background = false } = Astro.props;
 </section>
 
 <style>
-  section {
+  .margin {
     margin-block: var(--section-spacer);
   }
 

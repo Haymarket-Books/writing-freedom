@@ -8,6 +8,7 @@ import type {
   Quote,
   FAQ,
   Index,
+  LinkCTA,
   CTA,
   PageNavigation,
 } from "../../types/index";
@@ -16,8 +17,10 @@ import InnerGridSection from "../PageSections/InnerGrid.astro";
 import EmphasisSection from "../PageSections/Emphasis.astro";
 import PresentationSection from "../PageSections/Presentation.astro";
 import IndexSection from "../PageSections/IndexSection.astro";
+import SponsorsSection from "../PageSections/Sponsors.astro";
 import FAQSection from "../PageSections/FAQSection.astro";
 import QuoteSection from "../PageSections/Quote.astro";
+import LinkCTASection from "../PageSections/LinkCTA.astro";
 import CallToActionSection from "../PageSections/CallToAction.astro";
 import buildPageNav from "../../utils/buildPageNav";
 import type { PortableTextBlock } from "sanity";
@@ -44,6 +47,8 @@ const pageNavigation: PageNavigation = buildPageNav(page.content);
           );
         case "grid":
           return <InnerGridSection content={section as Grid} />;
+        case "sponsors":
+          return <SponsorsSection content={section as Grid} />;
         case "presentation":
           return <PresentationSection content={section as Presentation} />;
         case "emphasis":
@@ -53,14 +58,9 @@ const pageNavigation: PageNavigation = buildPageNav(page.content);
         case "faq":
           return <FAQSection content={section as FAQ} />;
         case "index":
-          // should probably make padding/background dynamic/controllable through Sanity
-          return (
-            <IndexSection
-              content={section as Index}
-              padding={idx === 3}
-              background={idx === 3}
-            />
-          );
+          return <IndexSection content={section as Index} />;
+        case "linkCTA":
+          return <LinkCTASection content={section as LinkCTA} />;
         case "cta":
           return <CallToActionSection content={section as CTA} />;
         default:

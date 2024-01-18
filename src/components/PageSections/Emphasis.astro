@@ -25,7 +25,7 @@ const { content } = Astro.props;
     style={`background-image: url(${content?.image?.asset.metadata.lqip})`}
   />
   <div class="emphasis">
-    <p set:html={content?.text} />
+    <RichContent content={content?.blocks} />
   </div>
 </article>
 
@@ -50,11 +50,27 @@ const { content } = Astro.props;
     background: var(--color-white);
     padding: 2rem;
     border-radius: var(--rounded-corners-small);
+  }
 
-    & p {
-      font-family: var(--font-heading);
-      font-size: var(--step-3);
-      font-weight: var(--font-heading-weight);
-    }
+  :global(.emphasis p) {
+    font-family: var(--font-heading);
+    font-size: var(--step-3);
+    font-weight: var(--font-heading-weight);
+  }
+
+  :global(.emphasis .highlight) {
+    position: relative;
+    display: inline-block;
+  }
+
+  :global(.emphasis .highlight::before) {
+    content: "";
+    position: absolute;
+    bottom: 0.5rem;
+    z-index: -1;
+    opacity: var(--text-opacity-shade);
+    height: 30%;
+    width: 100%;
+    background: var(--color-accent-light);
   }
 </style>

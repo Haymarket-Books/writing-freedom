@@ -1,5 +1,7 @@
 ---
 import { PortableText } from "astro-portabletext";
+import RichContentTextHighlight from "./RichContent_TextHighlight.astro";
+import RichContentLargeText from "./RichContent_LargeText.astro";
 // import PortableTextImage from "./PortableTextImage.astro";
 import type { PortableTextBlock } from "sanity";
 
@@ -9,11 +11,16 @@ type Props = {
 
 const { content } = Astro.props;
 
-// const components = {
-//     type: {
-//         image: PortableTextImage,
-//     }
-// }
+const components = {
+  // type: {
+  //   // image: PortableTextImage,
+
+  // },
+  mark: {
+    highlight: RichContentTextHighlight,
+    largeText: RichContentLargeText,
+  },
+};
 ---
 
-{content ? <PortableText value={content} /> : ""}
+{content ? <PortableText value={content} components={components} /> : ""}

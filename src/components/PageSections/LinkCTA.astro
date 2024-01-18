@@ -1,0 +1,20 @@
+---
+import ButtonLink from "../ButtonLink.astro";
+import type { LinkCTA } from "../../types";
+
+type Props = {
+  content?: LinkCTA;
+};
+
+const { content } = Astro.props;
+---
+
+<div class="center-all content-wrapper">
+  <ButtonLink linkObject={content?.linkObject!} withArrow />
+</div>
+
+<style>
+  div {
+    margin-block: var(--section-spacer);
+  }
+</style>

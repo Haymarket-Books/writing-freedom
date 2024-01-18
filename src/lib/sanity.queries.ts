@@ -169,6 +169,18 @@ export const pageQuery = groq`*[_type == $page] {
                 }
             }
         },
+        _type == "sponsors" => {
+            title,
+            "slug": slug.current,
+            "items": gridItems[]{
+                heading,
+                text,
+                "image": ${groqImage},
+                "linkObject": link{
+                ${groqNavigationLink}
+                }
+            }
+        },
         _type == "index" => {
             title,
             "slug": slug.current,
@@ -176,6 +188,7 @@ export const pageQuery = groq`*[_type == $page] {
             "linkObject": link{
                 ${groqNavigationLink}
             },
+            sectionPadding,
             "showContentType": items[0],
             items[0] == "teamMembers" => {
                 "entries": ${teamMembersQuery}
@@ -185,7 +198,7 @@ export const pageQuery = groq`*[_type == $page] {
             }
         },
         _type == "emphasis" => {
-            text,
+            blocks[],
             "image": ${groqImage}
         },
         _type == "presentation" => {
@@ -201,7 +214,8 @@ export const pageQuery = groq`*[_type == $page] {
         _type == "faq" => {
             title,
             "slug": slug.current,
-            list[]
+            list[],
+            sectionPadding
         },
         _type == "quote" => {
             attribution,
@@ -224,5 +238,10 @@ export const pageQuery = groq`*[_type == $page] {
                 ${groqNavigationLink}
             }
         },
+        _type == "linkCTA" => {
+            "linkObject": link{
+                ${groqNavigationLink}
+            }
+        }
     }
 }`;

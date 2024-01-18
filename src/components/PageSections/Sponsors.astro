@@ -31,7 +31,6 @@ const { content } = Astro.props;
                 format="webp"
               />
             )}
-            {item.heading && <h3>{item.heading}</h3>}
             <p>{item.text}</p>
             {item.linkObject && (
               <ButtonLink linkObject={item?.linkObject} withArrow />
@@ -62,19 +61,20 @@ const { content } = Astro.props;
   }
 
   .responsive-grid {
-    --item-min-width: 12rem;
-    --grid-gap: var(--space-m);
+    --item-min-width: 20rem;
+    --grid-gap: var(--space-2xl);
     margin-block-start: calc(var(--section-spacer) * 0.5);
   }
 
   article {
     &.flow {
-      --flow-space: 1rem;
+      --flow-space: 2rem;
     }
 
     & img {
-      height: 6rem;
-      width: 6rem;
+      max-height: 8rem;
+      margin-inline: auto;
+      width: auto;
     }
   }
 </style>

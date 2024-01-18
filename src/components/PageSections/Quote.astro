@@ -92,4 +92,20 @@ const { content } = Astro.props;
     mix-blend-mode: multiply;
     opacity: 0.6;
   }
+
+  :global(.quote .highlight) {
+    position: relative;
+    display: inline-block;
+  }
+
+  :global(.quote .highlight::before) {
+    content: "";
+    position: absolute;
+    bottom: 0.25rem;
+    z-index: -1;
+    opacity: 0.8;
+    height: 30%;
+    width: 100%;
+    background: var(--color-accent-base);
+  }
 </style>

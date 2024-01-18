@@ -1,4 +1,5 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
+import {HiMiniMagnifyingGlassPlus, HiLink, HiMiniPencilSquare} from 'react-icons/hi2'
 
 // Rich content with only minimal decorators and links, no headings etc.
 
@@ -15,12 +16,27 @@ export default defineType({
         decorators: [
           {title: 'Bold', value: 'strong'},
           {title: 'Italic', value: 'em'},
+          {
+            title: 'Large Text',
+            value: 'largeText',
+            component: (props) => <span style={{fontSize: 'larger'}}>{props.children}</span>,
+            icon: HiMiniMagnifyingGlassPlus,
+          },
+          {
+            title: 'Text Highlight',
+            value: 'highlight',
+            component: (props) => (
+              <span style={{backgroundColor: '#ffecb8'}}>{props.children}</span>
+            ),
+            icon: HiMiniPencilSquare,
+          },
         ],
         annotations: [
           {
             name: 'richContentLink',
             title: 'Link',
             type: 'object',
+            icon: HiLink,
             fields: [
               defineField({
                 name: 'href',
