@@ -91,7 +91,10 @@ export const fellowsDetailQuery = groq`*[_type == "fellow"] {
     "image": ${groqImage},
     content[],
     selectedWorks[],
-    media
+    media{
+        "file": file.asset->,
+        "content": fileDescription[]
+    }
 }`;
 
 export const fellowshipYearsIndexQuery = groq`*[_type == "fellowshipYear"] | order(year asc) {

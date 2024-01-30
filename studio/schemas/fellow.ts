@@ -127,9 +127,25 @@ export default defineType({
     }),
     defineField({
       name: 'media',
-      title: 'Embedded Media',
-      type: 'string',
-      description: 'Enter a video ID from YouTube or Vimeo.',
+      title: 'Embedded Audio',
+      type: 'object',
+      description: 'Upload an audio file and provide a description.',
+      fields: [
+        defineField({
+          name: 'file',
+          title: 'Audio File',
+          type: 'file',
+          description: 'Upload an .mp3 file.',
+          options: {
+            accept: '.mp3',
+          },
+        }),
+        defineField({
+          name: 'fileDescription',
+          title: 'Audio File Description',
+          type: 'richContentLite',
+        }),
+      ],
     }),
   ],
   preview: {

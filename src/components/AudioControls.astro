@@ -1,0 +1,76 @@
+---
+import type { Fellow } from "../types";
+import RichContent from "./RichContent.astro";
+import "../styles/rich-content.css";
+
+type Props = {
+  content?: Fellow;
+};
+
+const { content } = Astro.props;
+
+function toMb(num: number) {
+  return `${(num / 1000000).toFixed(2)} MB`;
+}
+---
+
+<figure class="audio-player | flow">
+  <figcaption class="rich-content">
+    <RichContent content={content?.media?.content} />
+  </figcaption>
+  <audio src={content?.media?.file?.url} controls></audio>
+  <!-- <div id="audio-controls" class="controls" data-state="hidden">
+    <button id="playpause" data-state="play">Play/pause</button>
+    <div class="progress">
+      <progress id="progress" value="0" min="0">
+        <span id="progress-bar"></span>
+      </progress>
+    </div>
+  </div> -->
+  <a class="text-step--1" href={`${content?.media?.file?.url}?dl=`}
+    >Download audio {
+      content?.media?.file?.size && (
+        <span>({toMb(content?.media?.file?.size)})</span>
+      )
+    }</a
+  >
+</figure>
+
+<style>
+  audio {
+    margin-inline: -6px;
+  }
+</style>
+
+<!-- <script>
+  import { Howl, Howler } from "howler";
+
+  const playerElements = [
+    "track",
+    "timer",
+    "duration",
+    "playBtn",
+    "pauseBtn",
+    "prevBtn",
+    "nextBtn",
+    "volumeBtn",
+    "progress",
+    "bar",
+    "loading",
+    "playlist",
+    "list",
+    "volume",
+    "barEmpty",
+    "barFull",
+    "sliderBtn",
+  ];
+  playerElements.forEach((el) => (window[el] = document.getElementById(el)));
+
+  class Player {
+    playlist
+    constructor() {
+        this.playlist = playlist;
+
+    }
+  }
+</script> -->

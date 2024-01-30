@@ -1,5 +1,5 @@
 import type { PortableTextBlock } from "sanity";
-import type { Image, ImageAsset, ImageMetadata } from "sanity";
+import type { Image, ImageAsset, ImageMetadata, FileAsset } from "sanity";
 
 // Content Collections
 export interface CoverImage extends Image {
@@ -55,7 +55,10 @@ export interface Fellow extends Person {
   categories?: Category[];
   content?: PortableTextBlock[];
   selectedWorks?: Work[];
-  media?: string;
+  media?: {
+    file?: FileAsset;
+    content?: PortableTextBlock[];
+  };
 }
 
 // Pages

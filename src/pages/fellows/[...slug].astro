@@ -4,6 +4,7 @@ import { Image } from "astro:assets";
 import RichContent from "../../components/RichContent.astro";
 import IndexBlueprint from "../../components/PageBlueprints/IndexBlueprint.astro";
 import ButtonLink from "../../components/ButtonLink.astro";
+import AudioControls from "../../components/AudioControls.astro";
 import BackgroundIllustration from "../../components/BackgroundIllustration.astro";
 import { sanityClient } from "sanity:client";
 import { fellowsDetailQuery } from "../../lib/sanity.queries";
@@ -113,17 +114,40 @@ const path = Astro.url.pathname;
               <RichContent content={fellow?.content} />
             </div>
           </div>
-          <div class="selected-work | flow">
-            <h2 class="small-title">Selected Work</h2>
-            <div class="rich-content">
-              <ul role="list">
-                {
-                  fellow?.selectedWorks?.map((work) => (
-                    <li>{`${work.title}, ${work.year}`}</li>
-                  ))
-                }
-              </ul>
+          <div class="sidebar | flow">
+            <div class="media | flow">
+              <div class="cluster">
+                <i class="fa-regular fa-headphones"></i><h2 class="small-title">
+                  Listen
+                </h2>
+              </div>
+              <AudioControls content={fellow} />
+              <!-- <figure class="flow">
+                <figcaption class="rich-content">
+                  <RichContent content={fellow?.media?.content} />
+                </figcaption>
+                <audio src={fellow?.media?.file?.url}></audio>
+                <div id="audio-controls" class="controls" data-state="hidden">
+                </div>
+                <a class="text-step--1" href={`${fellow?.media?.file?.url}?dl=`}
+                  >Download audio ({
+                    `${(fellow?.media?.file?.size! / 1000000).toFixed(2)} MB`
+                  })</a
+                >
+              </figure> -->
             </div>
+            <!-- <div class="selected-work | flow">
+              <h2 class="small-title">Selected Work</h2>
+              <div class="rich-content">
+                <ul role="list">
+                  {
+                    fellow?.selectedWorks?.map((work) => (
+                      <li>{`${work.title}, ${work.year}`}</li>
+                    ))
+                  }
+                </ul>
+              </div>
+            </div> -->
           </div>
         </div>
         <BackgroundIllustration xPosition={5} />
@@ -170,8 +194,8 @@ const path = Astro.url.pathname;
   }
 
   .intro-grid {
-    grid-template-columns: minmax(auto, 20rem) auto;
-    gap: 3rem;
+    grid-template-columns: minmax(auto, 22rem) auto;
+    gap: var(--space-2xl);
     width: fit-content;
     margin-inline: auto;
     display: grid;
@@ -210,14 +234,16 @@ const path = Astro.url.pathname;
 
   .grid {
     display: grid;
-    grid-template-columns: minmax(auto, 38rem) minmax(auto, 20rem);
-    gap: 3rem;
-    width: fit-content;
-    margin-inline: auto;
+    /* grid-template-columns: minmax(auto, 38rem) minmax(auto, 20rem);
+      width: fit-content;
+      margin-inline: auto;
+    */
+    grid-template-columns: 1fr 0.33fr;
+    gap: var(--space-2xl);
   }
 
   .bio {
-    margin-block-start: calc((var(--section-spacer) * 0.5) * -1);
+    margin-block-start: calc((var(--section-spacer) * 0.25) * -1);
     margin-block-end: var(--section-spacer);
     padding-block: var(--section-spacer);
     background-color: var(--color-primary-light-background);
@@ -228,9 +254,44 @@ const path = Astro.url.pathname;
     }
 
     & .background {
+      & .rich-content {
+        font-size: var(--step-1);
+        text-wrap: pretty;
+        max-width: 59ch;
+      }
     }
 
     & .selected-work {
+    }
+  }
+
+  .sidebar {
+    &.flow {
+      gap: var(--space-l);
+    }
+  }
+
+  .media {
+    background: var(--color-primary-dark);
+    border-radius: var(--rounded-corners-small);
+    color: var(--color-primary-light);
+    padding: 1.5rem;
+
+    & > .cluster {
+      --cluster-space: 0.75rem;
+    }
+
+    & :is(svg, .small-title) {
+      color: var(--color-accent-light);
+    }
+
+    & .small-title {
+      line-height: 1;
+    }
+
+    & svg {
+      position: relative;
+      top: -2px;
     }
   }
 </style>
