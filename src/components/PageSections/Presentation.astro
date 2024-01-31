@@ -9,9 +9,10 @@ import "../../styles/rich-content.css";
 
 type Props = {
   content?: Presentation;
+  textCenter?: boolean;
 };
 
-const { content } = Astro.props;
+const { content, textCenter = false } = Astro.props;
 ---
 
 <article class="content-wrapper" id={content?.slug}>
@@ -36,7 +37,7 @@ const { content } = Astro.props;
         />
       )
     }
-    <div class="text | flow">
+    <div class:list={["text", "flow", textCenter && "text-center"]}>
       <h2 class="small-title">{content?.title}</h2>
       <div class="rich-content">
         <RichContent content={content?.blocks} />
@@ -66,6 +67,18 @@ const { content } = Astro.props;
   .center {
     margin-inline: auto;
     width: fit-content;
+  }
+
+  .text {
+    &.text-center {
+      align-items: center;
+      text-align: center;
+
+      & .rich-content {
+        font-size: var(--step-1);
+        margin-block-end: var(--space-m);
+      }
+    }
   }
 
   .grid {

@@ -17,20 +17,30 @@ import generatePageMetadata from "../../utils/generatePageMetadata";
 
 export async function getStaticPaths() {
   const fellows = await sanityClient.fetch<Fellow[]>(fellowsDetailQuery);
+  const numberOfFellows = fellows.length;
 
-  return fellows.map((fellow) => {
+  return fellows.map((fellow, index) => {
     return {
       params: { slug: `${fellow.fellowshipYear?.slug}/${fellow?.slug}` },
-      props: { fellow },
+      props: {
+        fellow,
+        // If current fellow is last
+        nextFellow:
+          index + 1 === numberOfFellows ? undefined : fellows[index + 1],
+        // If current fellow is first
+        prevFellow: index === 0 ? undefined : fellows[index - 1],
+      },
     };
   });
 }
 
 type Props = {
   fellow?: Fellow;
+  prevFellow?: Fellow;
+  nextFellow?: Fellow;
 };
 
-const { fellow } = Astro.props;
+const { fellow, prevFellow, nextFellow } = Astro.props;
 
 const meta: PageMetadata = {
   seo: {
@@ -106,6 +116,7 @@ const path = Astro.url.pathname;
           </div>
         </div>
       </section>
+      <img class="radial-blur" src="/radial-blur.svg" alt="" />
       <section class="bio">
         <div class="content-wrapper grid">
           <div class="background | flow">
@@ -153,10 +164,35 @@ const path = Astro.url.pathname;
         <BackgroundIllustration xPosition={5} />
       </section>
     </article>
-    <div class="center-all content-wrapper">
-      <ButtonLink
-        linkObject={{ name: "Back to All Fellows", href: { slug: "fellows" } }}
-      />
+    <div class="fellow-nav | content-wrapper">
+      {
+        prevFellow && (
+          <div class="prev flow">
+            <div class="small-title">Previous Fellow</div>
+            <a href={buildFellowHref(prevFellow)} rel="prev">
+              {joinNames(prevFellow.name)}
+            </a>
+          </div>
+        )
+      }
+      <div class="return">
+        <ButtonLink
+          linkObject={{
+            name: "Back to All Fellows",
+            href: { slug: "fellows" },
+          }}
+        />
+      </div>
+      {
+        nextFellow && (
+          <div class="next flow">
+            <div class="small-title">Next Fellow</div>
+            <a href={buildFellowHref(nextFellow)} rel="next">
+              {joinNames(nextFellow.name)}
+            </a>
+          </div>
+        )
+      }
     </div>
   </main>
 </Layout>
@@ -204,6 +240,14 @@ const path = Astro.url.pathname;
     z-index: 2;
   }
 
+  .radial-blur {
+    position: absolute;
+    top: -15%;
+    z-index: -2;
+    right: -25%;
+    opacity: 0.1;
+  }
+
   .headshot {
     aspect-ratio: var(--presentation-image-ratio);
     object-fit: cover;
@@ -243,9 +287,9 @@ const path = Astro.url.pathname;
   }
 
   .bio {
-    margin-block-start: calc((var(--section-spacer) * 0.25) * -1);
+    margin-block-start: calc((var(--section-spacer) * 0.5) * -1);
     margin-block-end: var(--section-spacer);
-    padding-block: var(--section-spacer);
+    padding-block: calc(var(--section-spacer) + 1rem);
     background-color: var(--color-primary-light-background);
     position: relative;
 
@@ -292,6 +336,37 @@ const path = Astro.url.pathname;
     & svg {
       position: relative;
       top: -2px;
+    }
+  }
+
+  .fellow-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+
+    & .small-title {
+      color: var(--color-primary-base);
+    }
+
+    & :is(.prev, .next) {
+      &.flow {
+        gap: 0.5rem;
+      }
+    }
+
+    & .next {
+      text-align: right;
+    }
+
+    & .return {
+      grid-column: 2/2;
+      justify-self: center;
+    }
+
+    & a {
+      font-family: var(--font-heading);
+      font-weight: var(--font-heading-weight);
+      font-size: var(--step-1);
     }
   }
 </style>

@@ -34,7 +34,9 @@ const { page } = Astro.props;
         case "grid":
           return <IntroGridSection content={section as Grid} />;
         case "presentation":
-          return <PresentationSection content={section as Presentation} />;
+          return (
+            <PresentationSection content={section as Presentation} textCenter />
+          );
         case "emphasis":
           return <EmphasisSection content={section as Emphasis} />;
         case "quote":

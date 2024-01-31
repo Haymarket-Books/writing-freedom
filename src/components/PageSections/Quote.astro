@@ -27,12 +27,12 @@ const { content } = Astro.props;
     {
       content?.featuredLink && (
         <div class="link | flow">
+          <p class="italic">{content.featuredLink.description}</p>
           <ButtonLink
             theme="ghost"
             linkObject={content.featuredLink.linkObject!}
             withArrow
           />
-          <p>{content.featuredLink.description}</p>
         </div>
       )
     }

@@ -123,6 +123,7 @@ export interface Hero extends PageSection {
   heading?: string;
   text?: string;
   image?: CoverImage;
+  featuredImage?: CoverImage;
   linkObject?: Link;
 }
 

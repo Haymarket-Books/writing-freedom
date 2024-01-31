@@ -56,6 +56,10 @@
   text-wrap: pretty;
 }
 
+.italic {
+  font-style: italic;
+}
+
 .leading-normal {
   line-height: var(--leading-normal);
 }

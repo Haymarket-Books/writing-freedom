@@ -36,6 +36,7 @@ export default defineType({
     }),
     defineField({
       name: 'image',
+      title: 'Background Image',
       type: 'coverImage',
       description: 'Background image layered behind hero text.',
       validation: (Rule) => Rule.required(),

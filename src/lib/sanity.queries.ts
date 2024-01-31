@@ -76,7 +76,7 @@ export const fellowsIndexQuery = groq`*[_type == "fellow"] | order(name.lastName
     "image": ${groqImage}
 }`;
 
-export const fellowsDetailQuery = groq`*[_type == "fellow"] {
+export const fellowsDetailQuery = groq`*[_type == "fellow"] | order(name.lastName asc) {
     "type": _type,
     name,
     "slug": slug.current,
