@@ -5,12 +5,17 @@ import IndexBlueprint from "../../components/PageBlueprints/IndexBlueprint.astro
 import ContactBlueprint from "../../components/PageBlueprints/ContactBlueprint.astro";
 import PersonCard from "../../components/PersonCard.astro";
 import { sanityClient } from "sanity:client";
-import { pageQuery, fellowshipYearsIndexQuery } from "../../lib/sanity.queries";
+import {
+  pageQuery,
+  fellowshipYearsIndexQuery,
+  fellowCategoriesQuery,
+} from "../../lib/sanity.queries";
 import type {
   PagePayload,
   Fellow,
   FellowshipYear,
   PageMetadata,
+  Category,
 } from "../../types";
 import FellowsFilters from "../../components/FellowsFilters.astro";
 import generatePageMetadata from "../../utils/generatePageMetadata";
@@ -19,6 +24,9 @@ export async function getStaticPaths() {
   const years = await sanityClient.fetch<FellowshipYear[]>(
     fellowshipYearsIndexQuery,
   );
+  const fellowCategories = await sanityClient.fetch<Category[]>(
+    fellowCategoriesQuery,
+  );
   // const pages = await sanityClient.fetch<PagePayload[]>(pageQuery, {
   //   page: "page"
   // });
@@ -26,7 +34,11 @@ export async function getStaticPaths() {
   return years.map((entry) => {
     return {
       params: { year: entry.year },
-      props: { page: entry, fellowshipYears: years },
+      props: {
+        page: entry,
+        fellowshipYears: years,
+        filterCategories: fellowCategories,
+      },
     };
   });
 }
@@ -36,9 +48,10 @@ export async function getStaticPaths() {
 type Props = {
   page?: FellowshipYear;
   fellowshipYears?: FellowshipYear[];
+  filterCategories?: Category[];
 };
 
-const { page, fellowshipYears } = Astro.props;
+const { page, fellowshipYears, filterCategories } = Astro.props;
 
 const meta: PageMetadata = {
   seo: {
@@ -61,14 +74,16 @@ const path = Astro.url.pathname;
   <main slot="content">
     <div class="content-wrapper flow">
       <h1 class="with-mark">{page?.year} Fellows</h1>
-      <FellowsFilters years={fellowshipYears} />
-      <div class="responsive-grid">
-        {
-          page?.fellows?.map((fellow) => {
-            return <PersonCard person={fellow} />;
-          })
-        }
-      </div>
+      <fellow-filter class="flow">
+        <FellowsFilters years={fellowshipYears} categories={filterCategories} />
+        <div class="fellows-grid | responsive-grid">
+          {
+            page?.fellows?.map((fellow) => {
+              return <PersonCard person={fellow} />;
+            })
+          }
+        </div>
+      </fellow-filter>
     </div>
 
     <style>
@@ -92,3 +107,5 @@ const path = Astro.url.pathname;
     </style>
   </main>
 </Layout>
+
+<script src="../../scripts/components/fellow-filter.js"></script>

@@ -7,12 +7,17 @@ import buildFellowHref from "../utils/buildFellowHref";
 
 type Props = {
   person: Person | Fellow | TeamMember;
+  // filter?: boolean;
 };
 
 const { person } = Astro.props;
 ---
 
-<article class="flow">
+<article
+  class="flow"
+  data-filter-tag={person.type === "fellow" &&
+    (person as Fellow)?.categories?.map((category) => category.slug)}
+>
   {
     person.type === "teamMember" ? (
       <Fragment>

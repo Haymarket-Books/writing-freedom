@@ -117,6 +117,11 @@ export const fellowshipYearsIndexQuery = groq`*[_type == "fellowshipYear"] | ord
         }
 }`;
 
+export const fellowCategoriesQuery = groq`*[_type == "category"] | order(slug.current asc) {
+    "slug": slug.current,
+    name
+}`;
+
 //// PAGES
 // Navigation
 export const mainNavQuery = groq`*[_type == "navigation"][0] {

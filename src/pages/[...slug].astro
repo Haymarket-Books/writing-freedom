@@ -8,8 +8,9 @@ import {
   pageQuery,
   fellowsIndexQuery,
   fellowshipYearsIndexQuery,
+  fellowCategoriesQuery,
 } from "../lib/sanity.queries";
-import type { PagePayload, Fellow, FellowshipYear } from "../types";
+import type { PagePayload, Fellow, FellowshipYear, Category } from "../types";
 import generatePageMetadata from "../utils/generatePageMetadata";
 
 export async function getStaticPaths() {
@@ -28,6 +29,9 @@ export async function getStaticPaths() {
 const fellows = await sanityClient.fetch<Fellow[]>(fellowsIndexQuery);
 const years = await sanityClient.fetch<FellowshipYear[]>(
   fellowshipYearsIndexQuery,
+);
+const fellowCategories = await sanityClient.fetch<Category[]>(
+  fellowCategoriesQuery,
 );
 
 type Props = {
@@ -52,7 +56,10 @@ const path = Astro.url.pathname;
                 <IndexBlueprint
                   page={page}
                   content={page.slug === "fellows" ? fellows : undefined}
-                  filters={page.slug === "fellows" ? years : undefined}
+                  filterYears={page.slug === "fellows" ? years : undefined}
+                  filterCategories={
+                    page.slug === "fellows" ? fellowCategories : undefined
+                  }
                 />
               );
             case "contact":

@@ -1,5 +1,10 @@
 ---
-import type { PagePayload, Fellow, FellowshipYear } from "../../types/index";
+import type {
+  PagePayload,
+  Fellow,
+  FellowshipYear,
+  Category,
+} from "../../types/index";
 import type { PortableTextBlock } from "sanity";
 import PersonCard from "../PersonCard.astro";
 import FellowsFilters from "../FellowsFilters.astro";
@@ -11,10 +16,11 @@ import urlFor from "../../lib/sanity.urlForImage";
 type Props = {
   page: PagePayload;
   content?: Fellow[];
-  filters?: FellowshipYear[];
+  filterYears?: FellowshipYear[];
+  filterCategories?: Category[];
 };
 
-const { page, content, filters } = Astro.props;
+const { page, content, filterYears, filterCategories } = Astro.props;
 
 // const contentWithAstroImage = content?.map(async (fellow) => {
 //   return {
@@ -40,14 +46,16 @@ const { page, content, filters } = Astro.props;
     fellows={preparedContent}
     defaultYear={SITE_SETTINGS.defaultFellowshipYear}
   /> -->
-  <FellowsFilters years={filters} />
-  <div class="responsive-grid">
-    {
-      content?.map((fellow) => {
-        return <PersonCard person={fellow} />;
-      })
-    }
-  </div>
+  <fellow-filter class="flow">
+    <FellowsFilters years={filterYears} categories={filterCategories} />
+    <div class="fellows-grid | responsive-grid">
+      {
+        content?.map((fellow) => {
+          return <PersonCard person={fellow} />;
+        })
+      }
+    </div>
+  </fellow-filter>
 </div>
 
 <style>
@@ -69,3 +77,5 @@ const { page, content, filters } = Astro.props;
     --item-max-width: 14rem; */
   }
 </style>
+
+<script src="../../scripts/components/fellow-filter.js"></script>

@@ -1,12 +1,13 @@
 ---
 import ButtonLink from "./ButtonLink.astro";
-import type { FellowshipYear } from "../types";
+import type { FellowshipYear, Category } from "../types";
 
 type Props = {
   years?: FellowshipYear[];
+  categories?: Category[];
 };
 
-const { years } = Astro.props;
+const { years, categories } = Astro.props;
 
 const path = Astro.url.pathname;
 ---
@@ -41,4 +42,22 @@ const path = Astro.url.pathname;
       }
     </div>
   </div>
+  <form class="cluster">
+    <label for="fellow-categories" class="small-title">Filter Category</label>
+    <select name="Fellow Categories" id="fellow-categories">
+      <option value="all">All</option>
+      {
+        categories?.map((category) => (
+          <option value={category.slug}>{category.name}s</option>
+        ))
+      }
+    </select>
+  </form>
 </section>
+
+<script>
+  const options = document.querySelectorAll("#categories");
+  options.forEach((option) => {
+    option;
+  });
+</script>
