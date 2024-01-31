@@ -199,7 +199,9 @@ const path = Astro.url.pathname;
 
 <style>
   main {
-    margin-block-start: calc(var(--section-spacer) * 0.25);
+    position: relative;
+    overflow: hidden;
+    padding-block-start: calc(var(--section-spacer) * 0.25);
     margin-block-end: var(--section-spacer);
   }
 
@@ -356,6 +358,7 @@ const path = Astro.url.pathname;
 
     & .next {
       text-align: right;
+      align-items: flex-end;
     }
 
     & .return {
@@ -367,6 +370,8 @@ const path = Astro.url.pathname;
       font-family: var(--font-heading);
       font-weight: var(--font-heading-weight);
       font-size: var(--step-1);
+      display: inline-block;
+      width: fit-content;
     }
   }
 </style>
