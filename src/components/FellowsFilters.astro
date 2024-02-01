@@ -55,6 +55,27 @@ const path = Astro.url.pathname;
   </form>
 </section>
 
+<style>
+  section {
+    &.cluster {
+      gap: 3rem;
+    }
+  }
+
+  select {
+    padding: 0.75rem;
+    border-radius: var(--rounded-corners-small);
+    line-height: var(--leading-tight);
+    font-size: var(--step--1);
+    background: var(--color-primary-light);
+    border: 1px solid var(--color-accent-base);
+
+    /* &:hover {
+      border-color: var(--color-accent-base);
+    } */
+  }
+</style>
+
 <script>
   const options = document.querySelectorAll("#categories");
   options.forEach((option) => {
