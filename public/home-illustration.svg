@@ -1,5 +1,12 @@
 <svg width="308" height="246" viewBox="0 0 308 246" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="209.5" cy="156.5" r="89.5" fill="#FD49A0" fill-opacity="0.64"/>
+<filter id='noiseFilter'>
+<feTurbulence 
+    type='fractalNoise' 
+    baseFrequency='0.65' 
+    numOctaves='3' 
+    stitchTiles='stitch' />
+</filter>
+<circle cx="209.5" cy="156.5" r="89.5" fill="#FD49A0" fill-opacity="0.64" filter="url(#noiseFilter)"/>
 <g style="mix-blend-mode:hard-light" opacity="0.9">
 <path d="M124.281 65L162.781 125.114L181.693 101.474L197.228 128.491L262.07 119.711L308 121.737L236.404 142.675L256.667 192.658L228.298 158.211L223.57 216.298H216.816L201.956 224.404L176.289 204.14H168.184L159.404 158.211L0 185.904L141.842 139.298L124.281 65Z" fill="white" fill-opacity="0.9"/>
 <path d="M157.377 137.947L158.728 131.868L159.403 137.947L181.693 139.973L178.991 120.386L179.667 118.359L184.395 139.973L187.772 140.649L187.096 142.675L172.237 142L120.228 156.184L120.903 154.158L167.509 140.649L147.246 139.298L147.921 137.947H157.377Z" fill="#FD49A0"/>

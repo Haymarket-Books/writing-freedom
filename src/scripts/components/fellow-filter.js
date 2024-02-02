@@ -3,14 +3,18 @@ export default class FellowFilter extends HTMLElement {
     const form = this.querySelector("form");
     const formSelect = form.querySelector("select");
     const formOptions = form.querySelectorAll("option");
+    const heading = this.querySelector("h2");
     const filterItems = this.querySelectorAll(".fellows-grid article");
+    // Array.from(formOptions).forEach((option) =>
+    //   console.log(option.textContent)
+    // );
 
     const init = new URLSearchParams(window.location.search);
     // console.log("options", formOptions);
     // console.log("items", filterItems);
 
     for (const value of init.values()) {
-      console.log("init value", value);
+      // console.log("init value", value);
       Array.from(formSelect.options).forEach((option) => {
         if (option.value === value) {
           option.selected = true;
@@ -32,6 +36,7 @@ export default class FellowFilter extends HTMLElement {
       console.log("selected option: ", selected);
 
       const data = new FormData(form);
+      console.log("form data", data);
       filter(data);
       const permalink = new URLSearchParams(data).toString();
       console.log("permalink", permalink);
@@ -42,7 +47,7 @@ export default class FellowFilter extends HTMLElement {
     }
 
     function filter(data) {
-      console.log(filterItems);
+      // console.log(filterItems);
       let selectedTag;
 
       for (const [name, value] of data.entries()) {
@@ -51,6 +56,9 @@ export default class FellowFilter extends HTMLElement {
       }
 
       console.log("selectedTag", selectedTag);
+      heading.textContent = Array.from(formOptions).find(
+        (option) => option.value === selectedTag
+      ).textContent;
 
       filterItems.forEach((item) => {
         const itemTags = item.dataset.filterTag.split(",");

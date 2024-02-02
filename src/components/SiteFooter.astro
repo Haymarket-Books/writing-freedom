@@ -18,7 +18,7 @@ const date = new Date();
     <div class="grid">
       <div>
         <div class="logo-wrapper | cluster">
-          <Logo size="3rem" color="white" />
+          <Logo size="3rem" color="white" title={content.title} />
           <div>
             <p class="small-title">Haymarket Books</p>
             <p class="site-title">{content.title}</p>
@@ -32,7 +32,7 @@ const date = new Date();
           ><i class="fa-regular fa-arrow-up-right-from-square"></i>
         </p>
       </div>
-      <nav>
+      <nav aria-label="Footer Navigation">
         <ul class="flow" role="list">
           {
             navigation.entries?.map((navItem) => (
@@ -64,7 +64,15 @@ const date = new Date();
         }
       </ul>
     </div>
-    <div class="subfooter">{`© ${date.getFullYear()} ${content.title}`}</div>
+    <div class="subfooter | cluster">
+      <div>
+        {`© ${date.getFullYear()} Haymarket Books`}
+      </div>
+      <div>|</div>
+      <div>
+        Site design by <a href="https://daniel-saunders.com">Daniel Saunders</a>
+      </div>
+    </div>
   </div>
 </footer>
 
@@ -73,7 +81,7 @@ const date = new Date();
     --logo-size: 3rem;
     color: var(--color-primary-light);
     background: var(--color-background-gradient-dark);
-    padding-block-end: 1rem;
+    padding-block-end: 1.5rem;
   }
 
   .grid {

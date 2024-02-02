@@ -71,6 +71,10 @@ const { content } = Astro.props;
       border-bottom-left-radius: var(--rounded-corners-small);
     }
 
+    &:nth-child(2) {
+      border-inline: 1px solid color-mix(in srgb, var(--color-accent-light), white 60%)
+    }
+
     &:last-child {
       border-top-right-radius: var(--rounded-corners-small);
       border-bottom-right-radius: var(--rounded-corners-small);

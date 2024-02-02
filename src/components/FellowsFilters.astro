@@ -45,7 +45,7 @@ const path = Astro.url.pathname;
   <form class="cluster">
     <label for="fellow-categories" class="small-title">Filter Category</label>
     <select name="Fellow Categories" id="fellow-categories">
-      <option value="all">All</option>
+      <option value="all">All Fellows</option>
       {
         categories?.map((category) => (
           <option value={category.slug}>{category.name}s</option>
@@ -57,6 +57,9 @@ const path = Astro.url.pathname;
 
 <style>
   section {
+    border-block: 1px solid var(--color-primary-light);
+    padding: var(--space-s);
+
     &.cluster {
       gap: 3rem;
     }

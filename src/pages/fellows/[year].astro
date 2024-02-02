@@ -76,13 +76,16 @@ const path = Astro.url.pathname;
       <h1 class="with-mark">{page?.year} Fellows</h1>
       <fellow-filter class="flow">
         <FellowsFilters years={fellowshipYears} categories={filterCategories} />
-        <div class="fellows-grid | responsive-grid">
-          {
-            page?.fellows?.map((fellow) => {
-              return <PersonCard person={fellow} />;
-            })
-          }
-        </div>
+        <section class="flow">
+          <h2>All Fellows</h2>
+          <div class="fellows-grid | responsive-grid">
+            {
+              page?.fellows?.map((fellow) => {
+                return <PersonCard person={fellow} />;
+              })
+            }
+          </div>
+        </section>
       </fellow-filter>
     </div>
 
@@ -95,10 +98,20 @@ const path = Astro.url.pathname;
         }
       }
 
+      h2 {
+        font-size: var(--step-2);
+      }
+
+      section {
+        &.flow {
+          --flow-space: 1.5rem;
+        }
+      }
+
       .responsive-grid {
         /* --grid-gap: 2rem; */
         --item-min-width: 16rem;
-        --item-max-width: 18rem;
+        /* --item-max-width: 18rem; */
         grid-row-gap: 4rem;
         grid-column-gap: 2rem;
         /* --item-min-width: 12rem; 
