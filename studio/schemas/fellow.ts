@@ -128,6 +128,12 @@ export default defineType({
       validation: (Rule) => Rule.min(1),
     }),
     defineField({
+      name: 'websiteLink',
+      title: 'Website Link',
+      type: 'url',
+      description: "Optional link to the fellow's personal website.",
+    }),
+    defineField({
       name: 'media',
       title: 'Embedded Audio',
       type: 'object',
@@ -147,6 +153,12 @@ export default defineType({
           title: 'Audio File Description',
           type: 'richContentLite',
           description: 'A short description describing the audio file.',
+        }),
+        defineField({
+          name: 'fileTranscript',
+          title: 'Audio File Transcript',
+          type: 'richContentLite',
+          description: 'Optional transcript of the audio file.',
         }),
       ],
     }),

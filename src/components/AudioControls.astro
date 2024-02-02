@@ -2,6 +2,8 @@
 import type { Fellow } from "../types";
 import RichContent from "./RichContent.astro";
 import "../styles/rich-content.css";
+import ShareLink from "./Svelte/ShareLink.svelte";
+import joinNames from "../utils/joinNames";
 
 type Props = {
   content?: Fellow;
@@ -34,6 +36,11 @@ function toMb(num: number) {
       )
     }</a
   >
+  <ShareLink
+    url={content?.media?.file?.url}
+    title={`${joinNames(content?.name)} reading`}
+    client:load
+  />
 </figure>
 
 <style>

@@ -5,6 +5,7 @@ import type { Image, ImageAsset, ImageMetadata, FileAsset } from "sanity";
 export interface CoverImage extends Image {
   alt?: string;
   asset?: any;
+  attribution?: string;
 }
 
 export type Link = {
@@ -55,6 +56,7 @@ export interface Fellow extends Person {
   categories?: Category[];
   content?: PortableTextBlock[];
   selectedWorks?: Work[];
+  websiteLink?: string;
   media?: {
     file?: FileAsset;
     content?: PortableTextBlock[];

@@ -26,7 +26,8 @@ const groqImage = groq`image{
     alt,
     asset->,
     crop,
-    hotspot
+    hotspot,
+    attribution
 }`;
 
 export const settingsQuery = groq`*[_type == "siteSettings"][0]{
@@ -91,6 +92,7 @@ export const fellowsDetailQuery = groq`*[_type == "fellow"] | order(name.lastNam
     "image": ${groqImage},
     content[],
     selectedWorks[],
+    websiteLink,
     media{
         "file": file.asset->,
         "content": fileDescription[]

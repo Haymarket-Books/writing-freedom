@@ -20,9 +20,9 @@ export default defineType({
       const dimensions = tryGetImageDimensions(img as SanityImageSource)
       return dimensions.width > 5000
         ? `Warning: image size is very large (${dimensions.width} pixels wide), please consider using a smaller image.`
-        : dimensions.width < 800
-        ? `Warning: image size is very small (${dimensions.width} pixels wide), please consider using a larger image.`
-        : true
+        : // : dimensions.width < 800
+          // ? `Warning: image size is very small (${dimensions.width} pixels wide), please consider using a larger image.`
+          true
     }),
   ],
   fields: [
@@ -38,6 +38,13 @@ export default defineType({
       type: 'string',
       description: 'Required alternative text description for screenreaders.',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'attribution',
+      title: 'Image Attribution',
+      type: 'string',
+      description: 'Optional attribution or credit for the image.',
+      hidden: ({document}) => (document?._type === 'fellow' ? false : true),
     }),
   ],
 })
