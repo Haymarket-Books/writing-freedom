@@ -15,6 +15,7 @@ export default defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      description: "Unique identifier for this year's detail page. Defaults to year.",
       options: {
         source: (doc) => `${doc.year}`,
         isUnique: (value, context) => context.defaultIsUnique(value, context),

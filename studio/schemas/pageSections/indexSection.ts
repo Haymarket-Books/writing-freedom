@@ -9,6 +9,7 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
+      description: 'Name of the section.',
       validation: (Rule) => Rule.required(),
     }),
     defineField({

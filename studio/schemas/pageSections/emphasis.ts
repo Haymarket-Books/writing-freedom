@@ -9,7 +9,8 @@ export default defineType({
       name: 'blocks',
       title: 'Text',
       type: 'richContentLite',
-      validation: (Rule) => Rule.required().max(200),
+      description: 'Callout text that emphasizes a point.',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'image',

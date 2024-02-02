@@ -39,12 +39,14 @@ export default defineType({
               name: 'heading',
               title: 'Heading',
               type: 'string',
+              description: 'Column heading.',
               // validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: 'text',
               title: 'Text',
               type: 'text',
+              description: 'Column text.',
               validation: (Rule) => [
                 Rule.required(),
                 Rule.max(300).warning('It is best to keep this text under 300 characters.'),

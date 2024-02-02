@@ -9,6 +9,8 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
+      description:
+        "Usually coincides with the title of the page. On the front-end, this is displayed as a smaller 'eyebrow' title accompanying the main heading text.",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -26,12 +28,14 @@ export default defineType({
       name: 'heading',
       title: 'Heading',
       type: 'string',
+      description: 'Large heading text that summarizes the overall message of the page or section.',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'text',
       title: 'Text',
       type: 'text',
+      description: 'Additional text that supplements the main heading.',
       validation: (Rule) => Rule.required(),
     }),
     defineField({

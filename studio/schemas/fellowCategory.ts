@@ -15,6 +15,8 @@ export default defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      description:
+        "Unique identifier for this category's detail page. Defaults to name of category.",
       options: {
         source: (doc) => `${doc.name}s`,
         isUnique: (value, context) => context.defaultIsUnique(value, context),

@@ -4,7 +4,9 @@ import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemas'
 import {deskStructure} from './deskStructure'
 import {dashboardTool, projectInfoWidget} from '@sanity/dashboard'
+import {dashboardWelcomeWidget} from './widgets/dashboardWelcome'
 import {documentListWidget} from 'sanity-plugin-dashboard-widget-document-list'
+import {netlifyTool} from 'sanity-plugin-netlify'
 
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
 const singletonTypes = new Set([
@@ -26,6 +28,9 @@ export default defineConfig({
   plugins: [
     dashboardTool({
       widgets: [
+        dashboardWelcomeWidget({
+          layout: {width: 'large'},
+        }),
         documentListWidget({
           title: 'Last edited items',
           order: '_updatedAt desc',
@@ -43,11 +48,21 @@ export default defineConfig({
         // documentListWidget({
         //   title: 'Currently drafting (changes not published)',
         //   query: '*[(_id in path("drafts.**"))]',
+        //   types: [
+        //     'fellow',
+        //     'teamMember',
+        //     'page',
+        //     'homepage',
+        //     'category',
+        //     'teamCategory',
+        //     'siteSettings',
+        //   ],
         //   layout: {width: 'regular'},
         // }),
       ],
     }),
     deskTool({structure: deskStructure}),
+    netlifyTool(),
     visionTool(),
   ],
 

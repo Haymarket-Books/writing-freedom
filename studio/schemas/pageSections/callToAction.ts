@@ -9,6 +9,7 @@ export default defineType({
       name: 'heading',
       title: 'Heading',
       type: 'string',
+      description: 'The CTA callout heading.',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -26,6 +27,7 @@ export default defineType({
       name: 'text',
       title: 'Text',
       type: 'text',
+      description: 'Optional descriptive text as a supplement to the main heading.',
     }),
     defineField({
       name: 'type',

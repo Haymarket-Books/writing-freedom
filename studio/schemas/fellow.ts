@@ -37,6 +37,8 @@ export default defineType({
       name: 'slug',
       title: 'URL Slug',
       type: 'slug',
+      description:
+        "Unique identifier for this fellow's detail page. Defaults to full name of fellow.",
       options: {
         source: (doc: Fellow) => {
           return `${doc?.name?.firstName} ${doc?.name?.lastName}`
@@ -144,6 +146,7 @@ export default defineType({
           name: 'fileDescription',
           title: 'Audio File Description',
           type: 'richContentLite',
+          description: 'A short description describing the audio file.',
         }),
       ],
     }),

@@ -9,6 +9,7 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
+      description: 'Name of the section.',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -32,6 +33,7 @@ export default defineType({
       name: 'blocks',
       title: 'Text',
       type: 'richContentLite',
+      description: 'Short text that summarizes or presents a main point.',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
