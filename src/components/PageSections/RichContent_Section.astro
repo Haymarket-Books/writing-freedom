@@ -1,0 +1,28 @@
+---
+import type { RichContent as RichContentType } from "../../types";
+import RichContent from "../RichContent.astro";
+import "../../styles/rich-content.css";
+
+type Props = {
+  content?: RichContentType;
+};
+
+const { content } = Astro.props;
+---
+
+<section class="content-wrapper">
+  <div class="rich-content">
+    <RichContent content={content?.blocks} />
+  </div>
+</section>
+
+<style>
+  section {
+    margin-block: var(--section-spacer);
+  }
+
+  .rich-content {
+    margin-inline: auto;
+    max-width: var(--paragraph-measure);
+  }
+</style>

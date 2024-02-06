@@ -74,6 +74,11 @@ const { content } = Astro.props;
   }
 
   article {
+    padding: var(--space-m);
+    border-radius: var(--rounded-corners-small);
+    border: 1px solid
+      color-mix(in srgb, var(--color-primary-base), transparent 75%);
+
     &.flow {
       --flow-space: 1rem;
     }

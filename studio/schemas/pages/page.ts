@@ -70,6 +70,29 @@ export default defineType({
           type: 'presentation',
         }),
         defineArrayMember({
+          name: 'richContent',
+          title: 'Rich Content Section',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'blocks',
+              title: 'Text',
+              type: 'richContentLite',
+            }),
+          ],
+          preview: {
+            select: {
+              content: 'blocks',
+            },
+            prepare({content}) {
+              return {
+                title: content[0].children[0].text,
+                subtitle: 'Rich Content Section',
+              }
+            },
+          },
+        }),
+        defineArrayMember({
           name: 'faq',
           title: 'FAQ Section',
           type: 'faqs',

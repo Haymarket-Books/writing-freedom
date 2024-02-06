@@ -91,19 +91,26 @@ const path = Astro.url.pathname;
     <article>
       <section class="content-wrapper">
         <div class="intro-grid">
-          <Image
-            class="headshot lqip-preview"
-            src={urlFor(fellow?.image!)
-              .width(400)
-              .height(500)
-              .auto("format")
-              .url()}
-            width={400}
-            height={500}
-            alt={fellow?.image?.alt ||
-              `Headshot for ${joinNames(fellow?.name)}`}
-            format="webp"
-          />
+          <figure>
+            <Image
+              class="headshot lqip-preview"
+              src={urlFor(fellow?.image!)
+                .width(400)
+                .height(500)
+                .auto("format")
+                .url()}
+              width={400}
+              height={500}
+              alt={fellow?.image?.alt ||
+                `Headshot for ${joinNames(fellow?.name)}`}
+              format="webp"
+            />
+            {
+              fellow?.image?.attribution && (
+                <figcaption>{fellow.image.attribution}</figcaption>
+              )
+            }
+          </figure>
           <div class="intro | flow">
             <h1 class="with-mark balanced">{joinNames(fellow?.name)}</h1>
             <!-- prettier-ignore -->
@@ -126,6 +133,19 @@ const path = Astro.url.pathname;
             </div>
           </div>
           <div class="sidebar | flow">
+            {
+              fellow?.websiteLink && (
+                <div class="web-link | flow">
+                  <div class="cluster">
+                    <i class="fa-regular fa-link" />
+                    <h2 class="small-title">Website</h2>
+                  </div>
+                  <a href={fellow?.websiteLink} target="_blank">
+                    {fellow?.websiteLink}
+                  </a>
+                </div>
+              )
+            }
             <div class="media | flow">
               <div class="cluster">
                 <i class="fa-regular fa-headphones"></i><h2 class="small-title">
@@ -133,19 +153,6 @@ const path = Astro.url.pathname;
                 </h2>
               </div>
               <AudioControls content={fellow} />
-              <!-- <figure class="flow">
-                <figcaption class="rich-content">
-                  <RichContent content={fellow?.media?.content} />
-                </figcaption>
-                <audio src={fellow?.media?.file?.url}></audio>
-                <div id="audio-controls" class="controls" data-state="hidden">
-                </div>
-                <a class="text-step--1" href={`${fellow?.media?.file?.url}?dl=`}
-                  >Download audio ({
-                    `${(fellow?.media?.file?.size! / 1000000).toFixed(2)} MB`
-                  })</a
-                >
-              </figure> -->
             </div>
             <!-- <div class="selected-work | flow">
               <h2 class="small-title">Selected Work</h2>
@@ -247,7 +254,7 @@ const path = Astro.url.pathname;
     z-index: -2;
     top: -4%;
     left: 6%;
-    opacity: 0.05;
+    opacity: 0.1;
     /* top: -15%;
     right: -25%;
     opacity: 0.1; */
@@ -259,9 +266,18 @@ const path = Astro.url.pathname;
     height: 100%;
     border-radius: var(--rounded-corners-small);
     justify-self: end;
+
+    & + figcaption {
+      position: absolute;
+      font-style: italic;
+      font-size: var(--step--1);
+      padding-block-start: var(--space-2xs);
+    }
   }
 
   .intro {
+    position: relative;
+    top: -1.5rem;
     width: min(100vw, 28rem);
 
     & .small-title {
@@ -320,15 +336,23 @@ const path = Astro.url.pathname;
     }
   }
 
+  :is(.web-link, .media) {
+    & > .cluster {
+      --cluster-space: 0.75rem;
+    }
+  }
+
+  .web-link {
+    & svg {
+      color: var(--color-primary-base);
+    }
+  }
+
   .media {
     background: var(--color-primary-dark);
     border-radius: var(--rounded-corners-small);
     color: var(--color-primary-light);
     padding: 1.5rem;
-
-    & > .cluster {
-      --cluster-space: 0.75rem;
-    }
 
     & :is(svg, .small-title) {
       color: var(--color-accent-light);

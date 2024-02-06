@@ -107,9 +107,9 @@ export type PageSectionTypes =
   | "sponsors"
   | "index"
   | "emphasis"
+  | "richContent"
   | "presentation"
-  | "quote"
-  | "richContent";
+  | "quote";
 
 // export type PageSection = {
 //   [key: string]: PageSectionValues;
@@ -151,6 +151,10 @@ export interface Presentation extends PageSection {
   image?: CoverImage | null;
   linkObject?: Link;
   layout?: boolean;
+}
+
+export interface RichContent extends PageSection {
+  blocks?: PortableTextBlock[];
 }
 
 export interface Quote extends PageSection {
@@ -219,6 +223,15 @@ export type PagePayload = {
   blueprint?: "home" | "interior" | "index" | "contact";
   metadata?: PageMetadata;
   content: Array<
-    Hero | Grid | Emphasis | Presentation | Quote | FAQ | Index | LinkCTA | CTA
+    | Hero
+    | Grid
+    | Emphasis
+    | Presentation
+    | Quote
+    | RichContent
+    | FAQ
+    | Index
+    | LinkCTA
+    | CTA
   >;
 };

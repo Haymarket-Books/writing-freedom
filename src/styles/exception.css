@@ -1,3 +1,7 @@
+.disclosure {
+  box-shadow: var(--shadow-light);
+}
+
 .disclosure-button {
   position: relative;
   display: block;

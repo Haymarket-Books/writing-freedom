@@ -5,6 +5,7 @@ import type {
   Grid,
   Emphasis,
   Presentation,
+  RichContent,
   Quote,
   FAQ,
   Index,
@@ -22,6 +23,7 @@ import FAQSection from "../PageSections/FAQSection.astro";
 import QuoteSection from "../PageSections/Quote.astro";
 import LinkCTASection from "../PageSections/LinkCTA.astro";
 import CallToActionSection from "../PageSections/CallToAction.astro";
+import RichContentSection from "../PageSections/RichContent_Section.astro";
 import buildPageNav from "../../utils/buildPageNav";
 import type { PortableTextBlock } from "sanity";
 
@@ -55,6 +57,8 @@ const pageNavigation: PageNavigation = buildPageNav(page.content);
           return <EmphasisSection content={section as Emphasis} />;
         case "quote":
           return <QuoteSection content={section as Quote} />;
+        case "richContent":
+          return <RichContentSection content={section as RichContent} />;
         case "faq":
           return <FAQSection content={section as FAQ} />;
         case "index":

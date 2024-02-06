@@ -95,6 +95,7 @@
   --section-spacer: 6rem;
   --main-top-spacer: 10rem;
   --shadow-regular: 0 -3px 28px -3px rgb(43 0 43 / 18%);
+  --shadow-light: 0 -3px 28px -3px rgb(43 0 43 / 8%);
   --accent-line-width: 4px;
   --text-opacity-shade: 0.75;
   --presentation-image-ratio: 4/5;

@@ -22,16 +22,72 @@ const { content } = Astro.props;
       </header>
       <p>{content?.text}</p>
     </div>
-    <Image
+    <div class="featured-img">
+      <svg
+        width="326"
+        height="456"
+        viewBox="0 0 326 456"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <path d="M101 0V320" stroke="#ffffff" stroke-opacity="0.1"></path>
+        <path d="M133 0L133 409" stroke="#ffffff" stroke-opacity="0.2"></path>
+        <path d="M165 0V361" stroke="#ffffff" stroke-opacity="0.25"></path>
+        <path d="M197 0L197 456" stroke="#ffffff" stroke-opacity="0.3"></path>
+        <path d="M229 0V320" stroke="#ffffff" stroke-opacity="0.2"></path>
+        <path d="M261 0L261 380" stroke="#ffffff" stroke-opacity="0.25"></path>
+        <path d="M293 0V232" stroke="#ffffff" stroke-opacity="0.15"></path>
+        <path d="M325 0V320" stroke="#ffffff" stroke-opacity="0.07"></path>
+        <circle
+          cx="209.5"
+          cy="330.5"
+          r="89.5"
+          fill="#FD49A0"
+          fill-opacity="0.64"></circle>
+        <circle cx="209.5" cy="330.5" r="89.5" fill="url(#pattern0)"></circle>
+        <g style="mix-blend-mode:hard-light" opacity="0.9">
+          <path
+            d="M124.281 239L162.781 299.114L181.693 275.474L197.228 302.491L262.07 293.711L308 295.737L236.404 316.675L256.667 366.658L228.298 332.211L223.57 390.298H216.816L201.956 398.404L176.289 378.14H168.184L159.404 332.211L0 359.904L141.842 313.298L124.281 239Z"
+            fill="white"
+            fill-opacity="0.9"></path>
+          <path
+            d="M157.377 311.947L158.728 305.868L159.403 311.947L181.693 313.973L178.991 294.386L179.667 292.359L184.395 313.973L187.772 314.649L187.096 316.675L172.237 316L120.228 330.184L120.903 328.158L167.509 314.649L147.246 313.298L147.921 311.947H157.377Z"
+            fill="#FD49A0"></path>
+          <path
+            d="M210.737 320.053L200.605 302.491H197.228L210.737 322.079L208.71 365.307L210.737 367.333L213.439 316L228.298 332.886V330.184L214.114 313.974V309.921C223.674 313.703 227.553 308.795 228.298 305.868L235.053 317.351H237.079L229.649 303.167L226.272 302.491C223.57 311.137 217.041 308.795 214.114 306.544H212.088L210.737 320.053Z"
+            fill="#FD49A0"></path>
+          <path
+            d="M190.473 322.755L159.403 332.211V334.237L190.473 326.132L201.956 397.728L206.009 396.378L193.175 326.132L195.202 324.106L193.175 322.755L190.473 316.676V322.755Z"
+            fill="#FD49A0"></path>
+        </g>
+        <g style="mix-blend-mode:hard-light" opacity="0.9">
+          <path
+            d="M273.562 197.388L255.374 208.936L253.209 200.059L245.519 205.474L228.895 194.817L216.07 189.524L232.994 204.368L221.087 215.465L233.234 209.651L227.133 226.146L228.981 227.006L232.015 231.116L241.618 228.839L243.836 229.871L252.085 218.421L292.175 246.291L259.298 215.482L273.562 197.388Z"
+            fill="white"
+            fill-opacity="0.9"></path>
+          <path
+            d="M255.219 213.135L255.623 211.3L254.665 212.877L248.308 210.594L251.541 205.579L251.614 204.938L247.569 210.25L246.559 210.005L246.486 210.645L250.637 212.352L263.062 222.854L263.135 222.214L252.103 212.585L257.819 214.795L257.807 214.339L255.219 213.135Z"
+            fill="#750075"></path>
+          <path
+            d="M239.587 208.56L244.595 205.045L245.519 205.475L239.329 209.114L234.381 221.2L233.568 221.497L239.364 207.107L233.148 209.836L233.492 209.097L239.437 206.467L239.953 205.358C236.856 205.176 236.419 203.339 236.588 202.443L233.278 204.725L232.723 204.467L236.562 201.532L237.572 201.777C237.211 204.487 239.295 204.677 240.383 204.434L240.937 204.692L239.587 208.56Z"
+            fill="#750075"></path>
+          <path
+            d="M244.788 211.879L252.085 218.422L251.827 218.976L244.358 212.803L232.101 230.931L231.165 230.046L243.619 212.459L243.322 211.647L244.049 211.535L245.562 210.216L244.788 211.879Z"
+            fill="#750075"></path>
+        </g>
+      </svg>
+    </div>
+    <!-- <Image
       src={urlFor(content?.image?.asset).width(1200).url()}
       alt={content?.image?.alt || ""}
       width={content?.image?.asset?.metadata.dimensions.width}
       height={content?.image?.asset?.metadata.dimensions.height}
       format="svg"
       loading="eager"
-    />
+    /> -->
   </div>
-  <BackgroundIllustration zIndex={1} opacity={0.7} color="#ffffff" />
+  <!-- <BackgroundIllustration zIndex={1} opacity={0.7} color="#ffffff" /> -->
   <Image
     class="bg-image"
     src={heroBackground}
@@ -54,7 +110,7 @@ const { content } = Astro.props;
   }
 
   .grid {
-    position: relative;
+    /* position: relative; */
     z-index: 3;
     display: grid;
     grid-template-columns: auto minmax(auto, 45rem);
@@ -67,6 +123,13 @@ const { content } = Astro.props;
       top: -3rem;
       width: max(20vw, 50rem);
     }
+  }
+
+  .featured-img {
+    position: absolute;
+    right: 15%;
+    top: -14rem;
+    transform: scale(1.15);
   }
 
   .text {

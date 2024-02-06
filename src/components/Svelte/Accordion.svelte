@@ -49,7 +49,7 @@
     }
 
     .question-wrapper:hover {
-        background-color: color-mix(in srgb, var(--color-white), transparent 30%);
+        background-color: color-mix(in srgb, var(--color-white), transparent 60%);
     }
 
     .answer-wrapper {

@@ -20,6 +20,8 @@ const {
   navigation,
   content,
 } = Astro.props;
+
+// console.log("current path", currentPath);
 ---
 
 <header
@@ -38,18 +40,24 @@ const {
     <nav aria-label="Main Navigation">
       <ul class="cluster" role="list">
         {
-          navigation.entries?.map((navItem) => (
-            <li>
-              <a
-                aria-current={
-                  `/${navItem.slug}/` === currentPath ? "page" : "false"
-                }
-                href={`/${navItem.slug}`}
-              >
-                {navItem.title}
-              </a>
-            </li>
-          ))
+          navigation.entries?.map((navItem) => {
+            const urlParts = currentPath.split("/");
+
+            return (
+              <li>
+                <a
+                  aria-current={
+                    urlParts.includes(navItem?.slug!.slice(1))
+                      ? "page"
+                      : "false"
+                  }
+                  href={`/${navItem.slug}`}
+                >
+                  {navItem.title}
+                </a>
+              </li>
+            );
+          })
         }
       </ul>
     </nav>

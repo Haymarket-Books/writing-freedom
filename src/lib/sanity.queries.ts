@@ -207,6 +207,9 @@ export const pageQuery = groq`*[_type == $page] {
                 "entries": ${fellowsIndexQuery}
             }
         },
+        _type == "richContent" => {
+            blocks[]
+        },
         _type == "emphasis" => {
             blocks[],
             "image": ${groqImage}
