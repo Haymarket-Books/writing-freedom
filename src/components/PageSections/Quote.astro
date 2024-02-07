@@ -16,27 +16,29 @@ const { content } = Astro.props;
 ---
 
 <article class="content-wrapper">
-  <div class="grid">
-    <div class="rich-content quote">
-      <RichContent content={content?.blocks} />
-      <div class="attribution">
-        <p class="small-title">{`—${content?.attribution?.name}`}</p>
-        <p>{content?.attribution?.title}</p>
-      </div>
-    </div>
-    {
-      content?.featuredLink && (
-        <div class="link | flow">
-          <img src="/crane-circle.svg" width={150} height={150} />
-          <p class="italic">{content.featuredLink.description}</p>
-          <ButtonLink
-            theme="ghost"
-            linkObject={content.featuredLink.linkObject!}
-            withArrow
-          />
+  <div class="grid-wrapper">
+    <div class="grid">
+      <div class="rich-content quote">
+        <RichContent content={content?.blocks} />
+        <div class="attribution">
+          <p class="small-title">{`—${content?.attribution?.name}`}</p>
+          <p>{content?.attribution?.title}</p>
         </div>
-      )
-    }
+      </div>
+      {
+        content?.featuredLink && (
+          <div class="link | flow">
+            <img src="/crane-circle.svg" width={150} height={150} />
+            <p class="italic">{content.featuredLink.description}</p>
+            <ButtonLink
+              theme="ghost"
+              linkObject={content.featuredLink.linkObject!}
+              withArrow
+            />
+          </div>
+        )
+      }
+    </div>
   </div>
   {
     content?.image && (
@@ -56,11 +58,14 @@ const { content } = Astro.props;
 <style>
   article {
     position: relative;
+    margin-block: var(--section-spacer);
+    /* margin-inline: var(--gutter); */
+  }
+
+  .grid-wrapper {
     border-radius: var(--rounded-corners-small);
     background: var(--color-background-gradient);
     color: var(--color-primary-light);
-    margin-block: var(--section-spacer);
-    margin-inline: var(--gutter);
   }
 
   .grid {
@@ -70,7 +75,7 @@ const { content } = Astro.props;
     grid-template-columns: 1fr 0.5fr;
     gap: 2rem;
     padding: 4rem;
-    margin-inline: calc(var(--gutter) * -1);
+    /* margin-inline: calc(var(--gutter) * -1); */
 
     & .link {
       place-self: center;
@@ -94,6 +99,8 @@ const { content } = Astro.props;
     mix-blend-mode: multiply;
     opacity: 0.6;
     border-radius: var(--rounded-corners-small);
+    width: calc(100% - var(--gutter) * 2);
+    margin-inline: auto;
   }
 
   :global(.quote .highlight) {
@@ -131,6 +138,17 @@ const { content } = Astro.props;
         place-self: flex-start;
         align-items: flex-start;
       }
+    }
+  }
+
+  @media (max-width: 640px) {
+    .grid {
+      padding: 1.5rem;
+    }
+
+    :global(.quote .highlight) {
+      position: relative;
+      display: inline;
     }
   }
 </style>

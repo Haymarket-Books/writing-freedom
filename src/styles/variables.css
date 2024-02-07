@@ -85,7 +85,7 @@
   --space-s-m: clamp(1rem, 0.7609rem + 1.1957vw, 1.6875rem);
 
   /* Layouts */
-  --gutter: var(--space-m, 1rem);
+  --gutter: var(--space-s-m, 1rem);
   --wrapper-max-width: 1366px;
 
   /* Other */

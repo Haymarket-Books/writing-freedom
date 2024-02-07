@@ -74,6 +74,7 @@ const { content, navigation } = Astro.props;
     opacity: 0.3;
     filter: saturate(0);
     mix-blend-mode: multiply;
+    mask-image: linear-gradient(to right, transparent, black);
   }
 
   @media (max-width: 768px) {
@@ -83,6 +84,10 @@ const { content, navigation } = Astro.props;
       & header + p {
         text-wrap: auto;
       }
+    }
+
+    .bg-image {
+      mask-image: linear-gradient(to right, transparent 30%, black);
     }
   }
 </style>

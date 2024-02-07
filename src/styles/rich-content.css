@@ -45,7 +45,8 @@
   .rich-content {
     &.quote {
       & > p {
-        text-wrap: auto;
+        text-wrap: wrap;
+        font-size: var(--step-0);
       }
     }
   }

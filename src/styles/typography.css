@@ -59,3 +59,9 @@ a:not(.button-link, .logo):hover {
     }
   }
 }
+
+@media (max-width: 640px) {
+  h1 {
+    font-size: var(--step-3);
+  }
+}

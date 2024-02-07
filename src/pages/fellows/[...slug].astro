@@ -353,8 +353,8 @@ const path = Astro.url.pathname;
       }
     }
 
-    & .selected-work {
-    }
+    /* & .selected-work {
+    } */
   }
 
   .sidebar {
@@ -493,6 +493,17 @@ const path = Astro.url.pathname;
     .radial-blur {
       top: 1%;
       left: -25%;
+    }
+
+    .bio {
+      & .background {
+        & .rich-content {
+          font-size: var(--step-0);
+          text-wrap: wrap;
+          max-width: none;
+          hyphens: auto;
+        }
+      }
     }
   }
 </style>

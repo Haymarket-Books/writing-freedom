@@ -12,6 +12,7 @@ const { content } = Astro.props;
 ---
 
 <section class="content-wrapper" id={content?.slug}>
+  <div class="grid-wrapper">
   <div class="grid">
     {
       content?.items?.map((item) => {
@@ -42,24 +43,29 @@ const { content } = Astro.props;
       })
     }
   </div>
+  </div>
 </section>
 
 <style>
   section {
     position: relative;
     z-index: 3;
-    background: var(--color-white);
     margin-block-start: -4rem;
     margin-block-end: var(--section-spacer);
-    margin-inline: var(--gutter);
+    /* margin-inline: var(--gutter); */
+  }
+
+  .grid-wrapper {
+    background: var(--color-white);
     border-radius: var(--rounded-corners-small);
     box-shadow: var(--shadow-regular);
+    /* margin-inline: var(--gutter); */
   }
 
   .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    margin-inline: calc(var(--gutter) * -1);
+    /* margin-inline: calc(var(--gutter) * -1); */
   }
 
   article {
@@ -133,7 +139,7 @@ const { content } = Astro.props;
     }
 
     .overlay {
-      background: linear-gradient(to right, var(--color-white) 20%, transparent);
+      background: linear-gradient(to right, var(--color-white) 50%, transparent);
     }
 
     article {
