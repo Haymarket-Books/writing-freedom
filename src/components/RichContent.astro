@@ -2,6 +2,7 @@
 import { PortableText } from "astro-portabletext";
 import RichContentTextHighlight from "./RichContent_TextHighlight.astro";
 import RichContentLargeText from "./RichContent_LargeText.astro";
+import RichContentLink from "./RichContent_Link.astro";
 // import PortableTextImage from "./PortableTextImage.astro";
 import type { PortableTextBlock } from "sanity";
 
@@ -19,6 +20,7 @@ const components = {
   mark: {
     highlight: RichContentTextHighlight,
     largeText: RichContentLargeText,
+    richContentLink: RichContentLink,
   },
 };
 ---

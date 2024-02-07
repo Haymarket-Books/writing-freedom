@@ -1,0 +1,41 @@
+---
+import type { PortableTextChild } from "sanity";
+import type { Link } from "../types";
+import buildHref from "../utils/buildHref";
+
+const { children, markDef } = Astro.props.node;
+// console.log("richContentLink", children);
+// console.log("markDefs", markDef);
+const defLink: Link = {
+  href: {
+    type: markDef.href[0]._type,
+    ...markDef.href[0],
+  },
+};
+// console.log(defLink);
+const link = buildHref(defLink);
+---
+
+{
+  children.map((child: PortableTextChild) => {
+    if (child._type === "@text") {
+      return (
+        <a href={link.href} target={link.target}>
+          {child.text}
+        </a>
+      );
+    }
+  })
+}
+
+<style>
+  a {
+    color: var(--color-primary-base);
+    text-decoration-thickness: 2px;
+    text-decoration-color: color-mix(
+      in srgb,
+      var(--color-primary-base),
+      white 60%
+    );
+  }
+</style>
