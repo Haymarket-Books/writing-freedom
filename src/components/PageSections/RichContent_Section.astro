@@ -25,4 +25,10 @@ const { content } = Astro.props;
     margin-inline: auto;
     max-width: var(--paragraph-measure);
   }
+
+  @media (max-width: 768px) {
+    section {
+      margin-block-start: calc((var(--section-spacer) * -1) * 0.75);
+    }
+  }
 </style>

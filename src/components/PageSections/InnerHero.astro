@@ -3,6 +3,7 @@ import type { Hero } from "../../types/index";
 import PageNav from "./PageNav.astro";
 import { Image } from "astro:assets";
 import urlFor from "../../lib/sanity.urlForImage";
+import { SITE_SETTINGS } from "../../lib/defaults";
 
 type Props = {
   content?: Hero;
@@ -16,8 +17,8 @@ const { content, navigation } = Astro.props;
   <div class="content-wrapper">
     <div class="text | flow">
       <header>
-        <p class="small-title">{content?.title}</p>
-        <h1>{content?.heading}</h1>
+        <p class="small-title">{SITE_SETTINGS.title}</p>
+        <h1>{content?.title}</h1>
       </header>
       <p>{content?.text}</p>
     </div>
@@ -38,7 +39,8 @@ const { content, navigation } = Astro.props;
   article {
     position: relative;
     color: var(--color-primary-light);
-    padding-block: var(--section-spacer);
+    padding-block-start: calc(var(--section-spacer) + var(--space-m));
+    padding-block-end: calc(var(--section-spacer) * 0.75);
     background: var(--color-background-gradient);
     overflow: hidden;
   }
@@ -72,5 +74,15 @@ const { content, navigation } = Astro.props;
     opacity: 0.3;
     filter: saturate(0);
     mix-blend-mode: multiply;
+  }
+
+  @media (max-width: 768px) {
+    .text {
+      width: 100%;
+
+      & header + p {
+        text-wrap: auto;
+      }
+    }
   }
 </style>

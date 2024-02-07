@@ -41,12 +41,17 @@ const { page, content, filterYears, filterCategories } = Astro.props;
 
 <div class="content-wrapper flow">
   <h1 class="with-mark">{page.title}</h1>
-  <!-- <FilterFellows
-    client:load
-    fellows={preparedContent}
-    defaultYear={SITE_SETTINGS.defaultFellowshipYear}
-  /> -->
-  <fellow-filter class="flow">
+  <section class="flow">
+    <h2 class="sr-only">All Fellows</h2>
+    <div class="fellows-grid | responsive-grid">
+      {
+        content?.map((fellow) => {
+          return <PersonCard person={fellow} />;
+        })
+      }
+    </div>
+  </section>
+  <!-- <fellow-filter class="flow">
     <FellowsFilters years={filterYears} categories={filterCategories} />
     <section class="flow">
       <h2>All Fellows</h2>
@@ -58,7 +63,7 @@ const { page, content, filterYears, filterCategories } = Astro.props;
         }
       </div>
     </section>
-  </fellow-filter>
+  </fellow-filter> -->
 </div>
 
 <style>
@@ -75,6 +80,8 @@ const { page, content, filterYears, filterCategories } = Astro.props;
   }
 
   section {
+    margin-block: var(--space-m);
+
     &.flow {
       --flow-space: 1.5rem;
     }

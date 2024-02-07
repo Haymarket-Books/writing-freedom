@@ -127,9 +127,10 @@ const { content } = Astro.props;
 
   .featured-img {
     position: absolute;
-    right: 15%;
+    right: min(15%, 200px);
     top: -14rem;
     transform: scale(1.15);
+    z-index: -1;
   }
 
   .text {
@@ -160,5 +161,39 @@ const { content } = Astro.props;
     /* top: -25%; */
     opacity: 0.12;
     mix-blend-mode: luminosity;
+  }
+
+  @media (max-width: 999px) {
+    .featured-img {
+      position: absolute;
+      right: min(15%, 50px);
+      top: -14rem;
+      transform: scale(1);
+    }
+  }
+
+  @media (max-width: 849px) {
+    .featured-img {
+      transform: scale(0.6);
+      right: -5%;
+      top: -20rem;
+    }
+
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    article {
+      padding-block-start: 15rem;
+    }
+
+    .featured-img {
+      opacity: 0.2;
+      transform: scale(1.2);
+      top: -12rem;
+      right: -8%;
+    }
   }
 </style>

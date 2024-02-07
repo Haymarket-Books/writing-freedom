@@ -9,6 +9,15 @@ interface Fellow extends SanityDocument {
   }
 }
 
+const SOCIAL_ICONS = [
+  {title: 'LinkedIn', value: 'linkedin'},
+  {title: 'Facebook', value: 'facebook'},
+  {title: 'Instagram', value: 'instagram'},
+  {title: 'YouTube', value: 'youtube'},
+  {title: 'Twitter', value: 'twitter'},
+  // {title: 'Website', value: 'square-arrow-up-right'},
+]
+
 export default defineType({
   name: 'fellow',
   title: 'Fellow',
@@ -57,16 +66,6 @@ export default defineType({
       },
       validation: (Rule) => Rule.required(),
     }),
-    // defineField({
-    //   name: 'fellowshipYear',
-    //   title: 'Fellowship Year',
-    //   type: 'number',
-    //   initialValue: 2024,
-    //   options: {
-    //     list: [2024, 2025],
-    //   },
-    //   validation: (Rule) => Rule.required(),
-    // }),
     defineField({
       name: 'image',
       title: 'Headshot',
@@ -126,6 +125,51 @@ export default defineType({
         }),
       ],
       validation: (Rule) => Rule.min(1),
+    }),
+    defineField({
+      name: 'socialLinks',
+      title: 'Fellow Links',
+      description: 'Links to personal website or social media accounts.',
+      type: 'array',
+      of: [
+        {
+          name: 'socialLink',
+          title: 'Social Link',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'icon',
+              title: 'Icon',
+              type: 'string',
+              options: {
+                list: SOCIAL_ICONS,
+              },
+            }),
+            defineField({
+              name: 'url',
+              title: 'URL',
+              type: 'url',
+              validation: (Rule) =>
+                Rule.uri({
+                  scheme: ['http', 'https', 'mailto', 'tel'],
+                }),
+            }),
+          ],
+          preview: {
+            select: {
+              icon: 'icon',
+            },
+            prepare({icon}) {
+              const socialIcon =
+                icon &&
+                SOCIAL_ICONS.flatMap((option) => (option.value === icon ? [option.title] : []))
+              return {
+                title: `${socialIcon}`,
+              }
+            },
+          },
+        },
+      ],
     }),
     defineField({
       name: 'websiteLink',

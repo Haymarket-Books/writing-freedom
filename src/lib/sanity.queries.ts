@@ -92,6 +92,10 @@ export const fellowsDetailQuery = groq`*[_type == "fellow"] | order(name.lastNam
     "image": ${groqImage},
     content[],
     selectedWorks[],
+    socialLinks[]{
+        icon,
+        url
+    },
     websiteLink,
     media{
         "file": file.asset->,

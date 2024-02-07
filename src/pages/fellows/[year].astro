@@ -74,7 +74,17 @@ const path = Astro.url.pathname;
   <main slot="content">
     <div class="content-wrapper flow">
       <h1 class="with-mark">{page?.year} Fellows</h1>
-      <fellow-filter class="flow">
+      <section class="flow">
+        <h2 class="sr-only">All Fellows</h2>
+        <div class="fellows-grid | responsive-grid">
+          {
+            page?.fellows?.map((fellow) => {
+              return <PersonCard person={fellow} />;
+            })
+          }
+        </div>
+      </section>
+      <!-- <fellow-filter class="flow">
         <FellowsFilters years={fellowshipYears} categories={filterCategories} />
         <section class="flow">
           <h2>All Fellows</h2>
@@ -86,7 +96,7 @@ const path = Astro.url.pathname;
             }
           </div>
         </section>
-      </fellow-filter>
+      </fellow-filter> -->
     </div>
 
     <style>

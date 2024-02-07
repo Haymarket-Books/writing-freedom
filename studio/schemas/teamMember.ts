@@ -75,11 +75,12 @@ export default defineType({
       firstName: 'name.firstName',
       lastName: 'name.lastName',
       role: 'title',
+      category: 'category.name',
     },
-    prepare({firstName, lastName, role}) {
+    prepare({firstName, lastName, role, category}) {
       return {
         title: `${firstName} ${lastName}`,
-        subtitle: role,
+        subtitle: category,
       }
     },
   },

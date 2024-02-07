@@ -19,6 +19,11 @@ export type Link = {
   };
 };
 
+export type SocialLink = {
+  icon?: string;
+  url?: string;
+};
+
 export type Category = {
   name?: string;
   slug?: string;
@@ -56,6 +61,7 @@ export interface Fellow extends Person {
   categories?: Category[];
   content?: PortableTextBlock[];
   selectedWorks?: Work[];
+  socialLinks?: SocialLink[];
   websiteLink?: string;
   media?: {
     file?: FileAsset;
@@ -83,10 +89,7 @@ export type SiteSettings = {
   logo?: Image;
   defaultFellowshipYear?: FellowshipYear;
   defaultOgImage?: Image;
-  socialLinks?: {
-    icon?: string;
-    url?: string;
-  }[];
+  socialLinks?: SocialLink[];
 };
 
 // export type PageSectionValues =

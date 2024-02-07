@@ -77,4 +77,19 @@ const { content } = Astro.props;
       width: auto;
     }
   }
+
+  @media (max-width: 768px) {
+    article {
+      &.flow {
+        align-items: center;
+        text-align: center;
+      }
+
+      & img {
+        margin: 0;
+        max-height: 6rem;
+        object-fit: contain;
+      }
+    }
+  }
 </style>

@@ -6,6 +6,7 @@ import IndexBlueprint from "../../components/PageBlueprints/IndexBlueprint.astro
 import ButtonLink from "../../components/ButtonLink.astro";
 import AudioControls from "../../components/AudioControls.astro";
 import BackgroundIllustration from "../../components/BackgroundIllustration.astro";
+import ShareLink from "../../components/Svelte/ShareLink.svelte";
 import { sanityClient } from "sanity:client";
 import { fellowsDetailQuery } from "../../lib/sanity.queries";
 import type { Fellow, PageMetadata } from "../../types";
@@ -14,6 +15,7 @@ import joinNames from "../../utils/joinNames";
 import buildFellowHref from "../../utils/buildFellowHref";
 import "../../styles/rich-content.css";
 import generatePageMetadata from "../../utils/generatePageMetadata";
+import SocialLinks from "../../components/SocialLinks.astro";
 
 export async function getStaticPaths() {
   const fellows = await sanityClient.fetch<Fellow[]>(fellowsDetailQuery);
@@ -133,26 +135,51 @@ const path = Astro.url.pathname;
             </div>
           </div>
           <div class="sidebar | flow">
-            {
-              fellow?.websiteLink && (
-                <div class="web-link | flow">
-                  <div class="cluster">
-                    <i class="fa-regular fa-link" />
-                    <h2 class="small-title">Website</h2>
+            <div class="box | flow">
+              {
+                fellow?.media?.file && (
+                  <>
+                    <div class="media | flow">
+                      <div class="cluster">
+                        <>
+                          <i class="fa-regular fa-headphones" />
+                          <h2 class="small-title">Listen</h2>
+                        </>
+                      </div>
+                      <AudioControls content={fellow} />
+                    </div>
+                    <ShareLink
+                      url={fellow?.media?.file?.url}
+                      title={`${joinNames(fellow?.name)} reading`}
+                      client:load
+                    />
+                  </>
+                )
+              }
+              {
+                fellow?.websiteLink && (
+                  <div class="web-link | flow">
+                    <div class="cluster">
+                      <i class="fa-regular fa-link" />
+                      <h2 class="small-title">Website</h2>
+                    </div>
+                    <a href={fellow?.websiteLink} target="_blank">
+                      {fellow?.websiteLink}
+                    </a>
                   </div>
-                  <a href={fellow?.websiteLink} target="_blank">
-                    {fellow?.websiteLink}
-                  </a>
-                </div>
-              )
-            }
-            <div class="media | flow">
-              <div class="cluster">
-                <i class="fa-regular fa-headphones"></i><h2 class="small-title">
-                  Listen
-                </h2>
-              </div>
-              <AudioControls content={fellow} />
+                )
+              }
+              {
+                fellow?.socialLinks?.length && (
+                  <div class="follow | flow">
+                    <div class="cluster">
+                      <i class="fa-regular fa-share-from-square" />
+                      <h2 class="small-title">Follow</h2>
+                    </div>
+                    <SocialLinks content={fellow?.socialLinks} />
+                  </div>
+                )
+              }
             </div>
             <!-- <div class="selected-work | flow">
               <h2 class="small-title">Selected Work</h2>
@@ -297,22 +324,22 @@ const path = Astro.url.pathname;
     } */
   }
 
-  .grid {
-    display: grid;
-    /* grid-template-columns: minmax(auto, 38rem) minmax(auto, 20rem);
-      width: fit-content;
-      margin-inline: auto;
-    */
-    grid-template-columns: 1fr 0.33fr;
-    gap: var(--space-2xl);
-  }
-
   .bio {
     margin-block-start: calc((var(--section-spacer) * 0.5) * -1);
     margin-block-end: var(--section-spacer);
     padding-block: calc(var(--section-spacer) + 1rem);
     background-color: var(--color-primary-light-background);
     position: relative;
+
+    & .grid {
+      display: grid;
+      /* grid-template-columns: minmax(auto, 38rem) minmax(auto, 20rem);
+      width: fit-content;
+      margin-inline: auto;
+    */
+      grid-template-columns: 1fr 0.33fr;
+      gap: var(--space-2xl);
+    }
 
     & .small-title {
       color: var(--color-primary-base);
@@ -334,37 +361,37 @@ const path = Astro.url.pathname;
     &.flow {
       gap: var(--space-l);
     }
-  }
 
-  :is(.web-link, .media) {
-    & > .cluster {
-      --cluster-space: 0.75rem;
-    }
-  }
+    & .box {
+      background: var(--color-primary-dark);
+      border-radius: var(--rounded-corners-small);
+      color: var(--color-primary-light);
+      padding: 1.5rem;
 
-  .web-link {
-    & svg {
-      color: var(--color-primary-base);
-    }
-  }
+      &.flow {
+        gap: var(--space-l);
+      }
 
-  .media {
-    background: var(--color-primary-dark);
-    border-radius: var(--rounded-corners-small);
-    color: var(--color-primary-light);
-    padding: 1.5rem;
+      & > .flow {
+        gap: var(--space-2xs);
+      }
 
-    & :is(svg, .small-title) {
-      color: var(--color-accent-light);
-    }
+      & .cluster {
+        --cluster-space: 0.75rem;
+      }
 
-    & .small-title {
-      line-height: 1;
-    }
+      & :is(svg, .small-title) {
+        color: var(--color-accent-light);
+      }
 
-    & svg {
-      position: relative;
-      top: -2px;
+      & .small-title {
+        line-height: 1;
+      }
+
+      & svg {
+        position: relative;
+        top: -2px;
+      }
     }
   }
 
@@ -372,6 +399,7 @@ const path = Astro.url.pathname;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     align-items: center;
+    gap: var(--space-m);
 
     & .small-title {
       color: var(--color-primary-base);
@@ -399,6 +427,72 @@ const path = Astro.url.pathname;
       font-size: var(--step-1);
       display: inline-block;
       width: fit-content;
+    }
+  }
+
+  @media (max-width: 999px) {
+    .intro-grid {
+      margin-inline-start: 0;
+    }
+
+    .bio {
+      & .grid {
+        grid-template-columns: 1fr 300px;
+        gap: var(--space-l);
+      }
+    }
+  }
+
+  @media (max-width: 849px) {
+    .intro {
+      width: auto;
+    }
+
+    .bio {
+      & .grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .intro-grid {
+      gap: var(--space-m);
+    }
+
+    .fellow-nav {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+
+      & :is(.prev, .next) {
+        text-align: center;
+        align-items: center;
+      }
+
+      & .return {
+        grid-column: 1/1;
+        order: -1;
+      }
+    }
+  }
+
+  @media (max-width: 640px) {
+    .intro-grid {
+      grid-template-columns: 1fr;
+      width: 100%;
+      margin-block-start: var(--space-3xl);
+      gap: var(--space-l);
+    }
+
+    .intro {
+      top: 0;
+      order: -1;
+    }
+
+    .radial-blur {
+      top: 1%;
+      left: -25%;
     }
   }
 </style>

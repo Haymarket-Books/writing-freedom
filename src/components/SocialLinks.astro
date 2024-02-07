@@ -1,0 +1,69 @@
+---
+import type { SocialLink } from "../types";
+import capitalizeFirst from "../utils/capitalizeFirst";
+
+type Props = {
+  content?: SocialLink[];
+};
+
+const { content } = Astro.props;
+---
+
+<ul class="social | cluster" role="list">
+  {
+    content?.map((link) => {
+      const iconName =
+        link.icon === "square-arrow-up-right"
+          ? "Haymarket Books website"
+          : capitalizeFirst(link.icon!);
+      return (
+        <li>
+          <a href={link.url} target="_blank" title={iconName}>
+            <i
+              class={`fa-${
+                link.icon === "square-arrow-up-right" ? "regular" : "brands"
+              } fa-${link.icon}`}
+            />
+            <span class="sr-only">{iconName}</span>
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style>
+  .social {
+    color: var(--theme-color-social);
+    font-size: 1.5rem;
+
+    &.cluster {
+      --cluster-space: 1.5rem;
+    }
+
+    & a {
+      transition: all 0.2s ease;
+
+      &:hover {
+        opacity: var(--text-opacity-shade);
+      }
+    }
+  }
+
+  :global(.site-footer) {
+    & .social {
+      position: relative;
+      top: -6px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    :global(.site-header) {
+      & .social {
+        position: absolute;
+        top: calc(1rem + 0.25rem);
+        right: calc(var(--gutter) * 0.5);
+      }
+    }
+  }
+</style>

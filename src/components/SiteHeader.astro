@@ -1,6 +1,7 @@
 ---
 import ButtonLink from "./ButtonLink.astro";
 import type { Navigation, SiteSettings } from "../types";
+import SocialLinks from "./SocialLinks.astro";
 import Logo from "./Logo.astro";
 import buildHref from "../utils/buildHref";
 import capitalizeFirst from "../utils/capitalizeFirst";
@@ -27,7 +28,7 @@ const {
 <header
   data-header-color={theme}
   data-header-position={position}
-  class="cluster"
+  class="site-header | cluster"
 >
   <div class="cluster">
     <Logo
@@ -42,14 +43,11 @@ const {
         {
           navigation.entries?.map((navItem) => {
             const urlParts = currentPath.split("/");
-
             return (
               <li>
                 <a
                   aria-current={
-                    urlParts.includes(navItem?.slug!.slice(1))
-                      ? "page"
-                      : "false"
+                    urlParts.includes(navItem?.slug!) ? "page" : "false"
                   }
                   href={`/${navItem.slug}`}
                 >
@@ -62,26 +60,29 @@ const {
       </ul>
     </nav>
   </div>
-  <ul class="social | cluster" role="list">
+  <SocialLinks content={content?.socialLinks} />
+  <!-- <ul class="social | cluster" role="list">
     {
-      content?.socialLinks?.map((link) => (
-        <li>
-          <a
-            href={link.url}
-            target="_blank"
-            title={capitalizeFirst(link.icon!)}
-          >
-            <i
-              class={`fa-${
-                link.icon === "square-arrow-up-right" ? "regular" : "brands"
-              } fa-${link.icon}`}
-            />
-            <span class="sr-only">{capitalizeFirst(link.icon!)}</span>
-          </a>
-        </li>
-      ))
+      content?.socialLinks?.map((link) => {
+        const iconName =
+          link.icon === "square-arrow-up-right"
+            ? "Haymarket Books website"
+            : capitalizeFirst(link.icon!);
+        return (
+          <li>
+            <a href={link.url} target="_blank" title={iconName}>
+              <i
+                class={`fa-${
+                  link.icon === "square-arrow-up-right" ? "regular" : "brands"
+                } fa-${link.icon}`}
+              />
+              <span class="sr-only">{iconName}</span>
+            </a>
+          </li>
+        );
+      })
     }
-  </ul>
+  </ul> -->
 </header>
 
 <style>
@@ -92,11 +93,12 @@ const {
     background-color: var(--theme-color-background);
 
     &.cluster {
-      --cluster-justify: space-between;
+      justify-content: space-between;
     }
 
     & > :first-child {
-      --cluster-space: 2rem;
+      row-gap: 1.5rem;
+      column-gap: 2rem;
     }
 
     & a {
@@ -123,7 +125,9 @@ const {
   nav {
     & ul {
       &.cluster {
-        --cluster-space: 2rem;
+        row-gap: 0.75rem;
+        column-gap: 2rem;
+        justify-content: flex-start;
       }
     }
 
@@ -156,7 +160,7 @@ const {
     }
   }
 
-  .social {
+  /* .social {
     color: var(--theme-color-social);
     font-size: 1.5rem;
 
@@ -171,7 +175,7 @@ const {
         opacity: var(--text-opacity-shade);
       }
     }
-  }
+  } */
 
   header[data-header-color="normal"] {
     --theme-color-text: var(--color-text-heading);
@@ -187,5 +191,19 @@ const {
     --theme-color-logo: var(--color-white);
     --theme-color-social: var(--color-white);
     --theme-color-background: transparent;
+  }
+
+  /* @media (max-width: 640px) {
+    .social {
+      position: absolute;
+      top: calc(2rem + 0.25rem);
+      right: calc(var(--gutter) * 0.5);
+    }
+  } */
+
+  @media (max-width: 640px) {
+    header {
+      padding-block-start: 1rem;
+    }
   }
 </style>

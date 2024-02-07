@@ -68,16 +68,17 @@ const { content } = Astro.props;
   }
 
   .responsive-grid {
-    --item-min-width: 12rem;
+    --item-min-width: 20rem;
     --grid-gap: var(--space-m);
     margin-block-start: calc(var(--section-spacer) * 0.5);
+    /* align-items: start; */
   }
 
   article {
     padding: var(--space-m);
     border-radius: var(--rounded-corners-small);
     border: 1px solid
-      color-mix(in srgb, var(--color-primary-base), transparent 75%);
+      color-mix(in srgb, var(--color-primary-base), transparent 90%);
 
     &.flow {
       --flow-space: 1rem;

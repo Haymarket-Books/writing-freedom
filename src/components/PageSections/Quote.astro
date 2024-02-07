@@ -27,6 +27,7 @@ const { content } = Astro.props;
     {
       content?.featuredLink && (
         <div class="link | flow">
+          <img src="/crane-circle.svg" width={150} height={150} />
           <p class="italic">{content.featuredLink.description}</p>
           <ButtonLink
             theme="ghost"
@@ -59,6 +60,7 @@ const { content } = Astro.props;
     background: var(--color-background-gradient);
     color: var(--color-primary-light);
     margin-block: var(--section-spacer);
+    margin-inline: var(--gutter);
   }
 
   .grid {
@@ -96,7 +98,7 @@ const { content } = Astro.props;
 
   :global(.quote .highlight) {
     position: relative;
-    display: inline-block;
+    display: inline;
   }
 
   :global(.quote .highlight::before) {
@@ -108,5 +110,27 @@ const { content } = Astro.props;
     height: 30%;
     width: 100%;
     background: var(--color-accent-base);
+  }
+
+  @media (max-width: 999px) {
+    .grid {
+      grid-template-columns: 1fr 0.25fr;
+      padding: 2rem;
+    }
+  }
+
+  @media (max-width: 849px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .grid {
+      & .link {
+        place-self: flex-start;
+        align-items: flex-start;
+      }
+    }
   }
 </style>

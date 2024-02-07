@@ -61,9 +61,9 @@ async function copyLink() {
 </div>
 
 <style>
-    #share {
+    /* #share {
         margin-block-start: var(--space-s);
-    }
+    } */
 
     .share-heading {
         color: var(--color-accent-light);

@@ -17,18 +17,14 @@ function toMb(num: number) {
 ---
 
 <figure class="audio-player | flow">
-  <figcaption class="rich-content">
-    <RichContent content={content?.media?.content} />
-  </figcaption>
+  {
+    content?.media?.content && (
+      <figcaption class="rich-content">
+        <RichContent content={content?.media?.content} />
+      </figcaption>
+    )
+  }
   <audio src={content?.media?.file?.url} controls></audio>
-  <!-- <div id="audio-controls" class="controls" data-state="hidden">
-    <button id="playpause" data-state="play">Play/pause</button>
-    <div class="progress">
-      <progress id="progress" value="0" min="0">
-        <span id="progress-bar"></span>
-      </progress>
-    </div>
-  </div> -->
   <a class="text-step--1" href={`${content?.media?.file?.url}?dl=`}
     >Download audio {
       content?.media?.file?.size && (
@@ -36,11 +32,11 @@ function toMb(num: number) {
       )
     }</a
   >
-  <ShareLink
+  <!-- <ShareLink
     url={content?.media?.file?.url}
     title={`${joinNames(content?.name)} reading`}
     client:load
-  />
+  /> -->
 </figure>
 
 <style>

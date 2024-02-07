@@ -85,7 +85,7 @@
   --space-s-m: clamp(1rem, 0.7609rem + 1.1957vw, 1.6875rem);
 
   /* Layouts */
-  --gutter: var(--space-l, 1rem);
+  --gutter: var(--space-m, 1rem);
   --wrapper-max-width: 1366px;
 
   /* Other */
@@ -99,4 +99,10 @@
   --accent-line-width: 4px;
   --text-opacity-shade: 0.75;
   --presentation-image-ratio: 4/5;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-spacer: 4rem;
+  }
 }

@@ -115,4 +115,15 @@ const { content, textCenter = false } = Astro.props;
       }
     }
   }
+
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr;
+
+      & img {
+        aspect-ratio: 4/3;
+        width: 100%;
+      }
+    }
+  }
 </style>

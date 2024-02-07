@@ -40,3 +40,13 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .rich-content {
+    &.quote {
+      & > p {
+        text-wrap: auto;
+      }
+    }
+  }
+}

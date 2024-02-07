@@ -58,6 +58,7 @@ const { person } = Astro.props;
 
 <style>
   article {
+    container: personCard / inline-size;
     --underline-color: color-mix(
       in srgb,
       var(--color-primary-base),
@@ -97,7 +98,7 @@ const { person } = Astro.props;
   }
 
   .fellow h3 {
-    font-size: var(--step-0);
+    font-size: min(var(--step-1), 7cqi);
   }
 
   .text {
@@ -117,6 +118,12 @@ const { person } = Astro.props;
       &:hover {
         text-decoration: underline var(--underline-color);
       }
+    }
+  }
+
+  @container personCard (width > 350px) {
+    .fellow h3 {
+      font-size: max(var(--step-2), 6cqi);
     }
   }
 </style>
