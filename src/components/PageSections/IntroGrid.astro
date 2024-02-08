@@ -127,6 +127,16 @@ const { content } = Astro.props;
     transition: all 0.4s ease-out;
   }
 
+  @media (prefers-reduced-motion) {
+    a {
+      &:hover {
+        & .bg-image {
+          transform: unset;
+        }
+      }
+    }
+  }
+
   @media (max-width: 999px) {
     article {
       padding: 6rem 2rem 2rem;

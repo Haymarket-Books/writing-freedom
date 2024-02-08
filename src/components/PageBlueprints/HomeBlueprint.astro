@@ -49,3 +49,97 @@ const { page } = Astro.props;
     })
   }
 </Fragment>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  let mm = gsap.matchMedia();
+
+  mm.add(
+    {
+      reduceMotion: "(prefers-reduced-motion: reduce)",
+      isDesktop: "(min-width: 769px)",
+      isMobile: "(max-width: 768px)",
+    },
+    (context) => {
+      console.log(context.conditions);
+      let { reduceMotion, isDesktop, isMobile } =
+        context.conditions as gsap.Conditions;
+
+      const defaults = {
+        ease: "power1.out",
+        duration: 1,
+      };
+
+      // let duration = context.isReverted ? 0 : 1;
+
+      gsap.from(".hero .illustration .crane", {
+        scrollTrigger: ".hero",
+        opacity: 0,
+        scale: reduceMotion ? 1 : 0.89,
+        y: reduceMotion ? 0 : -10,
+        rotate: reduceMotion ? 0 : 5,
+        duration: defaults.duration + 0.5,
+        ease: defaults.ease,
+      });
+
+      gsap.from(".hero .illustration .crane-2", {
+        scrollTrigger: ".hero",
+        opacity: 0,
+        scale: reduceMotion ? 1 : 0.8,
+        rotate: reduceMotion ? 0 : -20,
+        x: reduceMotion ? 0 : 20,
+        duration: defaults.duration + 0.3,
+        delay: reduceMotion ? 0 : 0.2,
+        ease: defaults.ease,
+      });
+
+      gsap.from(".hero .illustration .circle", {
+        scrollTrigger: ".hero",
+        opacity: 0,
+        x: reduceMotion ? 0 : 30,
+        scale: reduceMotion ? 1 : 0.5,
+        duration: defaults.duration + 0.2,
+        ease: defaults.ease,
+      });
+
+      gsap.from(".hero .text header p, .hero .text header h1, .hero .text p", {
+        scrollTrigger: ".hero",
+        opacity: 0,
+        y: reduceMotion ? 0 : 16,
+        stagger: reduceMotion ? 0 : 0.4,
+        duration: defaults.duration,
+        ease: defaults.ease,
+      });
+
+      gsap.from(".quote-section", {
+        scrollTrigger: ".quote-section",
+        y: reduceMotion ? 0 : 32,
+        opacity: 0,
+        duration: defaults.duration,
+        ease: defaults.ease,
+      });
+
+      gsap.from(".quote-section .highlight", {
+        scrollTrigger: ".quote-section",
+        "--rule-width": reduceMotion ? "auto" : 0,
+        duration: reduceMotion ? 0 : defaults.duration + 0.5,
+        stagger: reduceMotion ? 0 : 0.5,
+        delay: reduceMotion ? 0 : 0.7,
+        ease: defaults.ease,
+      });
+
+      gsap.from(".index-section article", {
+        scrollTrigger: ".index-section article",
+        y: reduceMotion ? 0 : 16,
+        opacity: 0,
+        duration: defaults.duration,
+        stagger: reduceMotion ? 0 : 0.2,
+        ease: defaults.ease,
+      });
+    },
+  );
+</script>

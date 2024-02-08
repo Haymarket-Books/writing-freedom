@@ -13,7 +13,7 @@ type Props = {
 const { content } = Astro.props;
 ---
 
-<article>
+<article class="hero">
   <div class="grid | content-wrapper">
     <div class="text | flow">
       <header>
@@ -22,7 +22,7 @@ const { content } = Astro.props;
       </header>
       <p>{content?.text}</p>
     </div>
-    <div class="featured-img">
+    <div class="featured-img | illustration">
       <svg
         width="326"
         height="456"
@@ -44,9 +44,10 @@ const { content } = Astro.props;
           cy="330.5"
           r="89.5"
           fill="#FD49A0"
-          fill-opacity="0.64"></circle>
+          fill-opacity="0.64"
+          class="circle"></circle>
         <circle cx="209.5" cy="330.5" r="89.5" fill="url(#pattern0)"></circle>
-        <g style="mix-blend-mode:hard-light" opacity="0.9">
+        <g class="crane" style="mix-blend-mode:hard-light" opacity="0.9">
           <path
             d="M124.281 239L162.781 299.114L181.693 275.474L197.228 302.491L262.07 293.711L308 295.737L236.404 316.675L256.667 366.658L228.298 332.211L223.57 390.298H216.816L201.956 398.404L176.289 378.14H168.184L159.404 332.211L0 359.904L141.842 313.298L124.281 239Z"
             fill="white"
@@ -61,7 +62,7 @@ const { content } = Astro.props;
             d="M190.473 322.755L159.403 332.211V334.237L190.473 326.132L201.956 397.728L206.009 396.378L193.175 326.132L195.202 324.106L193.175 322.755L190.473 316.676V322.755Z"
             fill="#FD49A0"></path>
         </g>
-        <g style="mix-blend-mode:hard-light" opacity="0.9">
+        <g class="crane-2" style="mix-blend-mode:hard-light" opacity="0.9">
           <path
             d="M273.562 197.388L255.374 208.936L253.209 200.059L245.519 205.474L228.895 194.817L216.07 189.524L232.994 204.368L221.087 215.465L233.234 209.651L227.133 226.146L228.981 227.006L232.015 231.116L241.618 228.839L243.836 229.871L252.085 218.421L292.175 246.291L259.298 215.482L273.562 197.388Z"
             fill="white"

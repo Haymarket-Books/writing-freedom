@@ -12,10 +12,9 @@ type Props = {
 };
 
 const { content } = Astro.props;
-// console.log(content);
 ---
 
-<article class="content-wrapper">
+<article class="quote-section | content-wrapper">
   <div class="grid-wrapper">
     <div class="grid">
       <div class="rich-content quote">
@@ -103,6 +102,10 @@ const { content } = Astro.props;
     margin-inline: auto;
   }
 
+  :global(.quote) {
+    --rule-width: 100%;
+  }
+
   :global(.quote .highlight) {
     position: relative;
     display: inline;
@@ -115,7 +118,7 @@ const { content } = Astro.props;
     z-index: -1;
     opacity: 0.8;
     height: 30%;
-    width: 100%;
+    width: var(--rule-width);
     background: var(--color-accent-base);
   }
 

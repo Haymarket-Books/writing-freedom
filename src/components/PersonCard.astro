@@ -121,6 +121,15 @@ const { person } = Astro.props;
     }
   }
 
+  @media (prefers-reduced-motion) {
+    article {
+      & > a {
+        &:hover img {
+          transform: unset;
+        }
+    }
+  }
+
   @container personCard (width > 350px) {
     .fellow h3 {
       font-size: max(var(--step-2), 6cqi);

@@ -73,17 +73,76 @@ const pageNavigation: PageNavigation = buildPageNav(page.content);
     })
   }
 </Fragment>
-<!-- <h1>{page.title}</h1>
-<p>{page.slug}</p>
-<article>
-  {
-    page.content.map((section) => (
-      <div>
-        <>
-          <h2>{section.title || "Section"}</h2>
-          <p>{section.type}</p>
-        </>
-      </div>
-    ))
-  }
-</article> -->
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  let mm = gsap.matchMedia();
+
+  mm.add(
+    {
+      reduceMotion: "(prefers-reduced-motion: reduce)",
+      isDesktop: "(min-width: 769px)",
+      isMobile: "(max-width: 768px)",
+    },
+    (context) => {
+      console.log(context.conditions);
+      let { reduceMotion, isDesktop, isMobile } =
+        context.conditions as gsap.Conditions;
+
+      const defaults = {
+        ease: "power1.out",
+        duration: 1,
+      };
+
+      gsap.to(".hero img", {
+        scrollTrigger: ".hero",
+        scale: reduceMotion ? 1 : 1.1,
+        duration: defaults.duration + 1,
+        ease: defaults.ease,
+      });
+
+      gsap.from(".hero .text header p, .hero .text header h1, .hero .text p", {
+        scrollTrigger: ".hero",
+        opacity: 0,
+        y: reduceMotion ? 0 : 16,
+        stagger: reduceMotion ? 0 : 0.4,
+        duration: defaults.duration,
+        ease: defaults.ease,
+      });
+
+      gsap.from(".presentation-section img", {
+        scrollTrigger: ".presentation-section",
+        opacity: 0,
+        scale: reduceMotion ? 1 : 0.9,
+        // y: reduceMotion ? 0 : 32,
+        duration: defaults.duration + 0.5,
+        ease: defaults.ease,
+      });
+
+      if (document.querySelector(".faq-section")) {
+        gsap.from(".faq-section .bird", {
+          scrollTrigger: ".faq-section",
+          opacity: 0,
+          // scale: reduceMotion ? 1 : 0.98,
+          rotate: reduceMotion ? 0 : 16,
+          y: reduceMotion ? 0 : 4,
+          duration: reduceMotion ? 0 : defaults.duration + 1,
+          ease: defaults.ease,
+        });
+
+        gsap.from(".faq-section .lines > *", {
+          scrollTrigger: ".faq-section",
+          opacity: 0,
+          y: reduceMotion ? 0 : -100,
+          stagger: reduceMotion ? 0 : 0.2,
+          duration: defaults.duration,
+          ease: defaults.ease,
+        });
+      }
+    },
+  );
+</script>

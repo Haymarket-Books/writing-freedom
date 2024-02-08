@@ -43,7 +43,7 @@ const { page, content, filterYears, filterCategories } = Astro.props;
   <h1 class="with-mark">{page.title}</h1>
   <section class="flow">
     <h2 class="sr-only">All Fellows</h2>
-    <div class="fellows-grid | responsive-grid">
+    <div class="index-section | fellows-grid | responsive-grid">
       {
         content?.map((fellow) => {
           return <PersonCard person={fellow} />;
@@ -75,6 +75,11 @@ const { page, content, filterYears, filterCategories } = Astro.props;
     }
   }
 
+  h1 {
+    /* Careful, only for long title */
+    max-width: 16ch;
+  }
+
   h2 {
     font-size: var(--step-2);
   }
@@ -99,3 +104,39 @@ const { page, content, filterYears, filterCategories } = Astro.props;
 </style>
 
 <script src="../../scripts/components/fellow-filter.js"></script>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  let mm = gsap.matchMedia();
+
+  mm.add(
+    {
+      reduceMotion: "(prefers-reduced-motion: reduce)",
+      isDesktop: "(min-width: 769px)",
+      isMobile: "(max-width: 768px)",
+    },
+    (context) => {
+      console.log(context.conditions);
+      let { reduceMotion, isDesktop, isMobile } =
+        context.conditions as gsap.Conditions;
+
+      const defaults = {
+        ease: "power1.out",
+        duration: 1,
+      };
+
+      gsap.from(".index-section article", {
+        scrollTrigger: ".index-section article",
+        y: reduceMotion ? 0 : 16,
+        opacity: 0,
+        duration: defaults.duration,
+        stagger: reduceMotion ? 0 : 0.2,
+        ease: defaults.ease,
+      });
+    },
+  );
+</script>

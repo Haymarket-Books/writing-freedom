@@ -191,7 +191,7 @@ export const pageQuery = groq`*[_type == $page] {
                 text,
                 "image": ${groqImage},
                 "linkObject": link{
-                ${groqNavigationLink}
+                    ${groqNavigationLink}
                 }
             }
         },

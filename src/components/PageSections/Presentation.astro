@@ -15,7 +15,7 @@ type Props = {
 const { content, textCenter = false } = Astro.props;
 ---
 
-<article class="content-wrapper" id={content?.slug}>
+<article class="presentation-section | content-wrapper" id={content?.slug}>
   <div
     class:list={[content?.image ? "grid" : "center"]}
     data-layout={content?.layout === true ? "flipped" : "default"}
