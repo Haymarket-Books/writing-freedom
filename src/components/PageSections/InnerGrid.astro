@@ -11,7 +11,7 @@ type Props = {
 const { content } = Astro.props;
 ---
 
-<section class="content-wrapper" id={content?.slug}>
+<section class="columns-section | content-wrapper" id={content?.slug}>
   <h2 class="center-all with-mark">{content?.title}</h2>
   <div class="responsive-grid">
     {
@@ -20,6 +20,7 @@ const { content } = Astro.props;
           <article class="flow">
             {item.image && (
               <img
+                class="icon"
                 src={`/icon-illustration-${idx + 1}.svg`}
                 width="24"
                 height="24"

@@ -76,7 +76,7 @@ const path = Astro.url.pathname;
       <h1 class="with-mark">{page?.year} Fellows</h1>
       <section class="flow">
         <h2 class="sr-only">All Fellows</h2>
-        <div class="fellows-grid | responsive-grid">
+        <div class="index-section | fellows-grid | responsive-grid">
           {
             page?.fellows?.map((fellow) => {
               return <PersonCard person={fellow} />;
@@ -134,17 +134,37 @@ const path = Astro.url.pathname;
 <script src="../../scripts/components/fellow-filter.js"></script>
 
 <script>
-  // import { gsap } from "gsap";
-  // import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-  // gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger);
 
-  // gsap.from(".fellows-grid article", {
-  //   scrollTrigger: ".fellows-grid article",
-  //   y: 16,
-  //   opacity: 0,
-  //   duration: 1,
-  //   stagger: 0.2,
-  //   ease: "power1.out",
-  // });
+  let mm = gsap.matchMedia();
+
+  mm.add(
+    {
+      reduceMotion: "(prefers-reduced-motion: reduce)",
+      isDesktop: "(min-width: 769px)",
+      isMobile: "(max-width: 768px)",
+    },
+    (context) => {
+      console.log(context.conditions);
+      let { reduceMotion, isDesktop, isMobile } =
+        context.conditions as gsap.Conditions;
+
+      const defaults = {
+        ease: "power1.out",
+        duration: 1,
+      };
+
+      gsap.from(".index-section article", {
+        scrollTrigger: ".index-section article",
+        y: reduceMotion ? 0 : 16,
+        opacity: 0,
+        duration: defaults.duration,
+        stagger: reduceMotion ? 0 : 0.2,
+        ease: defaults.ease,
+      });
+    },
+  );
 </script>

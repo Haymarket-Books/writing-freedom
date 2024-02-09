@@ -106,6 +106,16 @@ const { page } = Astro.props;
         ease: defaults.ease,
       });
 
+      gsap.from(".hero .illustration .lines > *", {
+        scrollTrigger: ".hero",
+        opacity: 0,
+        y: reduceMotion ? 0 : -100,
+        stagger: reduceMotion ? 0 : 0.2,
+        delay: reduceMotion ? 0 : 0.2,
+        duration: defaults.duration,
+        ease: defaults.ease,
+      });
+
       gsap.from(".hero .text header p, .hero .text header h1, .hero .text p", {
         scrollTrigger: ".hero",
         opacity: 0,

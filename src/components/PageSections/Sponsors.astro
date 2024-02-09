@@ -11,7 +11,7 @@ type Props = {
 const { content } = Astro.props;
 ---
 
-<section class="content-wrapper" id={content?.slug}>
+<section class="sponsors-section | content-wrapper" id={content?.slug}>
   <h2 class="center-all with-mark">{content?.title}</h2>
   <div class="responsive-grid">
     {
@@ -81,13 +81,15 @@ const { content } = Astro.props;
 
   @media (max-width: 768px) {
     article {
+      justify-content: center;
+
       &.flow {
         align-items: center;
         text-align: center;
       }
 
       & img {
-        margin: 0;
+        margin: auto;
         max-height: 6rem;
         object-fit: contain;
       }

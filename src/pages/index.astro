@@ -10,7 +10,7 @@ const query = await sanityClient.fetch<PagePayload[]>(pageQuery, {
   page: "homepage",
 });
 const home = query[0];
-// console.log(home);
+// console.log(home.content.find((item) => item.type === "quote").featuredLink);
 const path = Astro.url.pathname;
 ---
 

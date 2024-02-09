@@ -100,8 +100,8 @@ const pageNavigation: PageNavigation = buildPageNav(page.content);
 
       gsap.to(".hero img", {
         scrollTrigger: ".hero",
-        scale: reduceMotion ? 1 : 1.1,
-        duration: defaults.duration + 1,
+        scale: reduceMotion ? 1 : 1.06,
+        duration: defaults.duration + 2,
         ease: defaults.ease,
       });
 
@@ -115,10 +115,10 @@ const pageNavigation: PageNavigation = buildPageNav(page.content);
       });
 
       gsap.from(".presentation-section img", {
-        scrollTrigger: ".presentation-section",
+        scrollTrigger: ".presentation-section .text",
         opacity: 0,
-        scale: reduceMotion ? 1 : 0.9,
-        // y: reduceMotion ? 0 : 32,
+        // scale: reduceMotion ? 1 : 0.9,
+        y: reduceMotion ? 0 : 32,
         duration: defaults.duration + 0.5,
         ease: defaults.ease,
       });
@@ -139,6 +139,30 @@ const pageNavigation: PageNavigation = buildPageNav(page.content);
           opacity: 0,
           y: reduceMotion ? 0 : -100,
           stagger: reduceMotion ? 0 : 0.2,
+          duration: defaults.duration,
+          ease: defaults.ease,
+        });
+      }
+
+      if (document.querySelector(".columns-section")) {
+        gsap.from(".columns-section .icon", {
+          scrollTrigger: ".columns-section",
+          opacity: 0,
+          y: reduceMotion ? 0 : 16,
+          stagger: reduceMotion ? 0 : 0.2,
+          delay: reduceMotion ? 0 : 0.3,
+          duration: defaults.duration,
+          ease: defaults.ease,
+        });
+      }
+
+      if (document.querySelector(".sponsors-section")) {
+        gsap.from(".sponsors-section img", {
+          scrollTrigger: ".sponsors-section",
+          opacity: 0,
+          y: reduceMotion ? 0 : 16,
+          stagger: reduceMotion ? 0 : 0.2,
+          delay: reduceMotion ? 0 : 0.3,
           duration: defaults.duration,
           ease: defaults.ease,
         });

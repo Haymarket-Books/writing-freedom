@@ -91,7 +91,7 @@ const path = Astro.url.pathname;
       <p>{joinNames(fellow?.name)}</p>
     </div>
     <article>
-      <section class="content-wrapper">
+      <section class="hero | content-wrapper">
         <div class="intro-grid">
           <figure>
             <Image
@@ -519,3 +519,63 @@ const path = Astro.url.pathname;
     }
   }
 </style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  let mm = gsap.matchMedia();
+
+  mm.add(
+    {
+      reduceMotion: "(prefers-reduced-motion: reduce)",
+      isDesktop: "(min-width: 769px)",
+      isMobile: "(max-width: 768px)",
+    },
+    (context) => {
+      console.log(context.conditions);
+      let { reduceMotion, isDesktop, isMobile } =
+        context.conditions as gsap.Conditions;
+
+      const defaults = {
+        ease: "power1.out",
+        duration: 1,
+      };
+
+      gsap.from(".intro-grid img", {
+        scrollTrigger: ".hero",
+        y: reduceMotion ? 0 : 32,
+        opacity: 0,
+        duration: defaults.duration,
+        ease: defaults.ease,
+      });
+
+      gsap.from(".radial-blur", {
+        scrollTrigger: ".hero",
+        scale: reduceMotion ? 1 : 0.6,
+        opacity: 0,
+        duration: defaults.duration,
+        ease: defaults.ease,
+      });
+
+      gsap.from(".bio .box", {
+        scrollTrigger: ".bio",
+        y: reduceMotion ? 0 : 32,
+        opacity: 0,
+        duration: defaults.duration,
+        ease: defaults.ease,
+      });
+
+      // gsap.from(".index-section article", {
+      //   scrollTrigger: ".index-section article",
+      //   y: reduceMotion ? 0 : 16,
+      //   opacity: 0,
+      //   duration: defaults.duration,
+      //   stagger: reduceMotion ? 0 : 0.2,
+      //   ease: defaults.ease,
+      // });
+    },
+  );
+</script>

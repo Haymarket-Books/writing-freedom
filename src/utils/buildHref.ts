@@ -13,6 +13,9 @@ export default function buildHref(link?: Link) {
       case "page":
         href = link?.href?.slug ? `/${link.href.slug}` : "/";
         break;
+      case "slugString":
+        href = link?.href?.slug;
+        break;
       default:
         href = `/${link?.href?.slug}`;
         break;
