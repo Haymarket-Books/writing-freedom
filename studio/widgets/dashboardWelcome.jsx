@@ -21,8 +21,8 @@ function DashboardWelcome() {
           </Text>
           <Text>
             Visit your site at{' '}
-            <a href="https://gilded-chebakia-3c3907.netlify.app/" target="_blank">
-              https://gilded-chebakia-3c3907.netlify.app/
+            <a href="https://writing-freedom.org" target="_blank">
+              https://writing-freedom.org
             </a>
           </Text>
           <Grid columns={3} gap={4}>

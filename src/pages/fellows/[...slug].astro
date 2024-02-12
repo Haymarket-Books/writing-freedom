@@ -116,7 +116,7 @@ const path = Astro.url.pathname;
           <div class="intro | flow">
             <h1 class="with-mark balanced">{joinNames(fellow?.name)}</h1>
             <!-- prettier-ignore -->
-            <p class="small-title leading-normal">{fellow?.categories?.map((category) => category.name).join(", ")}</p>
+            <p class="categories | small-title">{fellow?.categories?.map((category) => category.name).join(", ")}</p>
             <p>
               <a href={`/fellows/${fellow?.fellowshipYear?.slug}`}
                 >{`${fellow?.fellowshipYear?.year} Fellow`}</a
@@ -320,6 +320,12 @@ const path = Astro.url.pathname;
       font-style: italic;
       font-size: var(--step--1);
       padding-block-start: var(--space-2xs);
+    }
+  }
+
+  .categories {
+    &.small-title {
+      line-height: 1.7;
     }
   }
 

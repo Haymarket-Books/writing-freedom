@@ -206,6 +206,16 @@ export default defineType({
         }),
       ],
     }),
+    defineField({
+      name: 'ogImage',
+      title: 'Open Graph Image',
+      type: 'image',
+      description:
+        'Optionallty set an image for Open Graph contexts. This will display in social media, chats, and other shares. If nothing is set, it will default to the fellow headshot.',
+      options: {
+        hotspot: true,
+      },
+    }),
   ],
   preview: {
     select: {
