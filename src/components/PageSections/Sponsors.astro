@@ -21,12 +21,18 @@ const { content } = Astro.props;
             {item.image && (
               <Image
                 src={urlFor(item?.image)
-                  .width(400)
+                  .width(
+                    Math.floor(
+                      400 * item?.image.asset.metadata.dimensions.aspectRatio,
+                    ),
+                  )
                   .height(400)
                   .auto("format")
                   .url()}
                 alt={item.image.alt || ""}
-                width={400}
+                width={Math.floor(
+                  400 * item?.image.asset.metadata.dimensions.aspectRatio,
+                )}
                 height={400}
                 format="webp"
               />
@@ -72,7 +78,9 @@ const { content } = Astro.props;
     }
 
     & img {
-      max-height: 8rem;
+      height: 6rem;
+      object-fit: contain;
+      /* max-height: 8rem; */
       /* margin-inline: auto; */
       width: auto;
       align-self: flex-start;

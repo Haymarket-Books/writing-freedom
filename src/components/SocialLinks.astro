@@ -22,7 +22,7 @@ const { content } = Astro.props;
             <i
               class={`fa-${
                 link.icon === "square-arrow-up-right" ? "regular" : "brands"
-              } fa-${link.icon}`}
+              } fa-${link.icon === "twitter" ? "x-twitter" : link.icon}`}
             />
             <span class="sr-only">{iconName}</span>
           </a>

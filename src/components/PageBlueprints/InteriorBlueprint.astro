@@ -145,7 +145,7 @@ const pageNavigation: PageNavigation = buildPageNav(page.content);
       }
 
       if (document.querySelector(".columns-section")) {
-        gsap.from(".columns-section .icon", {
+        gsap.from(".columns-section article", {
           scrollTrigger: ".columns-section",
           opacity: 0,
           y: reduceMotion ? 0 : 16,

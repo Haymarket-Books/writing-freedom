@@ -227,6 +227,27 @@ const path = Astro.url.pathname;
           </div>
         )
       }
+      <img
+        class="fist-left"
+        src="/fist-left.svg"
+        alt=""
+        width="200"
+        height="260"
+      />
+      <img
+        class="fist-right"
+        src="/fist-right.svg"
+        alt=""
+        width="200"
+        height="260"
+      />
+      <img
+        class="fist-birds"
+        src="/fist-birds.svg"
+        alt=""
+        width="200"
+        height="260"
+      />
     </div>
   </main>
 </Layout>
@@ -236,7 +257,7 @@ const path = Astro.url.pathname;
     position: relative;
     overflow: hidden;
     padding-block-start: calc(var(--section-spacer) * 0.25);
-    margin-block-end: var(--section-spacer);
+    padding-block-end: var(--section-spacer);
   }
 
   .breadcrumb {
@@ -396,6 +417,7 @@ const path = Astro.url.pathname;
   }
 
   .fellow-nav {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     align-items: center;
@@ -439,6 +461,35 @@ const path = Astro.url.pathname;
         color: var(--color-primary-base);
         text-decoration-color: var(--color-primary-base);
       }
+    }
+
+    & :is(.fist-left, .fist-right) {
+      position: absolute;
+      z-index: -1;
+      height: 160px;
+      opacity: 0.25;
+      left: 50%;
+      bottom: calc(var(--section-spacer) * -1 - 1rem);
+    }
+
+    & .fist-left {
+      left: 40%;
+      transform: translateX(-50%) rotate(-15deg);
+    }
+
+    & .fist-right {
+      left: 60%;
+      transform: translateX(-50%) rotate(15deg);
+    }
+
+    & .fist-birds {
+      position: absolute;
+      z-index: -1;
+      height: 100px;
+      opacity: 0.25;
+      top: -4rem;
+      left: 50%;
+      transform: translateX(-50%);
     }
   }
 
@@ -485,6 +536,25 @@ const path = Astro.url.pathname;
       & .return {
         grid-column: 1/1;
         order: -1;
+      }
+
+      & .fist-left {
+        height: 200px;
+        left: 15%;
+        opacity: 0.15;
+        transform: translateX(-50%) rotate(-15deg);
+      }
+
+      & .fist-right {
+        height: 200px;
+        left: 85%;
+        opacity: 0.15;
+        transform: translateX(-50%) rotate(15deg);
+      }
+
+      & .fist-birds {
+        height: 90px;
+        top: -2rem;
       }
     }
   }

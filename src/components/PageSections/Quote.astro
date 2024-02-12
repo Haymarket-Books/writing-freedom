@@ -39,6 +39,14 @@ const { content } = Astro.props;
       }
     </div>
   </div>
+  <img class="fist-left" src="/fist-left.svg" alt="" width="200" height="260" />
+  <img
+    class="fist-right"
+    src="/fist-right.svg"
+    alt=""
+    width="200"
+    height="260"
+  />
   {
     content?.image && (
       <Image
@@ -59,6 +67,24 @@ const { content } = Astro.props;
     position: relative;
     margin-block: var(--section-spacer);
     /* margin-inline: var(--gutter); */
+  }
+
+  :is(.fist-left, .fist-right) {
+    position: absolute;
+    z-index: -1;
+    height: 200px;
+    opacity: 0.6;
+    top: -180px;
+  }
+
+  .fist-left {
+    left: 3rem;
+    transform: rotate(-15deg);
+  }
+
+  .fist-right {
+    right: 3rem;
+    transform: rotate(15deg);
   }
 
   .grid-wrapper {
@@ -127,6 +153,20 @@ const { content } = Astro.props;
       grid-template-columns: 1fr 0.25fr;
       padding: 2rem;
     }
+
+    :is(.fist-left, .fist-right) {
+      height: 120px;
+      opacity: 0.25;
+      top: -100px;
+    }
+
+    .fist-left {
+      left: 1rem;
+    }
+
+    .fist-right {
+      right: 1rem;
+    }
   }
 
   @media (max-width: 849px) {
@@ -142,6 +182,15 @@ const { content } = Astro.props;
         align-items: flex-start;
       }
     }
+
+    .fist-left {
+      left: auto;
+      right: 5rem;
+    }
+
+    .fist-right {
+      right: -1rem;
+    }
   }
 
   @media (max-width: 640px) {
@@ -152,6 +201,14 @@ const { content } = Astro.props;
     :global(.quote .highlight) {
       position: relative;
       display: inline;
+    }
+  }
+
+  @media (max-width: 400px) {
+    :is(.fist-left, .fist-right) {
+      height: 90px;
+      opacity: 0.25;
+      top: -70px;
     }
   }
 </style>
