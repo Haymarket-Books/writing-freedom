@@ -33,12 +33,8 @@ const path = Astro.url.pathname;
 const canonicalURL = new URL(path, Astro.site);
 
 const ogImage = await getImage({
-  src: urlFor(meta?.openGraph?.image!)
-    .width(1200)
-    .height(630)
-    .auto("format")
-    .url(),
-  format: "webp",
+  src: urlFor(meta?.openGraph?.image!).width(1200).height(630).url(),
+  format: "jpeg",
   width: 1200,
   height: 630,
   alt: "",
