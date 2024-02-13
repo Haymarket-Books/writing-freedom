@@ -42,6 +42,19 @@ const { person } = Astro.props;
             format="webp"
             style={`background-image: url(${person?.image?.asset.metadata.lqip})`}
           />
+          <Image
+            class="headshot-mobile lqip-preview"
+            src={urlFor(person.image!)
+              .width(500)
+              .height(400)
+              .auto("format")
+              .url()}
+            alt={person.image?.alt || ""}
+            width={500}
+            height={400}
+            format="webp"
+            style={`background-image: url(${person?.image?.asset.metadata.lqip})`}
+          />
         </a>
         <div class="fellow | text | flow">
           <a href={buildFellowHref(person as Fellow)}>
@@ -86,11 +99,19 @@ const { person } = Astro.props;
     border-radius: var(--rounded-corners-small);
   }
 
-  .headshot {
-    aspect-ratio: 4/5;
+  :is(.headshot, .headshot-mobile) {
     object-fit: cover;
     border-radius: var(--rounded-corners-small);
     transition: all 0.3s ease-out;
+  }
+
+  .headshot {
+    aspect-ratio: 4/5;
+  }
+
+  .headshot-mobile {
+    aspect-ratio: 5/4;
+    display: none;
   }
 
   .team-member h3 {
@@ -121,12 +142,23 @@ const { person } = Astro.props;
     }
   }
 
+  @media (max-width: 640px) {
+    .headshot-mobile {
+      display: block;
+    }
+
+    .headshot {
+      display: none;
+    }
+  }
+
   @media (prefers-reduced-motion) {
     article {
       & > a {
         &:hover img {
           transform: unset;
         }
+      }
     }
   }
 
