@@ -61,9 +61,20 @@ const ogImage = await getImage({
           type: "website",
           image: ogImage.src,
         },
+        image: {
+          alt: meta?.openGraph?.title,
+        },
         optional: {
           description: meta?.openGraph?.description,
         },
+      }}
+      twitter={{
+        card: "summary",
+        site: "@haymarketbooks",
+        title: meta?.openGraph?.title,
+        image: ogImage.src,
+        imageAlt: meta?.openGraph?.title,
+        description: meta?.openGraph?.description,
       }}
     />
     <link rel="icon" type="image/svg" href="/haymarket-books-logo.svg" />
