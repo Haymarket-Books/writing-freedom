@@ -63,7 +63,7 @@ export const teamMembersQuery = groq`*[_type == "teamMember"] | order(name.lastN
 }`;
 
 // remove $fellowshipYear param
-export const fellowsIndexQuery = groq`*[_type == "fellow"] | order(name.lastName asc) {
+export const fellowsIndexQuery = groq`*[_type == "fellow"] | order(name.firstName asc) | order(name.lastName asc) {
     "type": _type,
     name,
     "slug": slug.current,
@@ -78,7 +78,7 @@ export const fellowsIndexQuery = groq`*[_type == "fellow"] | order(name.lastName
     "image": ${groqImage}
 }`;
 
-export const fellowsDetailQuery = groq`*[_type == "fellow"] | order(name.lastName asc) {
+export const fellowsDetailQuery = groq`*[_type == "fellow"] | order(name.firstName) | order(name.lastName asc) {
     "type": _type,
     name,
     "slug": slug.current,
@@ -113,7 +113,7 @@ export const fellowshipYearsIndexQuery = groq`*[_type == "fellowshipYear"] | ord
     "type": _type,
     year,
     "slug": slug.current,
-    "fellows": *[_type == "fellow" && references(^._id)] | order(name.lastName asc) {
+    "fellows": *[_type == "fellow" && references(^._id)] | order(name.firstName asc) | order(name.lastName asc) {
         "type": _type,
         name,
         "slug": slug.current,
