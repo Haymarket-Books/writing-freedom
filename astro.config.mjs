@@ -4,6 +4,7 @@ import { browserslistToTargets } from "lightningcss";
 
 import sanity from "@sanity/astro";
 import svelte from "@astrojs/svelte";
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,12 +18,9 @@ export default defineConfig({
       },
     ],
   },
-  // redirects: {
-  //   "/fellows/2024": "/fellows?year=2024",
-  //   "/fellows/2025": "/fellows?year=2025",
-  // },
   integrations: [
     svelte(),
+    sitemap(),
     sanity({
       projectId: "7zni91yt",
       dataset: "production",

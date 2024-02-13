@@ -67,6 +67,7 @@ export interface Fellow extends Person {
     file?: FileAsset;
     content?: PortableTextBlock[];
   };
+  ogImage?: CoverImage;
 }
 
 // Pages

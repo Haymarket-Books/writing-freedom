@@ -57,7 +57,7 @@ const meta: PageMetadata = {
     title: `${joinNames(fellow?.name)} | ${
       fellow?.fellowshipYear?.year
     } Fellows`,
-    image: fellow?.image,
+    image: fellow?.ogImage || fellow?.image,
     description: `Biography for ${
       fellow?.fellowshipYear?.year
     } fellow ${joinNames(fellow?.name)}.`,

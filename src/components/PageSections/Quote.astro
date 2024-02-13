@@ -27,7 +27,13 @@ const { content } = Astro.props;
       {
         content?.featuredLink && (
           <div class="link | flow">
-            <img src="/crane-circle.svg" width={150} height={150} />
+            <img
+              src="/crane-circle.svg"
+              width={150}
+              height={150}
+              alt=""
+              role="presentation"
+            />
             <p class="italic">{content.featuredLink.description}</p>
             <ButtonLink
               theme="ghost"

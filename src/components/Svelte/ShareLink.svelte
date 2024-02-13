@@ -47,13 +47,13 @@ async function copyLink() {
     <div class="buttons | cluster">
         {#if webShareSupported}
             <div class="relative">
-                <button class="share-btn | cluster" on:click={shareLink}><i class="fa-regular fa-share"></i>Share this page</button>
+                <button class="share-btn | cluster" on:click={shareLink}><i class="fa-regular fa-share"></i>Share</button>
                 <p class="context-alert" role="alert" aria-live="polite" data-show={ shareFeedback.length ? null : 'empty' }>{shareFeedback}</p>
             </div>
         {/if}
         {#if clipboardSupported}
             <div class="relative">
-                <button class="share-btn | cluster" on:click={copyLink}><i class="fa-regular fa-copy"></i>Copy Link</button>
+                <button class="share-btn | cluster" on:click={copyLink}><i class="fa-regular fa-copy"></i>Copy link</button>
                 <p class="context-alert" role="alert" aria-live="polite" data-show={ copyFeedback.length ? null : 'empty' }>{copyFeedback}</p>
             </div>
         {/if}
