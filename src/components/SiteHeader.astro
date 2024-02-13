@@ -60,6 +60,14 @@ const {
       </ul>
     </nav>
   </div>
+  <div class="contact-wrapper">
+    <ButtonLink
+      linkObject={{
+        name: "Contact",
+        href: { type: "externalLink", url: content?.contact },
+      }}
+    />
+  </div>
   <!-- <SocialLinks content={content?.socialLinks} /> -->
   <!-- <ul class="social | cluster" role="list">
     {
@@ -200,6 +208,20 @@ const {
       right: calc(var(--gutter) * 0.5);
     }
   } */
+
+  @media (max-width: 768px) {
+    .contact-wrapper {
+      display: none;
+    }
+
+    nav {
+      & a {
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
 
   @media (max-width: 640px) {
     header {

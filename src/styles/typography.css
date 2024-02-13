@@ -38,7 +38,7 @@ a:not(.button-link, .logo):hover {
   font-size: var(--step--1);
   font-weight: 500;
   font-family: var(--font-heading);
-  line-height: var(--leading-tight);
+  line-height: var(--leading-normal);
   text-transform: uppercase;
   color: inherit;
   letter-spacing: 0.15em;

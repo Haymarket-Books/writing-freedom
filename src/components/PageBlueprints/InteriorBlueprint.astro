@@ -156,6 +156,17 @@ const pageNavigation: PageNavigation = buildPageNav(page.content);
         });
       }
 
+      if (document.querySelector(".index-section")) {
+        gsap.from(".index-section article", {
+          scrollTrigger: ".index-section article",
+          y: reduceMotion ? 0 : 16,
+          opacity: 0,
+          duration: defaults.duration,
+          stagger: reduceMotion ? 0 : 0.2,
+          ease: defaults.ease,
+        });
+      }
+
       if (document.querySelector(".sponsors-section")) {
         gsap.from(".sponsors-section img", {
           scrollTrigger: ".sponsors-section",

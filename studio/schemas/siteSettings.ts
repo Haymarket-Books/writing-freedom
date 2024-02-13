@@ -30,6 +30,16 @@ export default defineType({
       validation: (Rule) => Rule.max(250).required(),
     }),
     defineField({
+      name: 'contact',
+      title: 'Default Contact Info',
+      type: 'url',
+      description: 'Set the default contact email.',
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ['mailto'],
+        }).required(),
+    }),
+    defineField({
       name: 'logo',
       title: 'Site Logo',
       type: 'image',

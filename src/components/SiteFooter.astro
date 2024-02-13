@@ -3,6 +3,8 @@ import type { Navigation, SiteSettings } from "../types";
 import Logo from "./Logo.astro";
 import capitalizeFirst from "../utils/capitalizeFirst";
 import SocialLinks from "./SocialLinks.astro";
+import BackgroundIllustration from "./BackgroundIllustration.astro";
+import BackgroundIllustrationBird from "./BackgroundIllustrationBird.astro";
 
 type Props = {
   navigation: Navigation;
@@ -45,6 +47,10 @@ const date = new Date();
           }
         </ul>
       </nav>
+      <div class="flow">
+        <p class="small-title">Contact</p>
+        <a href={content?.contact}>{content?.contact?.split(":")[1]}</a>
+      </div>
       <!-- <SocialLinks content={content?.socialLinks} /> -->
     </div>
     <div class="subfooter | cluster">
@@ -57,14 +63,17 @@ const date = new Date();
       </div>
     </div>
   </div>
+  <BackgroundIllustration zIndex={0} color="#ffffff80" xPosition={5} />
 </footer>
 
 <style>
   footer {
     --logo-size: 3rem;
+    position: relative;
     color: var(--color-primary-light);
     background: var(--color-background-gradient-dark);
     padding-block-end: 1.5rem;
+    overflow: hidden;
   }
 
   .grid {
@@ -153,6 +162,21 @@ const date = new Date();
     .grid {
       --grid-gap: var(--space-xl);
       grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .grid {
+      justify-items: center;
+      text-align: center;
+    }
+
+    .logo-wrapper {
+      align-items: center;
+    }
+
+    .subfooter {
+      --cluster-justify: center;
     }
   }
 </style>

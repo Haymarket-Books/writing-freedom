@@ -66,6 +66,8 @@ const meta: PageMetadata = {
 
 const path = Astro.url.pathname;
 
+const shareLink = new URL(path, Astro.site);
+// console.log(shareLink.href)
 // const url = Astro.url;
 // const urlParts = url.pathname.split('/');
 ---
@@ -141,18 +143,11 @@ const path = Astro.url.pathname;
                   <>
                     <div class="media | flow">
                       <div class="cluster">
-                        <>
-                          <i class="fa-regular fa-headphones" />
-                          <h2 class="small-title">Listen</h2>
-                        </>
+                        <i class="fa-regular fa-headphones" />
+                        <h2 class="small-title">Listen</h2>
                       </div>
                       <AudioControls content={fellow} />
                     </div>
-                    <ShareLink
-                      url={fellow?.media?.file?.url}
-                      title={`${joinNames(fellow?.name)} reading`}
-                      client:load
-                    />
                   </>
                 )
               }
@@ -180,6 +175,11 @@ const path = Astro.url.pathname;
                   </div>
                 )
               }
+              <ShareLink
+                url={shareLink.href}
+                title={`Meet Writing Freedom Fellow ${joinNames(fellow?.name)}`}
+                client:load
+              />
             </div>
             <!-- <div class="selected-work | flow">
               <h2 class="small-title">Selected Work</h2>

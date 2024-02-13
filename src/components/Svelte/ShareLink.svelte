@@ -42,12 +42,12 @@ async function copyLink() {
 <div id="share">
     <div class="share-heading | cluster">
         <i class="fa-regular fa-share-nodes"></i>
-        <p class="small-title">Share Audio</p>
+        <p class="small-title">Share This Page</p>
     </div>
     <div class="buttons | cluster">
         {#if webShareSupported}
             <div class="relative">
-                <button class="share-btn | cluster" on:click={shareLink}><i class="fa-regular fa-share"></i>Share audio</button>
+                <button class="share-btn | cluster" on:click={shareLink}><i class="fa-regular fa-share"></i>Share this page</button>
                 <p class="context-alert" role="alert" aria-live="polite" data-show={ shareFeedback.length ? null : 'empty' }>{shareFeedback}</p>
             </div>
         {/if}

@@ -5,9 +5,10 @@
         DisclosureButton,
         DisclosurePanel,
     } from "@rgossiaux/svelte-headlessui";
+    export let openOnStart = false;
 </script>
 
-<Disclosure class="disclosure" let:open>
+<Disclosure class="disclosure" defaultOpen={openOnStart} let:open>
   <DisclosureButton class="disclosure-button">
     <div class:open class="question-wrapper" style="--bottom-radius:{open ? "0" : "var(--rounded-corners)"}">
         <slot name="question">Question?</slot>
@@ -67,7 +68,7 @@
 
     @media (max-width: 640px) {
         .answer-wrapper {
-            padding: 2rem 1rem;
+            padding: 1rem 1.5rem 2rem;
         }
 
         .question-wrapper {

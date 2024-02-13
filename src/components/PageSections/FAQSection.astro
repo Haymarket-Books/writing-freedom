@@ -28,8 +28,8 @@ const { content } = Astro.props;
     <h2 class="with-mark">{content?.title}</h2>
     <div class="faqs | flow">
       {
-        content?.list?.map((faq) => (
-          <Accordion client:load>
+        content?.list?.map((faq, index) => (
+          <Accordion openOnStart={index === 0 && true} client:load>
             <Fragment slot="question">{faq.question}</Fragment>
             <div class="text | flow" slot="answer">
               <RichContent content={faq.answer} />

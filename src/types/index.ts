@@ -87,6 +87,7 @@ export type SiteSettings = {
   title?: string;
   description?: string;
   logo?: Image;
+  contact?: string;
   defaultFellowshipYear?: FellowshipYear;
   defaultOgImage?: Image;
   socialLinks?: SocialLink[];

@@ -189,7 +189,12 @@ const { content } = Astro.props;
     }
 
     .fist-right {
+      display: none;
       right: -1rem;
+    }
+
+    :is(.fist-left, .fist-right) {
+      display: none;
     }
   }
 
@@ -198,9 +203,12 @@ const { content } = Astro.props;
       padding: 1.5rem;
     }
 
-    :global(.quote .highlight) {
+    /* :global(.quote .highlight) {
       position: relative;
       display: inline;
+    } */
+    :global(.quote .highlight::before) {
+      display: none;
     }
   }
 

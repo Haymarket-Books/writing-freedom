@@ -36,6 +36,7 @@ export const settingsQuery = groq`*[_type == "siteSettings"][0]{
     logo{
         asset->
     },
+    contact,
     defaultFellowshipYear->{
         year,
         "slug": slug.current,
@@ -90,6 +91,11 @@ export const fellowsDetailQuery = groq`*[_type == "fellow"] | order(name.lastNam
         "slug": slug.current
     },
     "image": ${groqImage},
+    ogImage{
+        crop,
+        hotspot,
+        asset->
+    },
     content[],
     selectedWorks[],
     socialLinks[]{
