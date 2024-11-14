@@ -10,14 +10,14 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.3.1",
-    "@astrojs/sitemap": "^3.0.3",
-    "@astrojs/svelte": "^4.0.2",
-    "@rgossiaux/svelte-headlessui": "^1.0.2",
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/svelte": "^5.7.3",
+    "@rgossiaux/svelte-headlessui": "^2.0.0",
     "@sanity/astro": "^2.1.1",
     "@sanity/client": "^6.7.0",
     "@sanity/image-url": "^1.0.2",
-    "astro": "^3.0.13",
+    "astro": "^4.16.12",
     "astro-portabletext": "^0.9.6",
     "astro-seo": "^0.8.0",
     "groq": "^3.23.1",
@@ -25,7 +25,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sanity": "^3.19.1",
-    "svelte": "^3.58.0",
+    "svelte": "^4.2.19",
     "typescript": "^5.2.2"
   },
   "devDependencies": {
