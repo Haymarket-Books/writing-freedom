@@ -97,6 +97,12 @@ const { person } = Astro.props;
 
   .img-wrapper {
     border-radius: var(--rounded-corners-small);
+    filter: grayscale(100%);
+    transition: all 1s;
+
+    &:hover {
+      filter: grayscale(0%);
+    }
   }
 
   :is(.headshot, .headshot-mobile) {

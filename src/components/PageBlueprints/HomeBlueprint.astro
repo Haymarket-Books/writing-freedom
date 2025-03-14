@@ -23,6 +23,7 @@ type Props = {
 };
 
 const { page } = Astro.props;
+const filterYear = 2025;
 ---
 
 <Fragment>
@@ -40,7 +41,9 @@ const { page } = Astro.props;
         case "quote":
           return <QuoteSection content={section as Quote} />;
         case "index":
-          return <IndexSection content={section as Index} />;
+          return (
+            <IndexSection content={section as Index} filterYear={filterYear} />
+          );
         case "cta":
           return <CallToActionSection content={section as CTA} />;
         default:
@@ -150,6 +153,6 @@ const { page } = Astro.props;
         stagger: reduceMotion ? 0 : 0.2,
         ease: defaults.ease,
       });
-    },
+    }
   );
 </script>

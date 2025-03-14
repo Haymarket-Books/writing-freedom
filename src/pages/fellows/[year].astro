@@ -4,6 +4,7 @@ import InteriorBlueprint from "../../components/PageBlueprints/InteriorBlueprint
 import IndexBlueprint from "../../components/PageBlueprints/IndexBlueprint.astro";
 import ContactBlueprint from "../../components/PageBlueprints/ContactBlueprint.astro";
 import PersonCard from "../../components/PersonCard.astro";
+import FellowsFilterYear from "../../components/FellowsFilterYear.astro";
 import { sanityClient } from "sanity:client";
 import {
   pageQuery,
@@ -22,10 +23,10 @@ import generatePageMetadata from "../../utils/generatePageMetadata";
 
 export async function getStaticPaths() {
   const years = await sanityClient.fetch<FellowshipYear[]>(
-    fellowshipYearsIndexQuery,
+    fellowshipYearsIndexQuery
   );
   const fellowCategories = await sanityClient.fetch<Category[]>(
-    fellowCategoriesQuery,
+    fellowCategoriesQuery
   );
   // const pages = await sanityClient.fetch<PagePayload[]>(pageQuery, {
   //   page: "page"
@@ -74,8 +75,9 @@ const path = Astro.url.pathname;
   <main slot="content">
     <div class="content-wrapper flow">
       <h1 class="with-mark">{page?.year} Fellows</h1>
+      <FellowsFilterYear />
       <section class="flow">
-        <h2 class="sr-only">All Fellows</h2>
+        <h2 class="sr-only">Fellows</h2>
         <div class="index-section | fellows-grid | responsive-grid">
           {
             page?.fellows?.map((fellow) => {
@@ -113,6 +115,8 @@ const path = Astro.url.pathname;
       }
 
       section {
+        margin-block: var(--space-m);
+
         &.flow {
           --flow-space: 1.5rem;
         }

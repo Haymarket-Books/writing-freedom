@@ -7,6 +7,7 @@ import type {
 } from "../../types/index";
 import type { PortableTextBlock } from "sanity";
 import PersonCard from "../PersonCard.astro";
+import FellowsFilterYear from "../FellowsFilterYear.astro";
 import FellowsFilters from "../FellowsFilters.astro";
 import FilterFellows from "../Svelte/FilterFellows.svelte";
 import { SITE_SETTINGS } from "../../lib/defaults";
@@ -41,6 +42,7 @@ const { page, content, filterYears, filterCategories } = Astro.props;
 
 <div class="content-wrapper flow">
   <h1 class="with-mark">{page.title}</h1>
+  <FellowsFilterYear />
   <section class="flow">
     <h2 class="sr-only">All Fellows</h2>
     <div class="index-section | fellows-grid | responsive-grid">
@@ -75,10 +77,9 @@ const { page, content, filterYears, filterCategories } = Astro.props;
     }
   }
 
-  h1 {
-    /* Careful, only for long title */
+  /* h1 {
     max-width: 16ch;
-  }
+  } */
 
   h2 {
     font-size: var(--step-2);

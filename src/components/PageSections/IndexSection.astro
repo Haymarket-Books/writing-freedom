@@ -9,10 +9,10 @@ type Props = {
   content?: Index;
   padding?: boolean;
   background?: boolean;
+  filterYear?: number;
 };
 
-const { content } = Astro.props;
-// console.log(content);
+const { content, filterYear = null } = Astro.props;
 ---
 
 <section
@@ -23,9 +23,16 @@ const { content } = Astro.props;
     <h2 class="with-mark">{content?.title}</h2>
     <div class="responsive-grid">
       {
-        content?.entries?.map((indexEntry) => {
-          return <PersonCard person={indexEntry as Person} />;
-        })
+        filterYear
+          ? content?.entries
+              ?.filter(
+                (indexEntry) =>
+                  (indexEntry as Fellow).fellowshipYear?.year == filterYear
+              )
+              .map((indexEntry) => <PersonCard person={indexEntry as Person} />)
+          : content?.entries?.map((indexEntry) => {
+              return <PersonCard person={indexEntry as Person} />;
+            })
       }
     </div>
     {

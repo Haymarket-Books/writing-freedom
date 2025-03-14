@@ -76,7 +76,7 @@ const shareLink = new URL(path, Astro.site);
   meta={generatePageMetadata(
     meta,
     `${joinNames(fellow?.name)} | Fellows`,
-    path,
+    path
   )}
 >
   <main slot="content">
@@ -314,6 +314,7 @@ const shareLink = new URL(path, Astro.site);
     height: 100%;
     border-radius: var(--rounded-corners-small);
     justify-self: end;
+    filter: grayscale(1) brightness(1.05);
 
     & + figcaption {
       position: absolute;
@@ -652,6 +653,6 @@ const shareLink = new URL(path, Astro.site);
       //   stagger: reduceMotion ? 0 : 0.2,
       //   ease: defaults.ease,
       // });
-    },
+    }
   );
 </script>
