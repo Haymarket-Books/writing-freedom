@@ -1,9 +1,11 @@
 import {defineField, defineType} from 'sanity'
+import {HiTag} from 'react-icons/hi2'
 
 export default defineType({
   name: 'category',
   title: 'Fellow Category',
   type: 'document',
+  icon: HiTag,
   fields: [
     defineField({
       name: 'name',

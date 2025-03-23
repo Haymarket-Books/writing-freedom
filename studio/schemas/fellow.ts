@@ -1,6 +1,7 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import type {SanityDocument} from 'sanity'
 import {NameField} from './components/NameField'
+import {HiUser} from 'react-icons/hi2'
 
 interface Fellow extends SanityDocument {
   name?: {
@@ -22,6 +23,13 @@ export default defineType({
   name: 'fellow',
   title: 'Fellow',
   type: 'document',
+  icon: HiUser,
+  groups: [
+    {name: 'meta', title: 'Meta'},
+    {name: 'content', title: 'Content'},
+    {name: 'media', title: 'Media'},
+    {name: 'seo', title: 'SEO'},
+  ],
   fields: [
     defineField({
       name: 'name',
@@ -41,6 +49,7 @@ export default defineType({
           validation: (Rule) => Rule.required(),
         }),
       ],
+      group: 'meta',
     }),
     defineField({
       name: 'slug',
@@ -55,6 +64,7 @@ export default defineType({
         isUnique: (value, context) => context.defaultIsUnique(value, context),
       },
       validation: (Rule) => Rule.required(),
+      group: 'meta',
     }),
     defineField({
       name: 'fellowshipYear',
@@ -65,12 +75,7 @@ export default defineType({
         disableNew: true,
       },
       validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'image',
-      title: 'Headshot',
-      type: 'coverImage',
-      validation: (Rule) => Rule.required(),
+      group: 'meta',
     }),
     defineField({
       name: 'categories',
@@ -82,12 +87,21 @@ export default defineType({
           to: [{type: 'category'}],
         },
       ],
+      group: 'meta',
+    }),
+    defineField({
+      name: 'image',
+      title: 'Headshot',
+      type: 'coverImage',
+      validation: (Rule) => Rule.required(),
+      group: 'content',
     }),
     defineField({
       name: 'content',
       title: 'Background',
       type: 'richContentLite',
       validation: (Rule) => Rule.required(),
+      group: 'content',
     }),
     defineField({
       name: 'selectedWorks',
@@ -125,6 +139,7 @@ export default defineType({
         }),
       ],
       validation: (Rule) => Rule.min(1),
+      group: 'content',
     }),
     defineField({
       name: 'socialLinks',
@@ -170,12 +185,14 @@ export default defineType({
           },
         },
       ],
+      group: 'content',
     }),
     defineField({
       name: 'websiteLink',
       title: 'Website Link',
       type: 'url',
       description: "Optional link to the fellow's personal website.",
+      group: 'content',
     }),
     defineField({
       name: 'media',
@@ -205,6 +222,7 @@ export default defineType({
           description: 'Optional transcript of the audio file.',
         }),
       ],
+      group: 'media',
     }),
     defineField({
       name: 'ogImage',
@@ -215,6 +233,7 @@ export default defineType({
       options: {
         hotspot: true,
       },
+      group: 'seo',
     }),
   ],
   preview: {

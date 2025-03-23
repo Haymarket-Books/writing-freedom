@@ -1,9 +1,11 @@
 import {defineField, defineType} from 'sanity'
+import {HiCalendar} from 'react-icons/hi2'
 
 export default defineType({
   name: 'fellowshipYear',
   title: 'Fellowship Year',
   type: 'document',
+  icon: HiCalendar,
   fields: [
     defineField({
       name: 'year',
