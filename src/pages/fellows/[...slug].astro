@@ -314,7 +314,7 @@ const shareLink = new URL(path, Astro.site);
     height: 100%;
     border-radius: var(--rounded-corners-small);
     justify-self: end;
-    filter: grayscale(1) brightness(1.05);
+    filter: grayscale(1) brightness(1.05) contrast(1.1);
 
     & + figcaption {
       position: absolute;
@@ -621,13 +621,13 @@ const shareLink = new URL(path, Astro.site);
         duration: 1,
       };
 
-      gsap.from(".intro-grid img", {
-        scrollTrigger: ".hero",
-        y: reduceMotion ? 0 : 32,
-        opacity: 0,
-        duration: defaults.duration,
-        ease: defaults.ease,
-      });
+      // gsap.from(".intro-grid img", {
+      //   scrollTrigger: ".hero",
+      //   y: reduceMotion ? 0 : 32,
+      //   opacity: 0,
+      //   duration: defaults.duration,
+      //   ease: defaults.ease,
+      // });
 
       gsap.from(".radial-blur", {
         scrollTrigger: ".hero",
