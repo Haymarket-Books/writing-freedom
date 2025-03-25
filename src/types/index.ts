@@ -54,6 +54,8 @@ export type Person = {
 export interface TeamMember extends Person {
   title?: string;
   category?: Category;
+  genres?: string;
+  url?: string;
 }
 
 export interface Fellow extends Person {
@@ -111,6 +113,7 @@ export type PageSectionTypes =
   | "grid"
   | "sponsors"
   | "index"
+  | "teamSection"
   | "emphasis"
   | "richContent"
   | "presentation"
@@ -204,6 +207,14 @@ export interface Index extends PageSection {
   linkObject?: Link;
   showContentType?: string;
   entries?: Array<Person | Fellow>;
+  sectionPadding?: boolean;
+}
+
+export interface TeamSection extends PageSection {
+  sections?: {
+    heading?: string;
+    items?: TeamMember[];
+  }[];
   sectionPadding?: boolean;
 }
 

@@ -1,0 +1,149 @@
+---
+import { Image } from "astro:assets";
+import type { Person, TeamMember, TeamSection } from "../../types";
+import joinNames from "../../utils/joinNames";
+
+import PersonCard from "../PersonCard.astro";
+import ButtonLink from "../ButtonLink.astro";
+import urlFor from "../../lib/sanity.urlForImage";
+
+type Props = {
+  content?: TeamSection;
+  padding?: boolean;
+  background?: boolean;
+  filterYear?: number;
+};
+
+const { content } = Astro.props;
+---
+
+<section
+  id={content?.slug}
+  class:list={[content?.sectionPadding ? "padding background" : "margin"]}
+>
+  <div class="content-wrapper | team-section | grid">
+    {
+      content?.sections?.map((section) => (
+        <div class="section">
+          <h2 class="with-mark">{section.heading}</h2>
+          <div class="responsive-grid">
+            {section?.items?.map((person) => (
+              <article class="team-member | text | flow">
+                <h3>{joinNames(person.name)}</h3>
+                {person?.category?.slug === "selection-committee" ? (
+                  <div class="flow">
+                    <p class="small-title">{person?.genres}</p>
+                    <a href={person.url} target="_blank">
+                      Website
+                      <i class="fa-regular fa-external-link" />
+                    </a>
+                  </div>
+                ) : (
+                  <p class="small-title">
+                    {(person as TeamMember)?.category?.name}
+                  </p>
+                )}
+              </article>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .margin {
+    margin-block: var(--section-spacer);
+  }
+
+  .padding {
+    padding-block: var(--section-spacer);
+  }
+
+  .background {
+    background-color: var(--color-primary-light-background);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+
+    & > :last-child {
+      position: relative;
+    }
+  }
+
+  .section:last-of-type::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    transform: translateX(-4rem);
+    height: 100%;
+    width: 1px;
+    background-color: color-mix(
+      in srgb,
+      var(--color-primary-base),
+      transparent 90%
+    );
+  }
+
+  h2 {
+    font-size: var(--step-2);
+  }
+
+  h3 {
+    font-size: var(--step-1);
+  }
+
+  .small-title {
+    /* opacity: var(--text-opacity-shade); */
+    font-size: 12px;
+  }
+
+  .team-member {
+    & .flow {
+      --flow-space: 0.5rem;
+    }
+
+    & a {
+      display: inline-flex;
+      gap: 0.5rem;
+      align-items: center;
+      place-self: flex-start;
+
+      & svg {
+        width: 0.75em;
+        height: 0.75em;
+        color: var(--color-primary-base);
+      }
+    }
+  }
+
+  .responsive-grid {
+    margin-block-start: 4rem;
+    /* --grid-gap: 2rem; */
+    /* --item-min-width: 12rem;
+    --item-max-width: 14rem; */
+    --item-min-width: 16rem;
+    /* --item-max-width: 18rem; */
+    grid-row-gap: 4rem;
+    grid-column-gap: 2rem;
+    /* --item-max-width: 14rem; */
+  }
+
+  @media (max-width: 768px) {
+    .responsive-grid {
+      grid-row-gap: 2.5rem;
+    }
+
+    .grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section:last-of-type::before {
+      display: none;
+    }
+  }
+</style>
