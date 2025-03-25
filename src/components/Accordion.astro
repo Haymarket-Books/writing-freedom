@@ -1,0 +1,80 @@
+---
+import RichContent from "./RichContent.astro";
+const { faq, open } = Astro.props;
+---
+
+<div x-data>
+  <div x-disclosure class="disclosure" {...open && { "default-open": true }}>
+    <button x-disclosure:button class="disclosure-button">
+      <div
+        class="question-wrapper"
+        :style="$disclosure.isOpen ? '--bottom-radius: 0' : '--bottom-radius: var(--rounded-corners)'"
+      >
+        {faq.question}
+        <span
+          class="icon"
+          :style="$disclosure.isOpen && '--disclosure-toggle: rotate(90deg)'"
+        >
+          <i class="fa-regular fa-chevron-right"></i>
+        </span>
+      </div>
+    </button>
+    <div x-disclosure:panel x-collapse>
+      <div class="answer-wrapper">
+        <div class="text | flow">
+          <RichContent content={faq.answer} />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .question-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    line-height: var(--leading-normal);
+    background-color: var(--color-white);
+    padding: 1.25rem 1.75rem;
+    border-top-left-radius: var(--rounded-corners);
+    border-top-right-radius: var(--rounded-corners);
+    border-bottom-left-radius: var(--bottom-radius);
+    border-bottom-right-radius: var(--bottom-radius);
+    font-size: var(--step-0);
+    transition: background-color 0.2s ease;
+  }
+
+  .question-wrapper:hover {
+    background-color: color-mix(
+      in srgb,
+      var(--color-white),
+      var(--color-primary-base) 15%
+    );
+  }
+
+  .answer-wrapper {
+    padding: 0.5rem 2rem 2rem;
+    background-color: var(--color-white);
+    border-bottom-left-radius: var(--rounded-corners);
+    border-bottom-right-radius: var(--rounded-corners);
+  }
+
+  .icon {
+    color: var(--color-accent-base);
+    transform: var(--disclosure-toggle);
+    transition: transform 0.2s ease-out;
+  }
+
+  @media (max-width: 640px) {
+    .answer-wrapper {
+      padding: 1rem 1.5rem 2rem;
+    }
+
+    .question-wrapper {
+      gap: 1rem;
+    }
+  }
+</style>

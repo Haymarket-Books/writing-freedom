@@ -12,8 +12,6 @@
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/sitemap": "^3.2.1",
-    "@astrojs/svelte": "^5.7.3",
-    "@rgossiaux/svelte-headlessui": "^2.0.0",
     "@sanity/astro": "^3.2.6",
     "@sanity/client": "^6.28.3",
     "@sanity/image-url": "^1.1.0",
@@ -24,8 +22,7 @@
     "gsap": "^3.12.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sanity": "^3.19.1",
-    "svelte": "^4.2.19",
+    "sanity": "^3.81.0",
     "typescript": "^5.2.2"
   },
   "devDependencies": {

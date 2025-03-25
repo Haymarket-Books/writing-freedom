@@ -4,10 +4,10 @@ import type { FAQ, Person, Fellow } from "../../types";
 import PersonCard from "../PersonCard.astro";
 import ButtonLink from "../ButtonLink.astro";
 import urlFor from "../../lib/sanity.urlForImage";
-import Accordion from "../Svelte/Accordion.svelte";
 import RichContent from "../RichContent.astro";
 import BackgroundIllustration from "../BackgroundIllustration.astro";
 import BackgroundIllustrationBird from "../BackgroundIllustrationBird.astro";
+import AccordionAstro from "../Accordion.astro";
 
 type Props = {
   content?: FAQ;
@@ -29,12 +29,7 @@ const { content } = Astro.props;
     <div class="faqs | flow">
       {
         content?.list?.map((faq, index) => (
-          <Accordion openOnStart={index === 0 && true} client:load>
-            <Fragment slot="question">{faq.question}</Fragment>
-            <div class="text | flow" slot="answer">
-              <RichContent content={faq.answer} />
-            </div>
-          </Accordion>
+          <AccordionAstro faq={faq} open={index == 0} />
         ))
       }
     </div>

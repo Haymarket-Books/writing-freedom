@@ -1,0 +1,153 @@
+---
+const { title, url } = Astro.props;
+---
+
+<div
+  x-data=`{
+    webShareSupported: undefined,
+    clipboardSupported: undefined,
+    shareFeedback: '',
+    copyFeedback: '',
+    title: "${title}",
+    url: "${url}",
+    init() {
+        this.webShareSupported = window.navigator.share ? true : false;
+        this.clipboardSupported = window.navigator.clipboard ? true : false;
+    },
+    async shareLink() {
+        const title = this.title;
+        const url = this.url;
+        window.navigator.share({
+            title,
+            url,
+            text: title
+        }).then(() => {
+            this.shareFeedback = 'Link shared!';
+            setTimeout(() => {
+                this.shareFeedback = '';
+            }, 3000);
+        }).catch((err) => console.error('Error sharing', err));
+    },
+    async copyLink() {
+        const url = this.url;
+        window.navigator.clipboard.writeText(url).then(() => {
+            this.copyFeedback = 'Link copied!';
+            setTimeout(() => {
+                this.copyFeedback = '';
+            }, 3000);
+        }).catch((err) => console.error('Error copying', err));
+    },
+    shouldShow() {
+        if (this.webShareSupported || this.clipboardSupported) {
+            return true;
+        }
+    }
+  }`
+  id="share"
+>
+  <div x-show="shouldShow">
+    <div class="share-heading | cluster">
+      <i class="fa-regular fa-share-nodes"></i>
+      <p class="small-title">Share This Page</p>
+    </div>
+    <div class="buttons | cluster">
+      <template x-if="webShareSupported">
+        <div class="relative">
+          <button
+            type="button"
+            class="share-btn | cluster"
+            x-on:click="shareLink"
+            ><i class="fa-regular fa-share"></i>Share</button
+          >
+          <p
+            class="context-alert"
+            role="alert"
+            aria-live="polite"
+            x-text="shareFeedback"
+            x-show="shareFeedback"
+          >
+          </p>
+        </div>
+      </template>
+      <template x-if="clipboardSupported">
+        <div class="relative">
+          <button
+            type="button"
+            class="share-btn | cluster"
+            x-on:click="copyLink"
+          >
+            <i class="fa-regular fa-copy"></i>Copy link
+          </button>
+          <p
+            class="context-alert"
+            role="alert"
+            aria-live="polite"
+            x-text="copyFeedback"
+            x-show="copyFeedback"
+          >
+          </p>
+        </div>
+      </template>
+    </div>
+  </div>
+</div>
+
+<style>
+  .share-heading {
+    color: var(--color-accent-light);
+
+    &.cluster {
+      --cluster-space: 0.75rem;
+    }
+  }
+
+  .buttons {
+    margin-block-start: 1rem;
+
+    &.cluster {
+      --cluster-space: 0.75rem;
+    }
+  }
+
+  .share-btn {
+    --foreground: var(--color-primary-light);
+    --background: var(--color-accent-base);
+    font-size: var(--step--1);
+    padding: 0.5rem 0.75rem;
+    background-color: var(--background);
+    color: var(--foreground);
+    border: 0;
+    /* border: 1px solid color-mix(in srgb, var(--foreground) 25%, white); */
+    border-radius: var(--rounded-corners-small);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--background) 90%, black);
+    }
+  }
+
+  .share-btn.cluster {
+    --cluster-space: 0.5rem;
+  }
+
+  .context-alert {
+    position: absolute;
+    inset: auto 0 calc(100% + 0.5rem) 0;
+    padding: 0.25rem;
+    background: var(--color-text-heading);
+    color: var(--color-white);
+    font-size: var(--step--1);
+    line-height: var(--leading-tight);
+    text-align: center;
+    border-radius: var(--rounded-corners-small);
+    transition: all 0.2s ease;
+
+    &[data-show="empty"] {
+      opacity: 0;
+      transform: translateY(0.25rem);
+      transition: none;
+    }
+  }
+</style>

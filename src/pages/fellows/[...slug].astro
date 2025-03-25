@@ -6,7 +6,6 @@ import IndexBlueprint from "../../components/PageBlueprints/IndexBlueprint.astro
 import ButtonLink from "../../components/ButtonLink.astro";
 import AudioControls from "../../components/AudioControls.astro";
 import BackgroundIllustration from "../../components/BackgroundIllustration.astro";
-import ShareLink from "../../components/Svelte/ShareLink.svelte";
 import { sanityClient } from "sanity:client";
 import { fellowsDetailQuery } from "../../lib/sanity.queries";
 import type { Fellow, PageMetadata } from "../../types";
@@ -16,6 +15,7 @@ import buildFellowHref from "../../utils/buildFellowHref";
 import "../../styles/rich-content.css";
 import generatePageMetadata from "../../utils/generatePageMetadata";
 import SocialLinks from "../../components/SocialLinks.astro";
+import ShareLinkAstro from "../../components/ShareLink.astro";
 
 export async function getStaticPaths() {
   const fellows = await sanityClient.fetch<Fellow[]>(fellowsDetailQuery);
@@ -175,10 +175,9 @@ const shareLink = new URL(path, Astro.site);
                   </div>
                 )
               }
-              <ShareLink
-                url={shareLink.href}
+              <ShareLinkAstro
                 title={`Meet Writing Freedom Fellow ${joinNames(fellow?.name)}`}
-                client:load
+                url={shareLink.href}
               />
             </div>
             <!-- <div class="selected-work | flow">
