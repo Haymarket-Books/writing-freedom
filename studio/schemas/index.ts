@@ -4,6 +4,7 @@ import fellowCategory from './fellowCategory'
 import fellowshipYear from './fellowshipYear'
 import teamMember from './teamMember'
 import teamMemberCategory from './teamMemberCategory'
+import teamSection from './pageSections/teamSection'
 import navigation from './navigation'
 import home from './pages/home'
 import page from './pages/page'
@@ -35,6 +36,7 @@ export const schemaTypes = [
   fellowshipYear,
   teamMember,
   teamMemberCategory,
+  teamSection,
   navigation,
   home,
   page,

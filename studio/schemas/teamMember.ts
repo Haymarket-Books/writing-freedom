@@ -56,13 +56,25 @@ export default defineType({
       title: 'Title',
       description: 'The title or role of this member.',
       type: 'string',
-      validation: (Rule) => Rule.required(),
+      // validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'genres',
+      title: 'Genres',
+      description: 'Optional - add genres (for selection committee)',
+      type: 'string',
+    }),
+    defineField({
+      name: 'url',
+      title: 'URL',
+      description: 'Optional - URL to personal site',
+      type: 'url',
     }),
     defineField({
       name: 'image',
       title: 'Headshot',
       type: 'coverImage',
-      validation: (Rule) => Rule.required(),
+      // validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'content',

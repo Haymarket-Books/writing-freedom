@@ -201,6 +201,22 @@ export const pageQuery = groq`*[_type == $page] {
                 }
             }
         },
+        _type == "teamSection" => {
+            "slug": slug.current,
+            sections[] {
+                heading,
+                items[]-> {
+                    name,
+                    genres,
+                    url,
+                    category->{
+                        name,
+                        "slug": slug.current
+                    }
+                }
+            },
+            sectionPadding
+        },
         _type == "index" => {
             title,
             "slug": slug.current,

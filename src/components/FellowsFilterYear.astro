@@ -1,0 +1,35 @@
+---
+import ButtonLink from "./ButtonLink.astro";
+const currentPath = Astro.url.pathname;
+const urlParts = currentPath.split("/").filter(Boolean);
+---
+
+<div class="cluster">
+  <ButtonLink
+    linkObject={{
+      type: "slugString",
+      name: "All Fellows",
+      href: { slug: "fellows" },
+    }}
+    theme={urlParts.toString() == "fellows" ? "primary" : "ghostPrimary"}
+    aria-current={urlParts.toString() == "fellows" ? "page" : "false"}
+  />
+  <ButtonLink
+    linkObject={{
+      type: "slugString",
+      name: "2025 Fellows",
+      href: { slug: "fellows/2025" },
+    }}
+    theme={urlParts.includes("2025") ? "primary" : "ghostPrimary"}
+    aria-current={urlParts.includes("2025") ? "page" : "false"}
+  />
+  <ButtonLink
+    linkObject={{
+      type: "slugString",
+      name: "2024 Fellows",
+      href: { slug: "fellows/2024" },
+    }}
+    theme={urlParts.includes("2024") ? "primary" : "ghostPrimary"}
+    aria-current={urlParts.includes("2024") ? "page" : "false"}
+  />
+</div>

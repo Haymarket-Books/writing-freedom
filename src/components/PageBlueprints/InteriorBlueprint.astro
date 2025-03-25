@@ -10,6 +10,7 @@ import type {
   FAQ,
   Index,
   LinkCTA,
+  TeamSection as TeamSectionType,
   CTA,
   PageNavigation,
 } from "../../types/index";
@@ -18,6 +19,7 @@ import InnerGridSection from "../PageSections/InnerGrid.astro";
 import EmphasisSection from "../PageSections/Emphasis.astro";
 import PresentationSection from "../PageSections/Presentation.astro";
 import IndexSection from "../PageSections/IndexSection.astro";
+import TeamSection from "../PageSections/TeamSection.astro";
 import SponsorsSection from "../PageSections/Sponsors.astro";
 import FAQSection from "../PageSections/FAQSection.astro";
 import QuoteSection from "../PageSections/Quote.astro";
@@ -63,6 +65,8 @@ const pageNavigation: PageNavigation = buildPageNav(page.content);
           return <FAQSection content={section as FAQ} />;
         case "index":
           return <IndexSection content={section as Index} />;
+        case "teamSection":
+          return <TeamSection content={section as TeamSectionType} />;
         case "linkCTA":
           return <LinkCTASection content={section as LinkCTA} />;
         case "cta":
@@ -167,6 +171,17 @@ const pageNavigation: PageNavigation = buildPageNav(page.content);
         });
       }
 
+      if (document.querySelector(".team-section")) {
+        gsap.from(".team-section .section article", {
+          scrollTrigger: ".team-section .section article",
+          y: reduceMotion ? 0 : 16,
+          opacity: 0,
+          duration: defaults.duration,
+          stagger: reduceMotion ? 0 : 0.2,
+          ease: defaults.ease,
+        });
+      }
+
       if (document.querySelector(".sponsors-section")) {
         gsap.from(".sponsors-section img", {
           scrollTrigger: ".sponsors-section",
@@ -178,6 +193,6 @@ const pageNavigation: PageNavigation = buildPageNav(page.content);
           ease: defaults.ease,
         });
       }
-    },
+    }
   );
 </script>
