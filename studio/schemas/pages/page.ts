@@ -65,6 +65,11 @@ export default defineType({
           type: 'indexSection',
         }),
         defineArrayMember({
+          name: 'teamSection',
+          title: 'Team Section',
+          type: 'teamSection',
+        }),
+        defineArrayMember({
           name: 'presentation',
           title: 'Presentation Section',
           type: 'presentation',
