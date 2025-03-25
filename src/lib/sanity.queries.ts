@@ -52,6 +52,7 @@ export const settingsQuery = groq`*[_type == "siteSettings"][0]{
 
 // Collections
 export const teamMembersQuery = groq`*[_type == "teamMember"] | order(name.lastName asc) {
+    "id": _id,
     "type": _type,
     name,
     title,
@@ -64,6 +65,7 @@ export const teamMembersQuery = groq`*[_type == "teamMember"] | order(name.lastN
 
 // remove $fellowshipYear param
 export const fellowsIndexQuery = groq`*[_type == "fellow"] | order(name.firstName asc) | order(name.lastName asc) {
+    "id": _id,
     "type": _type,
     name,
     "slug": slug.current,
@@ -79,6 +81,7 @@ export const fellowsIndexQuery = groq`*[_type == "fellow"] | order(name.firstNam
 }`;
 
 export const fellowsDetailQuery = groq`*[_type == "fellow"] | order(name.firstName) | order(name.lastName asc) {
+    "id": _id,
     "type": _type,
     name,
     "slug": slug.current,
@@ -114,6 +117,7 @@ export const fellowshipYearsIndexQuery = groq`*[_type == "fellowshipYear"] | ord
     year,
     "slug": slug.current,
     "fellows": *[_type == "fellow" && references(^._id)] | order(name.firstName asc) | order(name.lastName asc) {
+        "id": _id,
         "type": _type,
         name,
         "slug": slug.current,
