@@ -1,30 +1,22 @@
+// @ts-check
 import { defineConfig } from "astro/config";
 import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
-
-import sanity from "@sanity/astro";
 import sitemap from "@astrojs/sitemap";
 
+// troubleshoot: some settings not updating?
 // https://astro.build/config
 export default defineConfig({
   site: "https://writing-freedom.org",
-  scopedStyleStrategy: "class",
   image: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**.sanity.io",
-      },
-    ],
+    domains: ["cdn.sanity.io"]
   },
   integrations: [
     sitemap(),
-    sanity({
-      projectId: "7zni91yt",
-      dataset: "production",
-      useCdn: "false",
-    }),
   ],
+  prefetch: {
+    prefetchAll: true
+  },
   vite: {
     css: {
       transformer: "lightningcss",

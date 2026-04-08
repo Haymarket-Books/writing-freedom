@@ -1,29 +1,29 @@
 ---
 import { Image } from "astro:assets";
-import type { Grid } from "../../types";
-import ButtonLink from "../ButtonLink.astro";
-import urlFor from "../../lib/sanity.urlForImage";
+import ButtonLink from "@components/ButtonLink.astro";
+import { urlForImage } from "@lib/sanity/urlForImage";
+import type { SponsorsSection } from "@content/schemaFragments/sanityComponents";
 
 type Props = {
-  content?: Grid;
+  content: SponsorsSection;
 };
 
 const { content } = Astro.props;
 ---
 
-<section class="sponsors-section | content-wrapper" id={content?.slug}>
-  <h2 class="center-all with-mark">{content?.title}</h2>
+<section class="sponsors-section | content-wrapper" id={content.slug}>
+  <h2 class="center-all with-mark">{content.title}</h2>
   <div class="responsive-grid">
     {
-      content?.items?.map((item) => {
+      content.items.map((item) => {
         return (
           <article class="flow">
             {item.image && (
               <Image
-                src={urlFor(item?.image)
+                src={urlForImage(item.image)
                   .width(
                     Math.floor(
-                      400 * item?.image.asset.metadata.dimensions.aspectRatio,
+                      400 * item.image.asset.metadata.dimensions.aspectRatio,
                     ),
                   )
                   .height(400)
@@ -31,7 +31,7 @@ const { content } = Astro.props;
                   .url()}
                 alt={item.image.alt || ""}
                 width={Math.floor(
-                  400 * item?.image.asset.metadata.dimensions.aspectRatio,
+                  400 * item.image.asset.metadata.dimensions.aspectRatio,
                 )}
                 height={400}
                 format="webp"
@@ -39,7 +39,7 @@ const { content } = Astro.props;
             )}
             <p>{item.text}</p>
             {item.linkObject && (
-              <ButtonLink linkObject={item?.linkObject} withArrow />
+              <ButtonLink linkObject={item.linkObject} withArrow />
             )}
           </article>
         );

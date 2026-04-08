@@ -1,14 +1,14 @@
 ---
-import type { Quote } from "../../types";
-import RichContent from "../RichContent.astro";
-import ButtonLink from "../ButtonLink.astro";
-import buildHref from "../../utils/buildHref";
-import urlFor from "../../lib/sanity.urlForImage";
+import RichContent from "@components/RichContent.astro";
+import ButtonLink from "@components/ButtonLink.astro";
+import { urlForImage } from "@lib/sanity/urlForImage";
 import { Image } from "astro:assets";
+import type { QuoteSection } from "@content/schemaFragments/sanityComponents";
+import FeaturedVideos from "@components/FeaturedVideos.astro";
 import "../../styles/rich-content.css";
 
 type Props = {
-  content?: Quote;
+  content: QuoteSection;
 };
 
 const { content } = Astro.props;
@@ -18,14 +18,14 @@ const { content } = Astro.props;
   <div class="grid-wrapper">
     <div class="grid">
       <div class="rich-content quote">
-        <RichContent content={content?.blocks} />
+        <RichContent content={content.blocks} />
         <div class="attribution">
-          <p class="small-title">{`—${content?.attribution?.name}`}</p>
-          <p>{content?.attribution?.title}</p>
+          <p class="small-title">{`—${content.attribution?.name}`}</p>
+          <p>{content.attribution?.title}</p>
         </div>
       </div>
       {
-        content?.featuredLink && (
+        content.featuredLink && (
           <div class="link | flow">
             <img
               src="/crane-circle.svg"
@@ -35,11 +35,13 @@ const { content } = Astro.props;
               role="presentation"
             />
             <p class="italic">{content.featuredLink.description}</p>
-            <ButtonLink
-              theme="ghost"
-              linkObject={content.featuredLink.linkObject!}
-              withArrow
-            />
+            {content.featuredLink.linkObject && (
+              <ButtonLink
+                theme="ghost"
+                linkObject={content.featuredLink.linkObject}
+                withArrow
+              />
+            )}
           </div>
         )
       }
@@ -57,7 +59,11 @@ const { content } = Astro.props;
     content?.image && (
       <Image
         class="bg-image lqip-preview"
-        src={urlFor(content.image).width(1200).height(675).auto("format").url()}
+        src={urlForImage(content.image)
+          .width(1200)
+          .height(675)
+          .auto("format")
+          .url()}
         alt=""
         width={1200}
         height={675}
@@ -67,8 +73,15 @@ const { content } = Astro.props;
     )
   }
 </article>
+<div class="featured-videos content-wrapper">
+  <FeaturedVideos />
+</div>
 
 <style>
+  .featured-videos {
+    margin-block-end: var(--section-spacer);
+  }
+
   article {
     position: relative;
     margin-block: var(--section-spacer);

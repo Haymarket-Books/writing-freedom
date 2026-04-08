@@ -1,39 +1,50 @@
 ---
-import type { Hero } from "../../types/index";
-import PageNav from "./PageNav.astro";
+import PageNav from "@components/PageSections/PageNav.astro";
 import { Image } from "astro:assets";
-import urlFor from "../../lib/sanity.urlForImage";
-import { SITE_SETTINGS } from "../../lib/defaults";
+import { urlForImage } from "@lib/sanity/urlForImage";
+import type { HeroSection } from "@content/schemaFragments/sanityComponents";
+import { getEntry } from "astro:content";
+import type { PageNavigation } from "../../types/index";
 
 type Props = {
-  content?: Hero;
-  navigation?: any;
+  content: HeroSection;
+  navigation?: PageNavigation;
 };
 
 const { content, navigation } = Astro.props;
+
+const siteSettings = await getEntry("siteSettings", "siteSettings");
 ---
 
 <article class="hero">
   <div class="content-wrapper">
     <div class="text | flow">
       <header>
-        <p class="small-title">{SITE_SETTINGS.title}</p>
-        <h1>{content?.title}</h1>
+        <p class="small-title">{siteSettings?.data.title}</p>
+        <h1>{content.title}</h1>
       </header>
-      <p>{content?.text}</p>
+      <p>{content.text}</p>
     </div>
   </div>
-  <Image
-    class="bg-image lqip-preview"
-    src={urlFor(content?.image!).width(1920).height(1080).auto("format").url()}
-    width={1920}
-    height={1080}
-    alt=""
-    format="webp"
-    loading="eager"
-  />
+  {
+    content.image && (
+      <Image
+        class="bg-image lqip-preview"
+        src={urlForImage(content.image)
+          .width(1920)
+          .height(1080)
+          .auto("format")
+          .url()}
+        width={1920}
+        height={1080}
+        alt=""
+        format="webp"
+        loading="eager"
+      />
+    )
+  }
 </article>
-<PageNav navigation={navigation} />
+{navigation && <PageNav navigation={navigation} />}
 
 <style>
   article {

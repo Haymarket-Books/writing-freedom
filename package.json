@@ -1,7 +1,7 @@
 {
   "name": "writing-freedom",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.2.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -10,20 +10,15 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
-    "@astrojs/sitemap": "^3.2.1",
-    "@sanity/astro": "^3.2.6",
+    "@astrojs/check": "^0.9.8",
+    "@astrojs/sitemap": "^3.7.2",
     "@sanity/client": "^6.28.3",
     "@sanity/image-url": "^1.1.0",
-    "astro": "^5.5.2",
+    "astro": "^6.1.4",
     "astro-portabletext": "^0.11.1",
     "astro-seo": "^0.8.0",
-    "groq": "^3.23.1",
-    "gsap": "^3.12.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sanity": "^3.81.0",
-    "typescript": "^5.2.2"
+    "groq": "^3.99.0",
+    "gsap": "^3.12.5"
   },
   "devDependencies": {
     "browserslist": "^4.22.2",

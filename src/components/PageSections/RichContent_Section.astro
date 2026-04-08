@@ -1,10 +1,10 @@
 ---
-import type { RichContent as RichContentType } from "../../types";
-import RichContent from "../RichContent.astro";
+import RichContent from "@components/RichContent.astro";
 import "../../styles/rich-content.css";
+import type { RichContentSection as RichContentSectionType } from "@content/schemaFragments/sanityComponents";
 
 type Props = {
-  content?: RichContentType;
+  content: RichContentSectionType;
 };
 
 const { content } = Astro.props;
@@ -12,7 +12,7 @@ const { content } = Astro.props;
 
 <section class="content-wrapper">
   <div class="rich-content">
-    <RichContent content={content?.blocks} />
+    <RichContent content={content.blocks} />
   </div>
 </section>
 

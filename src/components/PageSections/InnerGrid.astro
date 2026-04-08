@@ -1,21 +1,19 @@
 ---
-import { Image } from "astro:assets";
-import type { Grid } from "../../types";
-import ButtonLink from "../ButtonLink.astro";
-import urlFor from "../../lib/sanity.urlForImage";
+import ButtonLink from "@components/ButtonLink.astro";
+import type { GridSection } from "@content/schemaFragments/sanityComponents";
 
 type Props = {
-  content?: Grid;
+  content: GridSection;
 };
 
 const { content } = Astro.props;
 ---
 
-<section class="columns-section | content-wrapper" id={content?.slug}>
-  <h2 class="center-all with-mark">{content?.title}</h2>
+<section class="columns-section | content-wrapper" id={content.slug}>
+  <h2 class="center-all with-mark">{content.title}</h2>
   <div class="responsive-grid">
     {
-      content?.items?.map((item, idx) => {
+      content.items.map((item, idx) => {
         return (
           <article class="flow">
             {item.image && (

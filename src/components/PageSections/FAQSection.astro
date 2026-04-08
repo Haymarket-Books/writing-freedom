@@ -1,34 +1,28 @@
 ---
-import { Image } from "astro:assets";
-import type { FAQ, Person, Fellow } from "../../types";
-import PersonCard from "../PersonCard.astro";
-import ButtonLink from "../ButtonLink.astro";
-import urlFor from "../../lib/sanity.urlForImage";
-import RichContent from "../RichContent.astro";
-import BackgroundIllustration from "../BackgroundIllustration.astro";
-import BackgroundIllustrationBird from "../BackgroundIllustrationBird.astro";
-import AccordionAstro from "../Accordion.astro";
+import BackgroundIllustrationBird from "@components/BackgroundIllustrationBird.astro";
+import AccordionAstro from "@components/Accordion.astro";
+import type { FAQSection as FAQSectionType } from "@content/schemaFragments/sanityComponents";
 
 type Props = {
-  content?: FAQ;
+  content: FAQSectionType;
 };
 
 const { content } = Astro.props;
 ---
 
 <section
-  id={content?.slug}
+  id={content.slug}
   class:list={[
-    content?.sectionPadding ? "padding background" : "margin",
+    content.sectionPadding ? "padding background" : "margin",
     "relative",
     "faq-section",
   ]}
 >
   <div class="content-wrapper flow">
-    <h2 class="with-mark">{content?.title}</h2>
+    <h2 class="with-mark">{content.title}</h2>
     <div class="faqs | flow">
       {
-        content?.list?.map((faq, index) => (
+        content.list.map((faq, index) => (
           <AccordionAstro faq={faq} open={index == 0} />
         ))
       }

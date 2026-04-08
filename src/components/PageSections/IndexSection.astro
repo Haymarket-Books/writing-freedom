@@ -1,42 +1,57 @@
 ---
-import { Image } from "astro:assets";
-import type { Index, Person, Fellow } from "../../types";
-import PersonCard from "../PersonCard.astro";
-import ButtonLink from "../ButtonLink.astro";
-import urlFor from "../../lib/sanity.urlForImage";
+import PersonCard from "@components/PersonCard.astro";
+import ButtonLink from "@components/ButtonLink.astro";
+import type { IndexSection as IndexSectionType } from "@content/schemaFragments/sanityComponents";
+import { getCollection } from "astro:content";
 
 type Props = {
-  content?: Index;
+  content: IndexSectionType;
   padding?: boolean;
   background?: boolean;
   filterYear?: number;
 };
 
 const { content, filterYear = null } = Astro.props;
+
+const fellows = await getCollection(
+  "fellows",
+  ({ data }) => data.fellowshipYear.year === filterYear,
+);
 ---
 
 <section
-  id={content?.slug}
-  class:list={[content?.sectionPadding ? "padding background" : "margin"]}
+  id={content.slug}
+  class:list={[content.sectionPadding ? "padding background" : "margin"]}
 >
   <div class="index-section | content-wrapper flow">
-    <h2 class="with-mark">{content?.title}</h2>
+    <h2 class="with-mark">{content.title}</h2>
     <div class="responsive-grid">
       {
+        fellows.length > 0 &&
+          fellows
+            .sort((a, b) => {
+              if (a.data.name.lastName === b.data.name.lastName) {
+                return a.data.name.firstName > b.data.name.firstName ? 1 : -1;
+              }
+              return a.data.name.lastName > b.data.name.lastName ? 1 : -1;
+            })
+            .map((fellow) => <PersonCard person={fellow} />)
+      }
+      <!-- {
         filterYear
           ? content?.entries
               ?.filter(
                 (indexEntry) =>
-                  (indexEntry as Fellow).fellowshipYear?.year == filterYear
+                  (indexEntry as Fellow).fellowshipYear?.year == filterYear,
               )
               .map((indexEntry) => <PersonCard person={indexEntry as Person} />)
           : content?.entries?.map((indexEntry) => {
               return <PersonCard person={indexEntry as Person} />;
             })
-      }
+      } -->
     </div>
     {
-      content?.linkObject && (
+      content.linkObject && (
         <ButtonLink linkObject={content?.linkObject} withArrow />
       )
     }

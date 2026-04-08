@@ -17,6 +17,15 @@ const urlParts = currentPath.split("/").filter(Boolean);
   <ButtonLink
     linkObject={{
       type: "slugString",
+      name: "2026 Fellows",
+      href: { slug: "fellows/2026" },
+    }}
+    theme={urlParts.includes("2026") ? "primary" : "ghostPrimary"}
+    aria-current={urlParts.includes("2026") ? "page" : "false"}
+  />
+  <ButtonLink
+    linkObject={{
+      type: "slugString",
       name: "2025 Fellows",
       href: { slug: "fellows/2025" },
     }}

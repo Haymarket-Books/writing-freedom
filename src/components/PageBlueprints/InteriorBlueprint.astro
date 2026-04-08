@@ -1,19 +1,4 @@
 ---
-import type {
-  PagePayload,
-  Hero,
-  Grid,
-  Emphasis,
-  Presentation,
-  RichContent,
-  Quote,
-  FAQ,
-  Index,
-  LinkCTA,
-  TeamSection as TeamSectionType,
-  CTA,
-  PageNavigation,
-} from "../../types/index";
 import InnerHeroSection from "../PageSections/InnerHero.astro";
 import InnerGridSection from "../PageSections/InnerGrid.astro";
 import EmphasisSection from "../PageSections/Emphasis.astro";
@@ -28,49 +13,68 @@ import CallToActionSection from "../PageSections/CallToAction.astro";
 import RichContentSection from "../PageSections/RichContent_Section.astro";
 import buildPageNav from "../../utils/buildPageNav";
 import type { PortableTextBlock } from "sanity";
+import type {
+  HeroSection,
+  GridSection,
+  PresentationSection as PresentationSectionType,
+  QuoteSection as QuoteSectionType,
+  IndexSection as IndexSectionType,
+  SponsorsSection as SponsorsSectionType,
+  CTASection,
+  EmphasisSection as EmphasisSectionType,
+  FAQSection as FAQSectionType,
+  TeamSection as TeamSectionType,
+  LinkCTASection as LinkCTASectionType,
+  RichContentSection as RichContentSectionType,
+} from "@content/schemaFragments/sanityComponents";
+import type { CollectionEntry } from "astro:content";
 
 type Props = {
-  page: PagePayload;
+  page: CollectionEntry<"pages">;
 };
 
 const { page } = Astro.props;
 
-const pageNavigation: PageNavigation = buildPageNav(page.content);
+const pageNavigation = buildPageNav(page.data.content);
 ---
 
 <Fragment>
   {
-    page.content.map((section, idx) => {
+    page.data.content.map((section, idx) => {
       switch (section.type) {
         case "hero":
           return (
             <InnerHeroSection
-              content={section as Hero}
+              content={section as HeroSection}
               navigation={pageNavigation}
             />
           );
         case "grid":
-          return <InnerGridSection content={section as Grid} />;
+          return <InnerGridSection content={section as GridSection} />;
         case "sponsors":
-          return <SponsorsSection content={section as Grid} />;
+          return <SponsorsSection content={section as SponsorsSectionType} />;
         case "presentation":
-          return <PresentationSection content={section as Presentation} />;
+          return (
+            <PresentationSection content={section as PresentationSectionType} />
+          );
         case "emphasis":
-          return <EmphasisSection content={section as Emphasis} />;
+          return <EmphasisSection content={section as EmphasisSectionType} />;
         case "quote":
-          return <QuoteSection content={section as Quote} />;
+          return <QuoteSection content={section as QuoteSectionType} />;
         case "richContent":
-          return <RichContentSection content={section as RichContent} />;
+          return (
+            <RichContentSection content={section as RichContentSectionType} />
+          );
         case "faq":
-          return <FAQSection content={section as FAQ} />;
+          return <FAQSection content={section as FAQSectionType} />;
         case "index":
-          return <IndexSection content={section as Index} />;
+          return <IndexSection content={section as IndexSectionType} />;
         case "teamSection":
           return <TeamSection content={section as TeamSectionType} />;
         case "linkCTA":
-          return <LinkCTASection content={section as LinkCTA} />;
+          return <LinkCTASection content={section as LinkCTASectionType} />;
         case "cta":
-          return <CallToActionSection content={section as CTA} />;
+          return <CallToActionSection content={section as CTASection} />;
         default:
           return null;
       }
@@ -109,23 +113,23 @@ const pageNavigation: PageNavigation = buildPageNav(page.content);
         ease: defaults.ease,
       });
 
-      gsap.from(".hero .text header p, .hero .text header h1, .hero .text p", {
-        scrollTrigger: ".hero",
-        opacity: 0,
-        y: reduceMotion ? 0 : 16,
-        stagger: reduceMotion ? 0 : 0.4,
-        duration: defaults.duration,
-        ease: defaults.ease,
-      });
+      // gsap.from(".hero .text header p, .hero .text header h1, .hero .text p", {
+      //   scrollTrigger: ".hero",
+      //   opacity: 0,
+      //   y: reduceMotion ? 0 : 16,
+      //   stagger: reduceMotion ? 0 : 0.4,
+      //   duration: defaults.duration,
+      //   ease: defaults.ease,
+      // });
 
-      gsap.from(".presentation-section img", {
-        scrollTrigger: ".presentation-section .text",
-        opacity: 0,
-        // scale: reduceMotion ? 1 : 0.9,
-        y: reduceMotion ? 0 : 32,
-        duration: defaults.duration + 0.5,
-        ease: defaults.ease,
-      });
+      // gsap.from(".presentation-section img", {
+      //   scrollTrigger: ".presentation-section .text",
+      //   opacity: 0,
+      //   // scale: reduceMotion ? 1 : 0.9,
+      //   y: reduceMotion ? 0 : 32,
+      //   duration: defaults.duration + 0.5,
+      //   ease: defaults.ease,
+      // });
 
       if (document.querySelector(".faq-section")) {
         gsap.from(".faq-section .bird", {
@@ -193,6 +197,6 @@ const pageNavigation: PageNavigation = buildPageNav(page.content);
           ease: defaults.ease,
         });
       }
-    }
+    },
   );
 </script>

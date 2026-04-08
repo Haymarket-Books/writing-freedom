@@ -1,51 +1,55 @@
 ---
+import HomeHeroSection from "@components/PageSections/HomeHero.astro";
+import IntroGridSection from "@components/PageSections/IntroGrid.astro";
+import EmphasisSection from "@components/PageSections/Emphasis.astro";
+import PresentationSection from "@components/PageSections/Presentation.astro";
+import IndexSection from "@components/PageSections/IndexSection.astro";
+import QuoteSection from "@components/PageSections/Quote.astro";
+import CallToActionSection from "@components/PageSections/CallToAction.astro";
+import type { CollectionEntry } from "astro:content";
 import type {
-  PagePayload,
-  Hero,
-  Grid,
-  Emphasis,
-  Presentation,
-  Quote,
-  Index,
-  CTA,
-} from "../../types/index";
-import type { PortableTextBlock } from "sanity";
-import HomeHeroSection from "../PageSections/HomeHero.astro";
-import IntroGridSection from "../PageSections/IntroGrid.astro";
-import EmphasisSection from "../PageSections/Emphasis.astro";
-import PresentationSection from "../PageSections/Presentation.astro";
-import IndexSection from "../PageSections/IndexSection.astro";
-import QuoteSection from "../PageSections/Quote.astro";
-import CallToActionSection from "../PageSections/CallToAction.astro";
+  HeroSection,
+  GridSection,
+  PresentationSection as PresentationSectionType,
+  QuoteSection as QuoteSectionType,
+  IndexSection as IndexSectionType,
+  CTASection,
+  EmphasisSection as EmphasisSectionType,
+} from "@content/schemaFragments/sanityComponents";
 
 type Props = {
-  page: PagePayload;
+  page: CollectionEntry<"pages">;
 };
 
 const { page } = Astro.props;
-const filterYear = 2025;
+const filterYear = 2026;
 ---
 
 <Fragment>
   {
-    page.content.map((section) => {
+    page.data.content.map((section) => {
       switch (section.type) {
         case "hero":
-          return <HomeHeroSection content={section as Hero} />;
+          return <HomeHeroSection content={section as HeroSection} />;
         case "grid":
-          return <IntroGridSection content={section as Grid} />;
+          return <IntroGridSection content={section as GridSection} />;
         case "presentation":
-          return <PresentationSection content={section as Presentation} />;
+          return (
+            <PresentationSection content={section as PresentationSectionType} />
+          );
         case "emphasis":
-          return <EmphasisSection content={section as Emphasis} />;
+          return <EmphasisSection content={section as EmphasisSectionType} />;
         case "quote":
-          return <QuoteSection content={section as Quote} />;
+          return <QuoteSection content={section as QuoteSectionType} />;
         case "index":
           return (
-            <IndexSection content={section as Index} filterYear={filterYear} />
+            <IndexSection
+              content={section as IndexSectionType}
+              filterYear={filterYear}
+            />
           );
         case "cta":
-          return <CallToActionSection content={section as CTA} />;
+          return <CallToActionSection content={section as CTASection} />;
         default:
           return null;
       }
@@ -153,6 +157,6 @@ const filterYear = 2025;
         stagger: reduceMotion ? 0 : 0.2,
         ease: defaults.ease,
       });
-    }
+    },
   );
 </script>
