@@ -1,50 +1,49 @@
 ---
-import type { Presentation } from "../../types";
-import RichContent from "../RichContent.astro";
-import ButtonLink from "../ButtonLink.astro";
-import buildHref from "../../utils/buildHref";
-import urlFor from "../../lib/sanity.urlForImage";
+import RichContent from "@components/RichContent.astro";
+import ButtonLink from "@components/ButtonLink.astro";
+import { urlForImage } from "@lib/sanity/urlForImage";
 import { Image } from "astro:assets";
+import type { PresentationSection } from "@content/schemaFragments/sanityComponents";
 import "../../styles/rich-content.css";
 
 type Props = {
-  content?: Presentation;
+  content: PresentationSection;
   textCenter?: boolean;
 };
 
 const { content, textCenter = false } = Astro.props;
 ---
 
-<article class="presentation-section | content-wrapper" id={content?.slug}>
+<article class="presentation-section | content-wrapper" id={content.slug}>
   <div
-    class:list={[content?.image ? "grid" : "center"]}
-    data-layout={content?.layout === true ? "flipped" : "default"}
+    class:list={[content.image ? "grid" : "center"]}
+    data-layout={content.layout === true ? "flipped" : "default"}
   >
     {
-      content?.image && (
+      content.image && (
         <Image
           class="lqip-preview"
-          src={urlFor(content?.image!)
+          src={urlForImage(content.image)
             .width(600)
             .height(900)
             .auto("format")
             .url()}
-          alt={content?.image?.alt || ""}
+          alt={content.image.alt || ""}
           width={600}
           height={900}
           format="webp"
-          style={`background-image: url(${content?.image?.asset.metadata.lqip})`}
+          style={`background-image: url(${content.image.asset.metadata.lqip})`}
         />
       )
     }
     <div class:list={["text", "flow", textCenter && "text-center"]}>
-      <h2 class="small-title">{content?.title}</h2>
+      <h2 class="small-title">{content.title}</h2>
       <div class="rich-content">
-        <RichContent content={content?.blocks} />
+        <RichContent content={content.blocks} />
       </div>
       {
-        content?.linkObject && (
-          <ButtonLink linkObject={content?.linkObject} withArrow />
+        content.linkObject && (
+          <ButtonLink linkObject={content.linkObject} withArrow />
         )
       }
     </div>

@@ -1,21 +1,21 @@
 ---
 import { Image } from "astro:assets";
-import type { Grid } from "../../types";
-import buildHref from "../../utils/buildHref";
-import urlFor from "../../lib/sanity.urlForImage";
+import buildHref from "@utils/buildHref";
+import { urlForImage } from "@lib/sanity/urlForImage";
+import type { GridSection } from "@content/schemaFragments/sanityComponents";
 
 type Props = {
-  content?: Grid;
+  content: GridSection;
 };
 
 const { content } = Astro.props;
 ---
 
-<section class="content-wrapper" id={content?.slug}>
+<section class="content-wrapper" id={content.slug}>
   <div class="grid-wrapper">
   <div class="grid">
     {
-      content?.items?.map((item) => {
+      content.items.map((item) => {
         const link = buildHref(item.linkObject);
 
         return (
@@ -29,7 +29,7 @@ const { content } = Astro.props;
                 <div class="overlay"></div>
                 <Image
                   class="bg-image lqip-preview"
-                  src={urlFor(item?.image).width(600).height(600).auto('format').url()}
+                  src={urlForImage(item.image).width(600).height(600).auto('format').url()}
                   alt=""
                   width={600}
                   height={600}

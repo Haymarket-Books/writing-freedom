@@ -2,11 +2,10 @@
 import type { PageNavigation } from "../../types";
 
 type Props = {
-  navigation?: PageNavigation;
+  navigation: PageNavigation;
 };
 
 const { navigation } = Astro.props;
-// console.log("PageNav", navigation);
 ---
 
 <section>
@@ -15,7 +14,7 @@ const { navigation } = Astro.props;
     <nav>
       <ul class="cluster" role="list">
         {
-          navigation?.map((navItem) => {
+          navigation.map((navItem) => {
             return (
               <li>
                 <a class="link" href={`#${navItem.slug}`}>

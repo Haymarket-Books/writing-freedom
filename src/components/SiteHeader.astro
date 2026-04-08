@@ -1,28 +1,26 @@
 ---
 import ButtonLink from "./ButtonLink.astro";
-import type { Navigation, SiteSettings } from "../types";
 import SocialLinks from "./SocialLinks.astro";
 import Logo from "./Logo.astro";
 import buildHref from "../utils/buildHref";
 import capitalizeFirst from "../utils/capitalizeFirst";
+import { type CollectionEntry } from "astro:content";
 
 type Props = {
   theme?: string;
   position?: string;
   currentPath: string;
-  navigation: Navigation;
-  content: SiteSettings;
+  nav?: CollectionEntry<"navigation">;
+  settings?: CollectionEntry<"siteSettings">;
 };
 
 const {
   theme = "normal",
   position = "relative",
   currentPath,
-  navigation,
-  content,
+  nav,
+  settings,
 } = Astro.props;
-
-// console.log("current path", currentPath);
 ---
 
 <header
@@ -32,7 +30,7 @@ const {
 >
   <div class="cluster">
     <Logo
-      title={content.title}
+      title={settings?.data.title}
       size="36"
       color={theme === "normal"
         ? "var(--color-primary-base)"
@@ -41,7 +39,7 @@ const {
     <nav aria-label="Main Navigation">
       <ul class="cluster" role="list">
         {
-          navigation.entries?.map((navItem) => {
+          nav?.data.entries?.map((navItem: any) => {
             const urlParts = currentPath.split("/");
             return (
               <li>

@@ -1,67 +1,66 @@
 ---
-import type { Person, Fellow, TeamMember } from "../types/index";
 import { Image } from "astro:assets";
-import urlFor from "../lib/sanity.urlForImage";
+import { urlForImage } from "@lib/sanity/urlForImage";
 import joinNames from "../utils/joinNames";
 import buildFellowHref from "../utils/buildFellowHref";
+import type { CollectionEntry } from "astro:content";
 
 type Props = {
-  person: Person | Fellow | TeamMember;
-  // filter?: boolean;
+  person: CollectionEntry<"fellows"> | CollectionEntry<"teamMembers">;
 };
 
 const { person } = Astro.props;
 ---
 
-<article
-  class="flow"
-  data-filter-tag={person.type === "fellow" &&
-    (person as Fellow)?.categories?.map((category) => category.slug)}
->
+<article class="flow">
   {
-    person.type === "teamMember" ? (
+    person.data.type === "teamMember" ? (
       <Fragment>
         <div class="team-member | text | flow">
-          <h3>{joinNames(person.name)}</h3>
-          <p class="small-title">{(person as TeamMember)?.category?.name}</p>
+          <h3>{joinNames(person.data.name)}</h3>
+          <p class="small-title">{person.data.category?.name}</p>
         </div>
       </Fragment>
     ) : (
       <Fragment>
-        <a class="img-wrapper" href={buildFellowHref(person as Fellow)}>
+        <a
+          class="img-wrapper"
+          href={buildFellowHref(person as CollectionEntry<"fellows">)}
+        >
           <Image
             class="headshot lqip-preview"
-            src={urlFor(person.image!)
+            src={urlForImage(person.data.image!)
               .width(400)
               .height(500)
               .auto("format")
               .url()}
-            alt={person.image?.alt || ""}
+            alt={person.data.image?.alt || ""}
             width={400}
             height={500}
             format="webp"
-            style={`background-image: url(${person?.image?.asset.metadata.lqip})`}
+            style={`background-image: url(${person?.data.image?.asset.metadata.lqip})`}
           />
           <Image
             class="headshot-mobile lqip-preview"
-            src={urlFor(person.image!)
-              .width(500)
-              .height(400)
+            src={urlForImage(person.data.image!)
+              .width(400)
+              .height(500)
               .auto("format")
               .url()}
-            alt={person.image?.alt || ""}
+            alt={person.data.image?.alt || ""}
             width={500}
             height={400}
             format="webp"
-            style={`background-image: url(${person?.image?.asset.metadata.lqip})`}
+            style={`background-image: url(${person?.data.image?.asset.metadata.lqip})`}
           />
         </a>
         <div class="fellow | text | flow">
-          <a href={buildFellowHref(person as Fellow)}>
-            <h3>{joinNames(person.name)}</h3>
+          <a href={buildFellowHref(person as CollectionEntry<"fellows">)}>
+            <h3>{joinNames(person.data.name)}</h3>
           </a>
           <p class="small-title">
-            {(person as Fellow)?.fellowshipYear?.year} Fellow
+            {(person as CollectionEntry<"fellows">).data.fellowshipYear.year}{" "}
+            Fellow
           </p>
         </div>
       </Fragment>
@@ -116,7 +115,7 @@ const { person } = Astro.props;
   }
 
   .headshot-mobile {
-    aspect-ratio: 5/4;
+    aspect-ratio: 4/5;
     display: none;
   }
 

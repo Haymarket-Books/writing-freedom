@@ -1,139 +1,88 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import InteriorBlueprint from "../../components/PageBlueprints/InteriorBlueprint.astro";
-import IndexBlueprint from "../../components/PageBlueprints/IndexBlueprint.astro";
-import ContactBlueprint from "../../components/PageBlueprints/ContactBlueprint.astro";
-import PersonCard from "../../components/PersonCard.astro";
-import FellowsFilterYear from "../../components/FellowsFilterYear.astro";
-import { sanityClient } from "sanity:client";
-import {
-  pageQuery,
-  fellowshipYearsIndexQuery,
-  fellowCategoriesQuery,
-} from "../../lib/sanity.queries";
-import type {
-  PagePayload,
-  Fellow,
-  FellowshipYear,
-  PageMetadata,
-  Category,
-} from "../../types";
-import FellowsFilters from "../../components/FellowsFilters.astro";
-import generatePageMetadata from "../../utils/generatePageMetadata";
+import Layout from "@layouts/Layout.astro";
+import IndexBlueprint from "@components/PageBlueprints/IndexBlueprint.astro";
+import type { PageMetadata } from "../../types";
+import generatePageMetadata from "@utils/generatePageMetadata";
+import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
-  const years = await sanityClient.fetch<FellowshipYear[]>(
-    fellowshipYearsIndexQuery
-  );
-  const fellowCategories = await sanityClient.fetch<Category[]>(
-    fellowCategoriesQuery
-  );
-  // const pages = await sanityClient.fetch<PagePayload[]>(pageQuery, {
-  //   page: "page"
-  // });
+  const years = await getCollection("fellowshipYears");
+  const allFellows = await getCollection("fellows");
 
   return years.map((entry) => {
     return {
-      params: { year: entry.year },
+      params: { year: entry.data.slug },
       props: {
         page: entry,
         fellowshipYears: years,
-        filterCategories: fellowCategories,
+        fellows: allFellows,
       },
     };
   });
 }
 
-// const fellows = await sanityClient.fetch<Fellow[]>(fellowsAllQuery);
-
-type Props = {
-  page?: FellowshipYear;
-  fellowshipYears?: FellowshipYear[];
-  filterCategories?: Category[];
-};
-
-const { page, fellowshipYears, filterCategories } = Astro.props;
+const { page, fellows } = Astro.props;
 
 const meta: PageMetadata = {
   seo: {
-    title: `${page?.year} Fellows`,
-    description: `Meet the Writing Freedom fellows for ${page?.year}.`,
+    title: `${page.data.year} Fellows`,
+    description: `Meet the Writing Freedom fellows for ${page.data.year}.`,
   },
   openGraph: {
-    title: `${page?.year} Fellows`,
+    title: `${page.data.year} Fellows`,
     image: undefined,
-    description: `Meet the Writing Freedom fellows for ${page?.year}.`,
+    description: `Meet the Writing Freedom fellows for ${page.data.year}.`,
   },
 };
 
 const path = Astro.url.pathname;
 
 // const page = pages.filter((page) => page.blueprint === "index");
+const filteredFellows = fellows.filter(
+  (fellow) => fellow.data.fellowshipYear._id === page.id,
+);
 ---
 
-<Layout meta={generatePageMetadata(meta, `${page?.year} Fellows`, path)}>
+<Layout meta={generatePageMetadata(meta, `${page.data.year} Fellows`, path)}>
   <main slot="content">
-    <div class="content-wrapper flow">
-      <h1 class="with-mark">{page?.year} Fellows</h1>
-      <FellowsFilterYear />
-      <section class="flow">
-        <h2 class="sr-only">Fellows</h2>
-        <div class="index-section | fellows-grid | responsive-grid">
-          {
-            page?.fellows?.map((fellow) => {
-              return <PersonCard person={fellow} />;
-            })
-          }
-        </div>
-      </section>
-      <!-- <fellow-filter class="flow">
-        <FellowsFilters years={fellowshipYears} categories={filterCategories} />
-        <section class="flow">
-          <h2>All Fellows</h2>
-          <div class="fellows-grid | responsive-grid">
-            {
-              page?.fellows?.map((fellow) => {
-                return <PersonCard person={fellow} />;
-              })
-            }
-          </div>
-        </section>
-      </fellow-filter> -->
-    </div>
-
-    <style>
-      .content-wrapper {
-        margin-block: var(--section-spacer);
-
-        &.flow {
-          --flow-space: 3rem;
-        }
-      }
-
-      h2 {
-        font-size: var(--step-2);
-      }
-
-      section {
-        margin-block: var(--space-m);
-
-        &.flow {
-          --flow-space: 1.5rem;
-        }
-      }
-
-      .responsive-grid {
-        /* --grid-gap: 2rem; */
-        --item-min-width: 16rem;
-        /* --item-max-width: 18rem; */
-        grid-row-gap: 4rem;
-        grid-column-gap: 2rem;
-        /* --item-min-width: 12rem; 
-        --item-max-width: 14rem; */
-      }
-    </style>
+    <IndexBlueprint
+      title={`${page.data.year} Fellows`}
+      fellows={filteredFellows}
+    />
   </main>
 </Layout>
+
+<style>
+  .content-wrapper {
+    margin-block: var(--section-spacer);
+
+    &.flow {
+      --flow-space: 3rem;
+    }
+  }
+
+  h2 {
+    font-size: var(--step-2);
+  }
+
+  section {
+    margin-block: var(--space-m);
+
+    &.flow {
+      --flow-space: 1.5rem;
+    }
+  }
+
+  .responsive-grid {
+    /* --grid-gap: 2rem; */
+    --item-min-width: 16rem;
+    /* --item-max-width: 18rem; */
+    grid-row-gap: 4rem;
+    grid-column-gap: 2rem;
+    /* --item-min-width: 12rem; 
+        --item-max-width: 14rem; */
+  }
+</style>
 
 <!-- <script src="../../scripts/components/fellow-filter.js"></script> -->
 

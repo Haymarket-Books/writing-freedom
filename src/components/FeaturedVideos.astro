@@ -1,0 +1,67 @@
+---
+import { Image } from "astro:assets";
+import video1 from "@assets/2024-fellows-all.jpg";
+import video2 from "@assets/2025-fellows-all.jpg";
+
+const videoList = [
+  {
+    title: "2024 Fellows Reading",
+    image: video1,
+    imageAlt: "Writing Freedom 2024 Fellows Reading",
+    text: `View a virtual reading featuring the 2024 Writing Freedom Fellows, with
+        special guest Rachel Kushner.`,
+    link: "https://youtu.be/gEg1kxycjwM?si=AlVQD8VCmPw5SjoC",
+  },
+  {
+    title: "2025 Fellows Reading",
+    image: video2,
+    imageAlt: "Writing Freedom 2025 Fellows Reading",
+    text: `View a virtual reading featuring the 2025 Writing Freedom Fellows, with
+        special guest Deesha Philyaw.`,
+    link: "https://youtu.be/alV068We7FY?si=g5KrCelR6v3DqDUc",
+  },
+];
+---
+
+<div class="featured-videos">
+  <div class="responsive-grid">
+    {
+      videoList.map((video) => (
+        <div class="flow">
+          <a href={video.link} target="_blank" class="image-wrapper">
+            <Image
+              class="img"
+              src={video.image}
+              alt={video.imageAlt}
+              width={600}
+              height={316}
+              format="webp"
+            />
+          </a>
+          <h3>{video.title}</h3>
+          <p>{video.text}</p>
+          <a href={video.link} target="_blank">
+            View Video
+          </a>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .responsive-grid {
+    gap: var(--space-l);
+    max-width: 1100px;
+    margin-inline: auto;
+  }
+
+  .img {
+    border-radius: 4px;
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
+</style>

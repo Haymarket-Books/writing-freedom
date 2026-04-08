@@ -1,50 +1,57 @@
 ---
-import { Image } from "astro:assets";
-import type { Person, TeamMember, TeamSection } from "../../types";
-import joinNames from "../../utils/joinNames";
-
-import PersonCard from "../PersonCard.astro";
-import ButtonLink from "../ButtonLink.astro";
-import urlFor from "../../lib/sanity.urlForImage";
+import joinNames from "@utils/joinNames";
+import type { TeamSection as TeamSectionType } from "@content/schemaFragments/sanityComponents";
+import { getCollection } from "astro:content";
 
 type Props = {
-  content?: TeamSection;
+  content: TeamSectionType;
   padding?: boolean;
   background?: boolean;
   filterYear?: number;
 };
 
 const { content } = Astro.props;
+
+const allPeople = await getCollection("teamMembers");
 ---
 
 <section
-  id={content?.slug}
-  class:list={[content?.sectionPadding ? "padding background" : "margin"]}
+  id={content.slug}
+  class:list={[content.sectionPadding ? "padding background" : "margin"]}
 >
   <div class="content-wrapper | team-section | grid">
     {
-      content?.sections?.map((section) => (
+      content.sections.map((section) => (
         <div class="section">
           <h2 class="with-mark">{section.heading}</h2>
           <div class="responsive-grid">
-            {section?.items?.map((person) => (
-              <article class="team-member | text | flow">
-                <h3>{joinNames(person.name)}</h3>
-                {person?.category?.slug === "selection-committee" ? (
-                  <div class="flow">
-                    <p class="small-title">{person?.genres}</p>
-                    <a href={person.url} target="_blank">
-                      Website
-                      <i class="fa-regular fa-external-link" />
-                    </a>
-                  </div>
-                ) : (
-                  <p class="small-title">
-                    {(person as TeamMember)?.category?.name}
-                  </p>
-                )}
-              </article>
-            ))}
+            {section.items.map((personRef) => {
+              const person = allPeople.find(
+                (person) => person.id === personRef._ref,
+              );
+              return (
+                person && (
+                  <article class="team-member | text | flow">
+                    <h3>{joinNames(person.data.name)}</h3>
+                    {person!.data.category.slug === "selection-committee" ? (
+                      <div class="flow">
+                        {person.data.genres && (
+                          <p class="small-title">{person.data.genres}</p>
+                        )}
+                        {person.data.url && (
+                          <a href={person.data.url} target="_blank">
+                            Website
+                            <i class="fa-regular fa-external-link" />
+                          </a>
+                        )}
+                      </div>
+                    ) : (
+                      <p class="small-title">{person.data.category.name}</p>
+                    )}
+                  </article>
+                )
+              );
+            })}
           </div>
         </div>
       ))

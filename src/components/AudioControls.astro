@@ -1,13 +1,13 @@
 ---
-import type { Fellow } from "../types";
 import RichContent from "./RichContent.astro";
 import "../styles/rich-content.css";
+import { type CollectionEntry } from "astro:content";
 
 type Props = {
-  content?: Fellow;
+  fellow: CollectionEntry<"fellows">;
 };
 
-const { content } = Astro.props;
+const { fellow } = Astro.props;
 
 function toMb(num: number) {
   return `${(num / 1000000).toFixed(2)} MB`;
@@ -16,17 +16,17 @@ function toMb(num: number) {
 
 <figure class="audio-player | flow">
   {
-    content?.media?.content && (
+    fellow.data.media?.content && (
       <figcaption class="rich-content">
-        <RichContent content={content?.media?.content} />
+        <RichContent content={fellow.data.media?.content} />
       </figcaption>
     )
   }
-  <audio src={content?.media?.file?.url} controls></audio>
-  <a class="text-step--1" href={`${content?.media?.file?.url}?dl=`}
+  <audio src={fellow.data.media?.file?.url} controls></audio>
+  <a class="text-step--1" href={`${fellow.data.media?.file?.url}?dl=`}
     >Download audio {
-      content?.media?.file?.size && (
-        <span>({toMb(content?.media?.file?.size)})</span>
+      fellow.data.media?.file?.size && (
+        <span>({toMb(fellow.data.media?.file?.size)})</span>
       )
     }</a
   >

@@ -1,21 +1,17 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import HomeBlueprint from "../components/PageBlueprints/HomeBlueprint.astro";
-import { sanityClient } from "sanity:client";
-import { pageQuery } from "../lib/sanity.queries";
-import type { PagePayload } from "../types";
-import generatePageMetadata from "../utils/generatePageMetadata";
+import Layout from "@layouts/Layout.astro";
+import HomeBlueprint from "@components/PageBlueprints/HomeBlueprint.astro";
+import generatePageMetadata from "@utils/generatePageMetadata";
+import { getEntry } from "astro:content";
 
-const query = await sanityClient.fetch<PagePayload[]>(pageQuery, {
-  page: "homepage",
-});
-const home = query[0];
-// console.log(home.content.find((item) => item.type === "quote").featuredLink);
+const page = await getEntry("pages", "homepage");
 const path = Astro.url.pathname;
 ---
 
-<Layout meta={generatePageMetadata(home.metadata, home.title, path)}>
+<Layout
+  meta={generatePageMetadata(page?.data.metadata, page?.data.title, path)}
+>
   <main slot="content">
-    <HomeBlueprint page={home} />
+    {page && page.data.type === "homepage" && <HomeBlueprint page={page} />}
   </main>
 </Layout>

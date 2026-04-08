@@ -1,31 +1,37 @@
 ---
-import type { Emphasis } from "../../types";
-import RichContent from "../RichContent.astro";
-import ButtonLink from "../ButtonLink.astro";
-import buildHref from "../../utils/buildHref";
-import urlFor from "../../lib/sanity.urlForImage";
+import RichContent from "@components/RichContent.astro";
+import { urlForImage } from "@lib/sanity/urlForImage";
 import { Image } from "astro:assets";
 import "../../styles/rich-content.css";
+import type { EmphasisSection } from "@content/schemaFragments/sanityComponents";
 
 type Props = {
-  content?: Emphasis;
+  content: EmphasisSection;
 };
 
 const { content } = Astro.props;
 ---
 
 <article class="content-wrapper">
-  <Image
-    class="lqip-preview"
-    src={urlFor(content?.image!).width(600).height(900).auto("format").url()}
-    alt={content?.image?.alt || ""}
-    width={600}
-    height={900}
-    format="webp"
-    style={`background-image: url(${content?.image?.asset.metadata.lqip})`}
-  />
+  {
+    content.image && (
+      <Image
+        class="lqip-preview"
+        src={urlForImage(content.image)
+          .width(600)
+          .height(900)
+          .auto("format")
+          .url()}
+        alt={content.image.alt || ""}
+        width={600}
+        height={900}
+        format="webp"
+        style={`background-image: url(${content.image.asset.metadata.lqip})`}
+      />
+    )
+  }
   <div class="emphasis">
-    <RichContent content={content?.blocks} />
+    <RichContent content={content.blocks} />
   </div>
 </article>
 

@@ -100,7 +100,7 @@ export default defineType({
       name: 'content',
       title: 'Background',
       type: 'richContentLite',
-      validation: (Rule) => Rule.required(),
+      // validation: (Rule) => Rule.required(),
       group: 'content',
     }),
     defineField({

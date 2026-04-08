@@ -1,13 +1,10 @@
 ---
-import type { Hero } from "../../types/index";
 import { Image } from "astro:assets";
-import urlFor from "../../lib/sanity.urlForImage";
-import heroBackground from "../../assets/hero-bg.png";
-import heroFeatured from "../../assets/crane-illustration.svg";
-import BackgroundIllustration from "../BackgroundIllustration.astro";
+import heroBackground from "@assets/hero-bg.png";
+import type { HeroSection } from "@content/schemaFragments/sanityComponents";
 
 type Props = {
-  content?: Hero;
+  content: HeroSection;
 };
 
 const { content } = Astro.props;

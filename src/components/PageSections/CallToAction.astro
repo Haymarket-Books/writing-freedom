@@ -1,35 +1,45 @@
 ---
-import type { CTA } from "../../types";
-import RichContent from "../RichContent.astro";
-import ButtonLink from "../ButtonLink.astro";
-import buildHref from "../../utils/buildHref";
-import urlFor from "../../lib/sanity.urlForImage";
+import ButtonLink from "@components/ButtonLink.astro";
+import { urlForImage } from "@lib/sanity/urlForImage";
 import { Image } from "astro:assets";
+import type { CTASection } from "@content/schemaFragments/sanityComponents";
 
 type Props = {
-  content?: CTA;
+  content: CTASection;
 };
 
 const { content } = Astro.props;
 ---
 
-<article id={content?.slug}>
+<article id={content.slug}>
   <div class="wrapper">
     <div class="text | flow">
-      <h2 class="balanced with-mark">{content?.heading}</h2>
-      <p>{content?.text}</p>
-      <ButtonLink linkObject={content?.linkObject!} withArrow />
+      <h2 class="balanced with-mark">{content.heading}</h2>
+      <p>{content.text}</p>
+      {
+        content.linkObject && (
+          <ButtonLink linkObject={content.linkObject} withArrow />
+        )
+      }
     </div>
   </div>
-  <Image
-    class="bg-image lqip-preview"
-    src={urlFor(content?.image!).width(1920).height(1080).auto("format").url()}
-    width={1920}
-    height={1080}
-    alt={content?.image?.asset || ""}
-    format="webp"
-    style={`background-image: url(${content?.image?.asset.metadata.lqip})`}
-  />
+  {
+    content.image && (
+      <Image
+        class="bg-image lqip-preview"
+        src={urlForImage(content.image)
+          .width(1920)
+          .height(1080)
+          .auto("format")
+          .url()}
+        width={1920}
+        height={1080}
+        alt={content.image.asset || ""}
+        format="webp"
+        style={`background-image: url(${content.image.asset.metadata.lqip})`}
+      />
+    )
+  }
 </article>
 
 <style>

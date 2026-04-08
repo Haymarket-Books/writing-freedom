@@ -1,31 +1,20 @@
 ---
-import ButtonLink from "../ButtonLink.astro";
-import type { LinkCTA } from "../../types";
+import ButtonLink from "@components/ButtonLink.astro";
+import type { LinkCTASection } from "@content/schemaFragments/sanityComponents";
 
 type Props = {
-  content?: LinkCTA;
+  content: LinkCTASection;
 };
 
 const { content } = Astro.props;
 ---
 
 <div class="center-all content-wrapper">
-  <ButtonLink linkObject={content?.linkObject!} withArrow />
-  <!-- <img class="fist-left" src="/fist-left.svg" alt="" width="200" height="260" />
-  <img
-    class="fist-right"
-    src="/fist-right.svg"
-    alt=""
-    width="200"
-    height="260"
-  />
-  <img
-    class="fist-birds"
-    src="/fist-birds.svg"
-    alt=""
-    width="200"
-    height="260"
-  /> -->
+  {
+    content.linkObject && (
+      <ButtonLink linkObject={content.linkObject} withArrow />
+    )
+  }
 </div>
 
 <style>
